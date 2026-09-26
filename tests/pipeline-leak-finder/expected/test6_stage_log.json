@@ -1,0 +1,920 @@
+{
+ "counts": {
+  "rows": 1726,
+  "deals": 500,
+  "deals_with_history": 500,
+  "closed": 494,
+  "won": 55,
+  "lost": 439,
+  "open": 6,
+  "closed_without_history": 0
+ },
+ "data_quality": {
+  "layout": "Stage log",
+  "pipeline": null,
+  "duplicate_rows": 0,
+  "other_pipelines": {},
+  "closed_without_history": 0,
+  "open_without_history": 0,
+  "deals_out_of_order": 0,
+  "negative_durations": 0,
+  "skipped_stage_entries": 16,
+  "text_amounts_parsed": 0,
+  "won_without_amount": 0,
+  "won_without_close_date": 0,
+  "future_dates": 0,
+  "unreadable_dates": 0,
+  "history_rows_not_stage": 0,
+  "stages_not_in_order": [],
+  "same_name_deals": 0,
+  "keyed_by": "deal ID"
+ },
+ "stage_mapping": {
+  "order": [
+   "Discovery",
+   "Qualified",
+   "Demo",
+   "Proposal",
+   "Negotiation"
+  ],
+  "order_source": "Read from the data: the order most deals moved through",
+  "won": [
+   "Signed"
+  ],
+  "lost": [
+   "Dead"
+  ]
+ },
+ "overview": {
+  "win_rate": 0.111,
+  "won_revenue": 1968800,
+  "avg_won_deal": 35796,
+  "median_won_cycle_days": 53.0,
+  "open_deals": 6,
+  "open_value": 187200
+ },
+ "stages": [
+  {
+   "stage": "Discovery",
+   "to": "Qualified",
+   "reached": 500,
+   "moved_on": 321,
+   "lost_here": 178,
+   "open_here": 1,
+   "conversion": 0.643,
+   "small_sample": false,
+   "skipped_through": 0,
+   "days": {
+    "median": 7.0,
+    "p75": 10.0,
+    "p90": 13.0,
+    "median_moved_on": 7.0,
+    "median_lost": 7.0,
+    "deals_timed": 499
+   },
+   "stall": {
+    "line_days": 10.0,
+    "under": {
+     "deals": 385,
+     "won": 39,
+     "win_rate": 0.101,
+     "small_sample": false
+    },
+    "over": {
+     "deals": 109,
+     "won": 16,
+     "win_rate": 0.147,
+     "small_sample": false
+    }
+   },
+   "stalled_now": {
+    "deals": 1,
+    "value": 18000
+   },
+   "losses": {
+    "deals": 178,
+    "share_of_losses": 0.405,
+    "lost_value": 2991400,
+    "with_amount": 71,
+    "median_lost_deal": 30200
+   },
+   "quarters": [
+    {
+     "quarter": "2024 Q1",
+     "entered": 56,
+     "resolved": 56,
+     "moved_on": 37,
+     "rate": 0.661,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2024 Q2",
+     "entered": 46,
+     "resolved": 46,
+     "moved_on": 32,
+     "rate": 0.696,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2024 Q3",
+     "entered": 49,
+     "resolved": 49,
+     "moved_on": 29,
+     "rate": 0.592,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2024 Q4",
+     "entered": 46,
+     "resolved": 46,
+     "moved_on": 23,
+     "rate": 0.5,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2025 Q1",
+     "entered": 50,
+     "resolved": 50,
+     "moved_on": 37,
+     "rate": 0.74,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2025 Q2",
+     "entered": 46,
+     "resolved": 46,
+     "moved_on": 32,
+     "rate": 0.696,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2025 Q3",
+     "entered": 42,
+     "resolved": 42,
+     "moved_on": 30,
+     "rate": 0.714,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2025 Q4",
+     "entered": 54,
+     "resolved": 54,
+     "moved_on": 34,
+     "rate": 0.63,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2026 Q1",
+     "entered": 40,
+     "resolved": 40,
+     "moved_on": 26,
+     "rate": 0.65,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2026 Q2",
+     "entered": 41,
+     "resolved": 41,
+     "moved_on": 25,
+     "rate": 0.61,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2026 Q3",
+     "entered": 30,
+     "resolved": 29,
+     "moved_on": 16,
+     "rate": 0.552,
+     "complete": false,
+     "counts": false
+    }
+   ]
+  },
+  {
+   "stage": "Qualified",
+   "to": "Demo",
+   "reached": 321,
+   "moved_on": 235,
+   "lost_here": 84,
+   "open_here": 2,
+   "conversion": 0.737,
+   "small_sample": false,
+   "skipped_through": 16,
+   "days": {
+    "median": 9.0,
+    "p75": 12.0,
+    "p90": 17.0,
+    "median_moved_on": 8.0,
+    "median_lost": 9.0,
+    "deals_timed": 303
+   },
+   "stall": {
+    "line_days": 12.0,
+    "under": {
+     "deals": 234,
+     "won": 35,
+     "win_rate": 0.15,
+     "small_sample": false
+    },
+    "over": {
+     "deals": 66,
+     "won": 15,
+     "win_rate": 0.227,
+     "small_sample": false
+    }
+   },
+   "stalled_now": {
+    "deals": 1,
+    "value": 40600
+   },
+   "losses": {
+    "deals": 84,
+    "share_of_losses": 0.191,
+    "lost_value": 1995500,
+    "with_amount": 47,
+    "median_lost_deal": 25100
+   },
+   "quarters": [
+    {
+     "quarter": "2024 Q1",
+     "entered": 32,
+     "resolved": 32,
+     "moved_on": 25,
+     "rate": 0.781,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2024 Q2",
+     "entered": 33,
+     "resolved": 33,
+     "moved_on": 24,
+     "rate": 0.727,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2024 Q3",
+     "entered": 33,
+     "resolved": 33,
+     "moved_on": 22,
+     "rate": 0.667,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2024 Q4",
+     "entered": 21,
+     "resolved": 21,
+     "moved_on": 16,
+     "rate": 0.762,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2025 Q1",
+     "entered": 36,
+     "resolved": 36,
+     "moved_on": 30,
+     "rate": 0.833,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2025 Q2",
+     "entered": 32,
+     "resolved": 32,
+     "moved_on": 26,
+     "rate": 0.812,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2025 Q3",
+     "entered": 31,
+     "resolved": 31,
+     "moved_on": 22,
+     "rate": 0.71,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2025 Q4",
+     "entered": 33,
+     "resolved": 33,
+     "moved_on": 22,
+     "rate": 0.667,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2026 Q1",
+     "entered": 26,
+     "resolved": 26,
+     "moved_on": 22,
+     "rate": 0.846,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2026 Q2",
+     "entered": 24,
+     "resolved": 24,
+     "moved_on": 16,
+     "rate": 0.667,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2026 Q3",
+     "entered": 20,
+     "resolved": 18,
+     "moved_on": 10,
+     "rate": 0.556,
+     "complete": false,
+     "counts": false
+    }
+   ]
+  },
+  {
+   "stage": "Demo",
+   "to": "Proposal",
+   "reached": 235,
+   "moved_on": 119,
+   "lost_here": 116,
+   "open_here": 0,
+   "conversion": 0.506,
+   "small_sample": false,
+   "skipped_through": 0,
+   "days": {
+    "median": 10.0,
+    "p75": 14.0,
+    "p90": 21.0,
+    "median_moved_on": 10.0,
+    "median_lost": 10.0,
+    "deals_timed": 235
+   },
+   "stall": {
+    "line_days": 14.5,
+    "under": {
+     "deals": 176,
+     "won": 44,
+     "win_rate": 0.25,
+     "small_sample": false
+    },
+    "over": {
+     "deals": 56,
+     "won": 11,
+     "win_rate": 0.196,
+     "small_sample": false
+    }
+   },
+   "stalled_now": {
+    "deals": 0,
+    "value": 0
+   },
+   "losses": {
+    "deals": 116,
+    "share_of_losses": 0.264,
+    "lost_value": 5022600,
+    "with_amount": 116,
+    "median_lost_deal": 32250
+   },
+   "quarters": [
+    {
+     "quarter": "2024 Q1",
+     "entered": 22,
+     "resolved": 22,
+     "moved_on": 8,
+     "rate": 0.364,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2024 Q2",
+     "entered": 24,
+     "resolved": 24,
+     "moved_on": 11,
+     "rate": 0.458,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2024 Q3",
+     "entered": 23,
+     "resolved": 23,
+     "moved_on": 12,
+     "rate": 0.522,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2024 Q4",
+     "entered": 17,
+     "resolved": 17,
+     "moved_on": 8,
+     "rate": 0.471,
+     "complete": true,
+     "counts": false
+    },
+    {
+     "quarter": "2025 Q1",
+     "entered": 27,
+     "resolved": 27,
+     "moved_on": 12,
+     "rate": 0.444,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2025 Q2",
+     "entered": 27,
+     "resolved": 27,
+     "moved_on": 20,
+     "rate": 0.741,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2025 Q3",
+     "entered": 22,
+     "resolved": 22,
+     "moved_on": 9,
+     "rate": 0.409,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2025 Q4",
+     "entered": 25,
+     "resolved": 25,
+     "moved_on": 15,
+     "rate": 0.6,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2026 Q1",
+     "entered": 20,
+     "resolved": 20,
+     "moved_on": 8,
+     "rate": 0.4,
+     "complete": true,
+     "counts": true
+    },
+    {
+     "quarter": "2026 Q2",
+     "entered": 17,
+     "resolved": 17,
+     "moved_on": 9,
+     "rate": 0.529,
+     "complete": true,
+     "counts": false
+    },
+    {
+     "quarter": "2026 Q3",
+     "entered": 11,
+     "resolved": 11,
+     "moved_on": 7,
+     "rate": 0.636,
+     "complete": false,
+     "counts": false
+    }
+   ]
+  },
+  {
+   "stage": "Proposal",
+   "to": "Negotiation",
+   "reached": 119,
+   "moved_on": 73,
+   "lost_here": 44,
+   "open_here": 2,
+   "conversion": 0.624,
+   "small_sample": false,
+   "skipped_through": 0,
+   "days": {
+    "median": 11.0,
+    "p75": 24.0,
+    "p90": 42.4,
+    "median_moved_on": 10.0,
+    "median_lost": 26.0,
+    "deals_timed": 117
+   },
+   "stall": {
+    "line_days": 13.0,
+    "under": {
+     "deals": 69,
+     "won": 44,
+     "win_rate": 0.638,
+     "small_sample": false
+    },
+    "over": {
+     "deals": 47,
+     "won": 11,
+     "win_rate": 0.234,
+     "small_sample": false
+    }
+   },
+   "stalled_now": {
+    "deals": 1,
+    "value": 16700
+   },
+   "losses": {
+    "deals": 44,
+    "share_of_losses": 0.1,
+    "lost_value": 1376200,
+    "with_amount": 44,
+    "median_lost_deal": 21200
+   },
+   "quarters": [
+    {
+     "quarter": "2024 Q1",
+     "entered": 8,
+     "resolved": 8,
+     "moved_on": 4,
+     "rate": 0.5,
+     "complete": true,
+     "counts": false
+    },
+    {
+     "quarter": "2024 Q2",
+     "entered": 11,
+     "resolved": 11,
+     "moved_on": 5,
+     "rate": 0.455,
+     "complete": true,
+     "counts": false
+    },
+    {
+     "quarter": "2024 Q3",
+     "entered": 9,
+     "resolved": 9,
+     "moved_on": 5,
+     "rate": 0.556,
+     "complete": true,
+     "counts": false
+    },
+    {
+     "quarter": "2024 Q4",
+     "entered": 11,
+     "resolved": 11,
+     "moved_on": 4,
+     "rate": 0.364,
+     "complete": true,
+     "counts": false
+    },
+    {
+     "quarter": "2025 Q1",
+     "entered": 12,
+     "resolved": 12,
+     "moved_on": 10,
+     "rate": 0.833,
+     "complete": true,
+     "counts": false
+    },
+    {
+     "quarter": "2025 Q2",
+     "entered": 16,
+     "resolved": 16,
+     "moved_on": 14,
+     "rate": 0.875,
+     "complete": true,
+     "counts": false
+    },
+    {
+     "quarter": "2025 Q3",
+     "entered": 12,
+     "resolved": 12,
+     "moved_on": 7,
+     "rate": 0.583,
+     "complete": true,
+     "counts": false
+    },
+    {
+     "quarter": "2025 Q4",
+     "entered": 16,
+     "resolved": 16,
+     "moved_on": 10,
+     "rate": 0.625,
+     "complete": true,
+     "counts": false
+    },
+    {
+     "quarter": "2026 Q1",
+     "entered": 8,
+     "resolved": 8,
+     "moved_on": 3,
+     "rate": 0.375,
+     "complete": true,
+     "counts": false
+    },
+    {
+     "quarter": "2026 Q2",
+     "entered": 8,
+     "resolved": 8,
+     "moved_on": 6,
+     "rate": 0.75,
+     "complete": true,
+     "counts": false
+    },
+    {
+     "quarter": "2026 Q3",
+     "entered": 8,
+     "resolved": 6,
+     "moved_on": 5,
+     "rate": 0.833,
+     "complete": false,
+     "counts": false
+    }
+   ]
+  },
+  {
+   "stage": "Negotiation",
+   "to": "Signed",
+   "reached": 73,
+   "moved_on": 55,
+   "lost_here": 17,
+   "open_here": 1,
+   "conversion": 0.764,
+   "small_sample": false,
+   "skipped_through": 0,
+   "days": {
+    "median": 12.0,
+    "p75": 17.2,
+    "p90": 25.9,
+    "median_moved_on": 12.0,
+    "median_lost": 11.0,
+    "deals_timed": 72
+   },
+   "stall": {
+    "line_days": 17.0,
+    "under": {
+     "deals": 54,
+     "won": 41,
+     "win_rate": 0.759,
+     "small_sample": false
+    },
+    "over": {
+     "deals": 18,
+     "won": 14,
+     "win_rate": 0.778,
+     "small_sample": true
+    }
+   },
+   "stalled_now": {
+    "deals": 1,
+    "value": 33300
+   },
+   "losses": {
+    "deals": 17,
+    "share_of_losses": 0.039,
+    "lost_value": 1062000,
+    "with_amount": 17,
+    "median_lost_deal": 76500
+   },
+   "quarters": [
+    {
+     "quarter": "2024 Q1",
+     "entered": 4,
+     "resolved": 4,
+     "moved_on": 3,
+     "rate": 0.75,
+     "complete": true,
+     "counts": false
+    },
+    {
+     "quarter": "2024 Q2",
+     "entered": 2,
+     "resolved": 2,
+     "moved_on": 2,
+     "rate": 1.0,
+     "complete": true,
+     "counts": false
+    },
+    {
+     "quarter": "2024 Q3",
+     "entered": 7,
+     "resolved": 7,
+     "moved_on": 4,
+     "rate": 0.571,
+     "complete": true,
+     "counts": false
+    },
+    {
+     "quarter": "2024 Q4",
+     "entered": 5,
+     "resolved": 5,
+     "moved_on": 4,
+     "rate": 0.8,
+     "complete": true,
+     "counts": false
+    },
+    {
+     "quarter": "2025 Q1",
+     "entered": 9,
+     "resolved": 9,
+     "moved_on": 8,
+     "rate": 0.889,
+     "complete": true,
+     "counts": false
+    },
+    {
+     "quarter": "2025 Q2",
+     "entered": 13,
+     "resolved": 13,
+     "moved_on": 11,
+     "rate": 0.846,
+     "complete": true,
+     "counts": false
+    },
+    {
+     "quarter": "2025 Q3",
+     "entered": 9,
+     "resolved": 9,
+     "moved_on": 7,
+     "rate": 0.778,
+     "complete": true,
+     "counts": false
+    },
+    {
+     "quarter": "2025 Q4",
+     "entered": 9,
+     "resolved": 9,
+     "moved_on": 4,
+     "rate": 0.444,
+     "complete": true,
+     "counts": false
+    },
+    {
+     "quarter": "2026 Q1",
+     "entered": 3,
+     "resolved": 3,
+     "moved_on": 3,
+     "rate": 1.0,
+     "complete": true,
+     "counts": false
+    },
+    {
+     "quarter": "2026 Q2",
+     "entered": 5,
+     "resolved": 5,
+     "moved_on": 5,
+     "rate": 1.0,
+     "complete": true,
+     "counts": false
+    },
+    {
+     "quarter": "2026 Q3",
+     "entered": 7,
+     "resolved": 6,
+     "moved_on": 4,
+     "rate": 0.667,
+     "complete": false,
+     "counts": false
+    }
+   ]
+  }
+ ],
+ "fixes": [
+  {
+   "stage": "Demo",
+   "to": "Proposal",
+   "current_rate": 0.506,
+   "deals_per_year": 76,
+   "downstream_win_rate": 0.474,
+   "avg_won_deal": 35796,
+   "method": "best quarter",
+   "target_rate": 0.741,
+   "best_quarter": "2025 Q2",
+   "best_quarter_deals": 27,
+   "quarters_counted": 8,
+   "z": 2.59,
+   "evidence": "could be luck",
+   "lift": 0.235,
+   "extra_wins_per_year": 8.5,
+   "value_per_year": 303127,
+   "rank": 1
+  },
+  {
+   "stage": "Discovery",
+   "to": "Qualified",
+   "current_rate": 0.643,
+   "deals_per_year": 171,
+   "downstream_win_rate": 0.174,
+   "avg_won_deal": 35796,
+   "method": "best quarter",
+   "target_rate": 0.74,
+   "best_quarter": "2025 Q1",
+   "best_quarter_deals": 50,
+   "quarters_counted": 10,
+   "z": 1.51,
+   "evidence": "could be luck",
+   "lift": 0.097,
+   "extra_wins_per_year": 2.9,
+   "value_per_year": 103343,
+   "rank": 2
+  },
+  {
+   "stage": "Qualified",
+   "to": "Demo",
+   "current_rate": 0.737,
+   "deals_per_year": 109,
+   "downstream_win_rate": 0.237,
+   "avg_won_deal": 35796,
+   "method": "best quarter",
+   "target_rate": 0.846,
+   "best_quarter": "2026 Q1",
+   "best_quarter_deals": 26,
+   "quarters_counted": 10,
+   "z": 1.32,
+   "evidence": "could be luck",
+   "lift": 0.109,
+   "extra_wins_per_year": 2.8,
+   "value_per_year": 100825,
+   "rank": 3
+  },
+  {
+   "stage": "Negotiation",
+   "to": "Signed",
+   "current_rate": 0.764,
+   "deals_per_year": 27,
+   "downstream_win_rate": 1.0,
+   "avg_won_deal": 35796,
+   "method": "equal lift",
+   "target_rate": 0.84,
+   "best_quarter": null,
+   "best_quarter_deals": null,
+   "quarters_counted": 0,
+   "z": null,
+   "evidence": "no quarter to test",
+   "lift": 0.076,
+   "extra_wins_per_year": 2.1,
+   "value_per_year": 73454,
+   "rank": 4
+  },
+  {
+   "stage": "Proposal",
+   "to": "Negotiation",
+   "current_rate": 0.624,
+   "deals_per_year": 42,
+   "downstream_win_rate": 0.764,
+   "avg_won_deal": 35796,
+   "method": "equal lift",
+   "target_rate": 0.686,
+   "best_quarter": null,
+   "best_quarter_deals": null,
+   "quarters_counted": 0,
+   "z": null,
+   "evidence": "no quarter to test",
+   "lift": 0.062,
+   "extra_wins_per_year": 2.0,
+   "value_per_year": 71205,
+   "rank": 5
+  }
+ ],
+ "headline_fix": "Demo",
+ "findings": {
+  "lowest_conversion": "Demo",
+  "most_lost_deals": "Discovery",
+  "most_lost_value": "Demo",
+  "slowest_stage": "Negotiation",
+  "biggest_stall_penalty": "Proposal",
+  "biggest_lost_deals": "Demo",
+  "early_losses": {
+   "before_stage": "Demo",
+   "deals": 262,
+   "share": 0.597
+  }
+ },
+ "trust": {
+  "verdict": "usable",
+  "reasons": [],
+  "closed_without_history_share": 0.0,
+  "out_of_order_share": 0.0,
+  "problems": [
+   {
+    "check": "Stages skipped on the way through",
+    "count": 16,
+    "fix": "Require every stage, or merge a stage reps routinely skip. Your CRM's stage rules can block skipping",
+    "severity": 3,
+    "examples": [
+     "D40100028",
+     "D40100434",
+     "D40100896",
+     "D40101008",
+     "D40101099"
+    ]
+   }
+  ]
+ }
+}

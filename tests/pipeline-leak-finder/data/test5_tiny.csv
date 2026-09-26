@@ -1,0 +1,31 @@
+Record ID,Deal Name,Pipeline,Deal Stage,Amount,Create Date,Close Date,"Date entered ""Discovery (Sales Pipeline)""","Date entered ""Qualified (Sales Pipeline)""","Date entered ""Demo (Sales Pipeline)""","Date entered ""Proposal (Sales Pipeline)""","Date entered ""Negotiation (Sales Pipeline)""","Date entered ""Closed Won (Sales Pipeline)""","Date entered ""Closed Lost (Sales Pipeline)"""
+40100000,Oakmont Advisory - Platform + Services,Sales Pipeline,Closed Lost,,2024-08-01 10:36,2024-08-08 09:16,2024-08-01 09:31,,,,,,2024-08-08 15:30
+40100007,Copperline Networks - Enterprise rollout,Sales Pipeline,Closed Lost,23500,2026-05-27 14:50,2026-06-10 11:06,2026-05-27 15:01,2026-05-31 14:27,,,,,2026-06-10 17:48
+40100014,Stonebridge Advisory - Pilot,Sales Pipeline,Closed Lost,130200,2024-08-16 08:44,2024-08-25 15:17,2024-08-16 11:37,2024-08-19 09:57,,,,,2024-08-25 13:01
+40100021,Marlowe Logistics - Platform,Sales Pipeline,Closed Won,6300,2025-03-25 08:01,2025-06-15 16:00,2025-03-25 14:43,2025-03-29 11:27,2025-04-09 08:33,2025-04-22 11:48,2025-05-25 15:31,2025-06-15 16:14,
+40100028,Riverton Logistics - Pilot,Sales Pipeline,Closed Lost,38400,2025-07-22 13:14,2025-08-09 11:48,2025-07-22 15:18,2025-07-26 08:26,2025-08-03 16:59,,,,2025-08-09 09:11
+40100035,Pinecrest Labs - Platform + Services,Sales Pipeline,Closed Lost,,2026-02-14 12:07,2026-02-18 13:57,2026-02-14 16:59,,,,,,2026-02-18 14:32
+40100042,Ironvale Partners - Platform,Sales Pipeline,Closed Lost,31000,2026-01-28 11:19,2026-02-20 12:37,2026-01-28 15:54,,2026-02-15 16:25,,,,2026-02-20 17:54
+40100049,Ironvale Foods - Enterprise rollout,Sales Pipeline,Closed Lost,38800,2025-05-25 08:30,2025-06-14 11:47,2025-05-25 14:26,2025-06-01 10:23,2025-06-09 16:56,,,,2025-06-14 13:05
+40100056,Stonebridge Foods - Enterprise rollout,Sales Pipeline,Closed Lost,18100,2026-05-05 15:42,2026-05-15 16:06,2026-05-05 10:33,,,,,,2026-05-15 14:23
+40100063,Glenmore Software - Team plan,Sales Pipeline,Closed Lost,7600,2026-03-30 15:46,2026-04-10 08:30,2026-03-30 08:19,,,,,,2026-04-10 17:37
+40100070,Ravenna Networks - Team plan,Sales Pipeline,Closed Lost,42600,2024-01-03 17:25,2024-02-26 10:10,2024-01-03 16:14,2024-01-12 08:49,2024-01-19 11:34,2024-02-07 16:14,,,2024-02-26 14:32
+40100077,Redfield Networks - Platform,Sales Pipeline,Closed Lost,8800,2025-08-12 13:54,2025-09-30 17:22,2025-08-12 15:58,2025-08-25 12:42,2025-08-30 16:38,2025-09-05 08:24,,,2025-09-30 16:51
+40100084,Brightline Foods - Pilot,Sales Pipeline,Closed Lost,13500,2025-12-26 10:33,2026-01-27 16:13,2025-12-26 14:03,2025-12-29 15:55,2026-01-08 13:36,,,,2026-01-27 16:12
+40100091,Beacon Labs - Pilot,Sales Pipeline,Closed Won,9000,2025-04-23 16:26,2025-06-08 15:52,2025-04-23 13:26,2025-04-27 13:00,2025-05-03 16:34,2025-05-15 17:50,2025-05-27 17:21,2025-06-08 15:38,
+40100098,Bluestone Freight - Enterprise rollout,Sales Pipeline,Closed Lost,50500,2024-04-11 08:51,2024-05-28 11:40,2024-04-11 10:35,2024-04-19 17:11,2024-05-05 09:51,,,,2024-05-28 16:51
+40100105,Clearpath Labs - Enterprise rollout,Sales Pipeline,Closed Lost,30000,2025-01-16 12:02,2025-02-12 09:05,2025-01-16 08:28,2025-01-21 08:48,2025-01-31 12:15,,,,2025-02-12 12:07
+40100112,Beacon Logistics - Platform + Services,Sales Pipeline,Closed Won,35100,2025-11-12 17:11,2026-01-01 13:18,2025-11-12 09:10,,2025-11-19 10:16,2025-12-10 16:10,2025-12-20 12:41,2026-01-01 12:29,
+40100119,Ravenna Freight - Platform,Sales Pipeline,Closed Lost,68300,2025-12-14 13:31,2026-01-03 15:07,2025-12-14 08:19,2025-12-26 14:21,,,,,2026-01-03 14:50
+40100126,Kestrel Capital - Pilot,Sales Pipeline,Closed Lost,,2025-08-07 11:16,2025-08-14 09:16,2025-08-07 16:13,,,,,,2025-08-14 17:27
+40100133,Marlowe Partners - Platform + Services,Sales Pipeline,Closed Lost,17400,2025-12-13 08:14,2026-02-20 08:25,2025-12-13 10:02,2025-12-22 10:28,2025-12-28 16:43,2026-01-09 14:34,,,2026-02-20 11:40
+40100140,Saltmarsh Health - Platform + Services,Sales Pipeline,Closed Lost,,2025-06-06 16:28,2025-06-20 11:33,2025-06-06 08:25,2025-06-15 17:51,,,,,2025-06-20 13:42
+40100147,Orchard Energy - Enterprise rollout,Sales Pipeline,Closed Lost,,2025-12-18 14:03,2026-01-07 12:08,2025-12-18 11:56,2025-12-30 08:19,,,,,2026-01-07 09:54
+40100154,Beacon Health - Platform + Services,Sales Pipeline,Closed Lost,62000,2024-12-27 09:19,2025-01-03 12:47,2024-12-27 10:26,,,,,,2025-01-03 17:16
+40100161,Saltmarsh Analytics - Team plan,Sales Pipeline,Closed Lost,25500,2025-08-07 10:00,2025-09-22 16:56,2025-08-07 08:37,2025-08-13 11:57,2025-08-22 17:29,2025-09-09 10:52,,,2025-09-22 17:32
+40100168,Thornbury Foods - Team plan,Sales Pipeline,Closed Lost,,2025-11-05 08:24,2025-11-27 11:22,2025-11-05 09:13,,,,,,2025-11-27 17:43
+40100175,Cedar Networks - Enterprise rollout,Sales Pipeline,Closed Lost,29400,2024-02-13 14:37,2024-03-06 11:31,2024-02-13 09:42,2024-02-21 14:18,2024-02-25 16:31,2024-02-29 08:20,,,2024-03-06 17:55
+40100182,Vantage Energy - Platform + Services,Sales Pipeline,Closed Lost,21100,2025-05-01 14:57,2025-06-22 12:01,2025-05-01 10:12,2025-05-21 13:51,2025-06-04 17:50,2025-06-13 10:21,,,2025-06-22 14:13
+40100189,Ironvale Capital - Platform,Sales Pipeline,Closed Lost,,2025-01-02 12:43,2025-01-14 09:53,2025-01-02 14:59,,,,,,2025-01-14 16:22
+40100196,Marlowe Systems - Platform,Sales Pipeline,Closed Lost,12300,2026-06-23 16:31,2026-07-16 16:15,2026-06-23 09:46,2026-06-30 08:05,2026-07-10 10:10,,,,2026-07-16 10:58
+40100203,Kestrel Analytics - Enterprise rollout,Sales Pipeline,Closed Lost,113500,2025-02-03 16:13,2025-02-17 12:48,2025-02-03 13:38,2025-02-10 16:53,,,,,2025-02-17 12:23

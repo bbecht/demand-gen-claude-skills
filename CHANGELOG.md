@@ -1,5 +1,23 @@
 # Changelog
 
+## Pipeline Leak Finder
+
+### 1.0.0 (September 2026)
+
+- Conversion from each stage to the next, from a HubSpot deal export with "Date entered" columns, a Salesforce Opportunity History or Field History report, or any stage log
+- Open deals wait until they move. Skipped stages count as passed through
+- Time in stage, and a stall line per stage: the day by which three in four deals that moved on had left
+- Win rate for deals that left each stage in time against those that sat past the stall line
+- Where lost deals die: by count, by value and by typical lost deal
+- The fix worth the most: every stage valued against its own best quarter, as closed revenue a year at last year's volume
+- A luck test on every best quarter: Holds up or Could be luck. Equal 10% lift when a stage has too few finished quarters
+- Stuck right now: open deals past their stage's stall line, biggest first
+- Data check: duplicate rows, other pipelines, deals with no history, dates out of order, skipped stages, text amounts, mixed and unreadable dates
+- Readouts for four seats: CEO or owner, VP Sales or CRO, RevOps, marketing lead
+- Interactive tool with a target planner and each stage's rate by quarter
+- Plain-language method guide: what each number means, how to read it, when not to trust it
+- Synthetic MIT sample data with planted leaks, as a HubSpot export and a Salesforce history report
+
 ## Customer Segmentation
 
 ### 1.0.0 (October 2026)

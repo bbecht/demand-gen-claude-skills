@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pipeline Leak Finder</title>
+<style>
+  :root{
+    --bg:#ffffff; --surface:#ffffff; --soft:#eef2f8; --border:#bdbdbd; --ink:#000000;
+    --blue:#1d4ed8; --blue-soft:rgba(29,78,216,0.10); --amber:#d97706; --amber-soft:rgba(217,119,6,0.12);
+    --hollow:#ffffff; --btn:#000000; --btn-ink:#ffffff;
+  }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+    --bg:#000000; --surface:#0b0b0c; --soft:#1a1d24; --border:#5a5a5a; --ink:#ffffff;
+    --blue:#3b82f6; --blue-soft:rgba(59,130,246,0.16); --amber:#c77a08; --amber-soft:rgba(199,122,8,0.18);
+    --hollow:#0b0b0c; --btn:#ffffff; --btn-ink:#000000; } }
+  :root[data-theme="dark"]{
+    --bg:#000000; --surface:#0b0b0c; --soft:#1a1d24; --border:#5a5a5a; --ink:#ffffff;
+    --blue:#3b82f6; --blue-soft:rgba(59,130,246,0.16); --amber:#c77a08; --amber-soft:rgba(199,122,8,0.18);
+    --hollow:#0b0b0c; --btn:#ffffff; --btn-ink:#000000; }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  b,strong,th{font-weight:600}
+  a{color:var(--ink);text-decoration:underline}
+  .wrap{max-width:1000px;margin:0 auto;padding:32px 40px 48px}
+  h1{font-size:24px;font-weight:600;margin:0 0 4px}
+  .label{font-size:12px;text-transform:uppercase;letter-spacing:0.08em;font-weight:700;margin:32px 0 8px}
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+  .cap{font-size:14px;margin:0 0 12px}
+  .roles{display:flex;flex-wrap:wrap;gap:6px;margin:18px 0 4px}
+  .roles button,.tbtn{font:inherit;font-weight:600;padding:6px 12px;border:1px solid var(--border);background:var(--surface);color:var(--ink);cursor:pointer;border-radius:8px}
+  .roles button[aria-pressed="true"]{background:var(--blue-soft);border-color:var(--blue);box-shadow:inset 0 -3px 0 var(--blue)}
+  .q{font-size:19px;font-weight:600;margin:0 0 12px}
+  .insights{display:grid;gap:8px}
+  .card{border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-size:15px}
+  .card.warn{border-left:4px solid var(--amber)}
+  .card.key{border-left:4px solid var(--blue)}
+  .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:1px 8px;border-radius:999px;margin-right:6px;border:1px solid var(--ink)}
+  .tiles{display:grid;grid-template-columns:repeat(4,1fr);margin-top:14px}
+  .tiles > div{padding:4px 16px;border-left:1px solid var(--border)}
+  .tiles > div:first-child{border-left:0;padding-left:0}
+  .tiles .v{font-size:24px;font-weight:600}
+  .tiles .l{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;font-weight:600}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{border-bottom:1px solid var(--border);padding:7px 6px;text-align:right;vertical-align:middle}
+  th:first-child,td:first-child{text-align:left}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:0.06em}
+  th.sort{cursor:pointer;text-decoration:underline dotted}
+  tr:last-child td{border-bottom:0}
+  .scroll{overflow-x:auto}
+  .controls{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin:0 0 12px}
+  .controls label{font-weight:600;font-size:13px;display:flex;gap:6px;align-items:center}
+  select,input[type=search]{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:5px 8px}
+  input[type=range]{accent-color:var(--blue);width:140px}
+  input:focus,select:focus,button:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
+  svg text{fill:var(--ink);font-family:inherit}
+  .axis line,.axis path{stroke:var(--ink)}
+  .grid line{stroke:var(--border);stroke-dasharray:2 3}
+  .qline{stroke:var(--ink);stroke-width:1.5;stroke-dasharray:6 4}
+  .qlab{font-size:13px;font-weight:700}
+  .qsub{font-size:11px}
+  .mk{cursor:pointer}
+  .mk:hover,.mk.hl{stroke-width:3}
+  .legend{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;margin:10px 0 0;align-items:center}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  #tip{position:fixed;pointer-events:none;background:var(--surface);color:var(--ink);border:1px solid var(--ink);border-radius:8px;padding:8px 10px;font-size:12px;line-height:1.45;display:none;z-index:10;max-width:260px;box-shadow:0 4px 14px rgba(0,0,0,0.18)}
+  #tip b{font-size:13px}
+  .bar-row{display:grid;grid-template-columns:170px 1fr;gap:10px;align-items:center;margin:6px 0}
+  .track{position:relative;height:18px}
+  .bar{position:absolute;left:0;top:0;height:18px;border-radius:0 4px 4px 0}
+  .bar.solid{background:var(--blue)}
+  .bar.amber{background:var(--amber)}
+  .bar.hollow{background:var(--hollow);box-shadow:inset 0 0 0 2px var(--ink)}
+  .bar.hatch{background:repeating-linear-gradient(45deg,var(--hollow) 0 4px,var(--ink) 4px 5px);box-shadow:inset 0 0 0 1px var(--ink)}
+  .bar-lbl{position:absolute;top:0;white-space:nowrap;max-width:none;font-weight:600;font-size:12px;line-height:18px}
+  .sw{display:inline-block;width:18px;height:12px;border-radius:2px;vertical-align:-1px}
+  .attr{border-top:1px solid var(--border);padding:14px 0}
+  .attr:first-child{border-top:0;padding-top:0}
+  .attr h3{font-size:15px;margin:0 0 4px;font-weight:600}
+  .pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;padding:2px 8px;border-radius:999px;border:1px solid var(--ink);margin-left:6px;vertical-align:1px}
+  .pill.curved{background:var(--amber-soft);border-color:var(--amber)}
+  .pill.agree{background:var(--blue-soft);border-color:var(--blue)}
+  .pill.none{border-style:dashed}
+  .attr .why{font-size:13px;margin:2px 0 8px}
+  details{border:1px solid var(--border);padding:12px 16px;border-radius:12px;margin-top:10px;background:var(--surface)}
+  details.inner{border:0;padding:6px 0 0;margin:0}
+  summary{font-weight:600;cursor:pointer}
+  .flags{display:grid;gap:8px;margin:12px 0 0}
+  .more{margin-top:10px}
+  .guide p{margin:0 0 10px}
+  .guide h4{margin:14px 0 4px;font-size:14px}
+  footer{margin-top:32px;font-size:13px;font-weight:600}
+  .hide{display:none}
+  .rowbars{display:grid;gap:10px}
+  .rb{display:grid;grid-template-columns:200px 1fr 120px;gap:12px;align-items:center}
+  .rb .nm{font-weight:600;font-size:13px;line-height:1.3}
+  .rb .nm small{display:block;font-weight:400;font-size:12px}
+  .rb .side{font-size:12px;text-align:right;line-height:1.3}
+  .rb.flag{border-left:4px solid var(--amber);padding-left:8px;margin-left:-12px}
+  .track{position:relative;height:22px;background:var(--soft);border-radius:0 4px 4px 0}
+  .bar{position:absolute;left:0;top:0;height:22px;border-radius:0 4px 4px 0}
+  .bar-in{position:absolute;top:0;line-height:22px;font-size:12px;font-weight:700;white-space:nowrap}
+  .mark{position:absolute;top:-4px;height:30px;border-left:3px solid var(--ink)}
+  .mark.dash{border-left:2px dashed var(--ink)}
+  .mark.target{border-left:3px solid var(--amber)}
+  .mark.target::after{content:"";position:absolute;left:-7px;top:-6px;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid var(--amber)}
+  .seg-toggle{display:inline-flex;gap:6px;margin:0 0 12px}
+  .tbtn[aria-pressed="true"]{background:var(--blue-soft);border-color:var(--blue);box-shadow:inset 0 -3px 0 var(--blue)}
+  .pill{white-space:nowrap}
+  .pill.holds{background:var(--blue-soft);border-color:var(--blue)}
+  .pill.luck{border-style:dashed}
+  .pill.lift{background:var(--amber-soft);border-color:var(--amber)}
+  tr.top td{font-weight:700}
+  tr.top td:first-child{box-shadow:inset 4px 0 0 var(--amber);padding-left:10px}
+  .planner{display:grid;gap:12px}
+  .planner .out{font-size:17px;font-weight:600}
+  .qcol{cursor:default}
+  svg.chart{display:block;width:100%;min-width:640px}
+  @media (max-width:760px){
+    .wrap{padding:20px 16px 40px}
+    .tiles{grid-template-columns:1fr 1fr;row-gap:12px}
+    .tiles > div:nth-child(3){border-left:0;padding-left:0}
+    .rb{grid-template-columns:1fr;gap:4px}
+    .rb .side{text-align:left}
+    .rb.flag{margin-left:0}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Pipeline Leak Finder</h1>
+  <div id="meta"></div>
+
+  <div class="roles" role="group" aria-label="Choose your seat">
+    <button data-role="ceo">CEO or owner</button>
+    <button data-role="cro">VP Sales or CRO</button>
+    <button data-role="revops">RevOps</button>
+    <button data-role="marketing">Marketing lead</button>
+  </div>
+
+  <div class="label">Your question</div>
+  <div class="panel">
+    <div class="q" id="question"></div>
+    <div class="insights" id="insights"></div>
+    <div class="tiles" id="tiles"></div>
+  </div>
+
+  <div class="label">Stage by stage</div>
+  <div class="panel">
+    <p class="cap">The share of deals that leave each stage for the next one. Deals still sitting in a stage are left out until they move. The amber marker is the stage's own best quarter. The <b>Lowest</b> tag marks the weakest stage.</p>
+    <div class="rowbars" id="convBars"></div>
+    <div class="legend"><span><i class="sw" style="background:var(--blue)"></i>Moves on today</span><span><i class="sw" style="background:var(--amber);width:4px"></i>Best quarter</span></div>
+    <details class="inner"><summary>The counts behind each rate</summary><div class="scroll"><table id="convTable"></table></div></details>
+  </div>
+
+  <div class="label">Where lost deals die</div>
+  <div class="panel">
+    <p class="cap">Every lost deal, counted at the last stage it reached before it closed lost.</p>
+    <div class="seg-toggle" role="group" aria-label="Measure">
+      <button class="tbtn" data-lm="deals" aria-pressed="true">Lost deals</button>
+      <button class="tbtn" data-lm="value" aria-pressed="false">Lost value</button>
+      <button class="tbtn" data-lm="median" aria-pressed="false">Typical lost deal</button>
+    </div>
+    <div class="rowbars" id="lossBars"></div>
+    <p class="cap" style="margin-top:12px" id="lossNote"></p>
+  </div>
+
+  <div class="label">Time in stage</div>
+  <div class="panel">
+    <p class="cap">Days a deal spends in each stage. The solid bar is the median. The striped bar runs to the slowest quarter of deals. The dashed line is the stall line: three in four deals that move on have left by then.</p>
+    <div class="rowbars" id="timeBars"></div>
+    <div class="legend"><span><i class="sw" style="background:var(--blue)"></i>Median days</span><span><i class="sw" style="background:repeating-linear-gradient(45deg,var(--hollow) 0 3px,var(--ink) 3px 4px);box-shadow:inset 0 0 0 1px var(--ink)"></i>Up to the slowest quarter</span><span><i class="sw" style="border-left:2px dashed var(--ink);border-radius:0;width:2px"></i>Stall line</span></div>
+    <details class="inner" open><summary>Does waiting cost deals?</summary>
+      <p class="cap" style="margin-top:8px">Final win rate for closed deals that left each stage before the stall line, against those that sat past it.</p>
+      <div class="scroll"><table id="stallTable"></table></div></details>
+  </div>
+
+  <div class="label">The fix worth the most</div>
+  <div class="panel">
+    <p class="cap">Each stage is compared to its own best quarter. The value is the closed revenue a year if the stage hit that rate again, at last year's volume, with every later stage converting as it does today. Each fix is valued alone.</p>
+    <div class="scroll"><table id="fixTable"></table></div>
+    <details class="inner" open><summary>Try a target</summary>
+      <div class="planner" style="margin-top:10px">
+        <div class="controls">
+          <label>Stage <select id="pStage"></select></label>
+          <label>Target rate <input type="range" id="pRate" min="0" max="100" step="0.1"> <span id="pRateV"></span></label>
+          <button class="tbtn" id="pReset">Back to best quarter</button>
+        </div>
+        <div class="out" id="pOut"></div>
+        <p class="cap" id="pHow"></p>
+        <div class="scroll"><svg id="qChart" class="chart" viewBox="0 0 900 260" role="img" aria-label="Conversion by quarter for the chosen stage"></svg></div>
+        <div class="legend"><span><i class="sw" style="background:var(--blue)"></i>Quarter counted</span><span><i class="sw" style="background:var(--hollow);box-shadow:inset 0 0 0 2px var(--ink)"></i>Too few deals or not finished</span><span><i class="sw" style="background:var(--amber)"></i>Best quarter</span><span><i class="sw" style="border-left:2px dashed var(--ink);border-radius:0;width:2px"></i><span id="allQ">All quarters</span></span></div>
+      </div>
+    </details>
+  </div>
+
+  <div class="label">Stuck right now</div>
+  <div class="panel">
+    <p class="cap" id="stuckCap"></p>
+    <div class="controls"><label>Find a deal <input type="search" id="stuckSearch" placeholder="Deal name or ID"></label></div>
+    <div class="scroll"><table id="stuckTable"></table></div>
+  </div>
+
+  <div class="label">Can you trust this?</div>
+  <div class="panel">
+    <div class="tiles" id="trustTiles"></div>
+    <div class="flags" id="trustFlags"></div>
+    <div class="scroll" style="margin-top:12px"><table id="probTable"></table></div>
+    <details class="inner"><summary>Every check</summary><div class="scroll"><table id="dqTable"></table></div></details>
+  </div>
+
+  <details class="guide">
+    <summary>How this works, in plain words</summary>
+    <h4>Conversion</h4>
+    <p>Of the deals that left a stage, the share that moved forward. A deal that skipped a stage counts as passing through it. Deals still sitting in the stage wait until they move, so a young pipeline does not drag the rate down.</p>
+    <h4>Time in stage and the stall line</h4>
+    <p>Days from entering a stage to entering the next one, or to closing. The stall line is the day by which three in four deals that moved on had already left. A deal past it is behind its own pipeline's pace.</p>
+    <h4>Where lost deals die</h4>
+    <p>Each lost deal is counted once, at the last stage it reached. Count shows where the volume leaks. Value shows where the money leaks. Early deals often have no amount, so early lost value reads low.</p>
+    <h4>The fix worth the most</h4>
+    <p>For each stage: last year's deal volume, times the gap between today's rate and the best quarter, times the share of deals that win after moving on, times the average won deal. The target is a rate this team already hit, not an industry benchmark.</p>
+    <h4>Holds up or could be luck</h4>
+    <p>Pick the best of ten quarters and one will look good by chance. The skill tests the best quarter against all the others. Holds up means the gap is too big to be a lucky draw. Could be luck means it is not. Find out what was different in that quarter before you spend on it.</p>
+    <h4>When not to trust it</h4>
+    <p>Under 20 deals behind a rate, you see counts, not percentages. Stage dates entered in bulk after the fact make time in stage meaningless. Slow deals lose more, and a slow deal is often a weak deal: speed is a warning sign, not proof that rushing wins. A best quarter can come from a different market, a different rep or a different deal mix. Find the cause before you copy it.</p>
+    <p><a href="https://github.com/bbecht/demand-gen-claude-skills/blob/main/skills/pipeline-leak-finder/references/method-guide.md" target="_blank" rel="noopener">Read the full plain-language guide</a></p>
+  </details>
+
+  <footer>Built by Marketing Systems Guild. Turning strangers into clients.</footer>
+</div>
+<div id="tip" role="tooltip"></div>
+
+<script>
+const DATA = /*__DATA__*/null;
+const START_ROLE = /*__ROLE__*/"ceo";
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const pct = (x, d=0) => x == null ? "n/a" : (x*100).toFixed(d) + "%";
+const money = x => { x = x || 0; const a = Math.abs(x);
+  if (a >= 1e6) return "$" + (x/1e6).toFixed(2).replace(/\.?0+$/,"") + "M";
+  if (a >= 1e4) return "$" + Math.round(x/1e3) + "K"; return "$" + Math.round(x).toLocaleString("en-US"); };
+const num = x => (x||0).toLocaleString("en-US");
+const days = x => x == null ? "n/a" : (Math.round(x*10)/10) + (x === 1 ? " day" : " days");
+const SMALL = DATA.rules.small_sample;
+const ST = DATA.stages, FX = DATA.fixes, O = DATA.overview, C = DATA.counts, F = DATA.findings;
+const fixOf = s => FX.find(f => f.stage === s);
+const stageOf = s => ST.find(x => x.stage === s);
+const pair = x => `${x.stage} to ${x.to}`;
+const rate = x => x.small_sample ? `${x.moved_on} of ${x.moved_on + x.lost_here}` : pct(x.conversion);
+const HEAD = DATA.headline_fix ? fixOf(DATA.headline_fix) : null;
+const LOWEST = F.lowest_conversion;
+const EVID = {"holds up": ["holds", "Holds up"], "could be luck": ["luck", "Could be luck"], "no quarter to test": ["lift", "Equal lift"]};
+const evidence = f => { const e = EVID[f.evidence] || ["", f.evidence]; return `<span class="pill ${e[0]}">${e[1]}</span>`; };
+const targetText = f => f.method === "best quarter" ? `${pct(f.target_rate)} in ${f.best_quarter}` : `${pct(f.target_rate)}, a 10% lift`;
+
+// ---------- header ----------
+$("#meta").innerHTML = `${num(C.closed)} closed deals (${num(C.won)} won, ${num(C.lost)} lost) and ${num(C.open)} open, from a ${esc(DATA.data_quality.layout)}` +
+  `${DATA.data_quality.pipeline ? ", " + esc(DATA.data_quality.pipeline) : ""}. As of ${esc(DATA.as_of)}, ${esc(DATA.as_of_source)}. Data check: <b>${esc(DATA.trust.verdict)}</b>.`;
+
+// ---------- role readouts ----------
+const QUESTIONS = {
+  ceo: "Which stage is costing us the most revenue?",
+  cro: "Where do deals stall, and which ones are stuck right now?",
+  revops: "Can I trust the stage data?",
+  marketing: "Are we feeding the pipeline deals that can close?"
+};
+function card(kind, tag, html){ return `<div class="card ${kind}"><span class="tag">${tag}</span>${html}</div>`; }
+function tiles(el, items){ $(el).innerHTML = items.map(([l,v]) => `<div><div class="v">${v}</div><div class="l">${l}</div></div>`).join(""); }
+function fixLine(f){
+  if (!f || !f.value_per_year) return "No stage has a rate gap worth money in this file.";
+  const how = f.method === "best quarter" ? `Getting back to ${f.best_quarter}'s ${pct(f.target_rate)}` : `A 10% lift, to ${pct(f.target_rate)},`;
+  const luck = f.evidence === "could be luck" ? ` That quarter could be luck. Find what was different before you fund a change.` :
+    f.method === "equal lift" ? ` Too few finished quarters to test a best one, so this uses an equal 10% lift.` : "";
+  return `Fix <b>${esc(f.stage)} to ${esc(f.to)}</b>. It converts ${pct(f.current_rate)} today. ${how} is worth about ${Math.round(f.extra_wins_per_year)} more wins and <b>${money(f.value_per_year)}</b> in closed revenue a year at today's pace.${luck}`;
+}
+function stallStage(){ return F.biggest_stall_penalty ? stageOf(F.biggest_stall_penalty) : null; }
+function stuckTotal(){ return DATA.stuck.value; }
+
+function renderRole(role){
+  window.__role = role;
+  document.querySelectorAll(".roles button").forEach(b => b.setAttribute("aria-pressed", b.dataset.role===role));
+  $("#question").textContent = QUESTIONS[role];
+  const out = [];
+  (DATA.warnings||[]).forEach(w => out.push(card("warn","Warning",esc(w))));
+  if (DATA.trust.verdict === "not usable") out.push(card("warn","Stop","The stage history is too broken to trust. Fix the data problems under Can you trust this before acting on any stage."));
+  const L = stageOf(F.most_lost_deals), sp = stallStage();
+  if (role === "ceo"){
+    out.push(card(HEAD && HEAD.evidence !== "holds up" ? "warn" : "key","The fix", fixLine(HEAD)));
+    if (L) out.push(card("", "Where deals die", `Most lost deals die in <b>${esc(L.stage)}</b>: ${num(L.losses.deals)} of ${num(C.lost)}, ${pct(L.losses.share_of_losses)} of all losses.`));
+    tiles("#tiles", [["Win rate", pct(O.win_rate)], ["Won revenue", money(O.won_revenue)], ["Fix value a year", HEAD ? money(HEAD.value_per_year) : "n/a"], ["Median sales cycle", days(O.median_won_cycle_days)]]);
+  } else if (role === "cro"){
+    const wr = g => g.small_sample ? `${g.won} of ${g.deals}` : pct(g.win_rate);
+    if (sp) out.push(card("key","Stall", `Deals that sit in <b>${esc(sp.stage)}</b> past ${days(sp.stall.line_days)} win ${wr(sp.stall.over)}. Deals that leave sooner win ${wr(sp.stall.under)}.`));
+    else out.push(card("", "Stall", "No stage shows a clear cost to waiting in this file."));
+    out.push(card(DATA.stalled_deals.length ? "warn" : "", "Stuck now", DATA.stalled_deals.length ? `${DATA.stalled_deals.length} open deals worth ${money(stuckTotal())} are past their stage's stall line. The list is under Stuck right now.` : "No open deal is past its stall line."));
+    out.push(card("", "The fix", fixLine(HEAD)));
+    tiles("#tiles", [["Open deals", num(O.open_deals)], ["Stuck deals", num(DATA.stalled_deals.length)], ["Stuck value", money(stuckTotal())], ["Slowest stage", F.slowest_stage ? esc(F.slowest_stage) : "n/a"]]);
+  } else if (role === "revops"){
+    const P = DATA.trust.problems;
+    const R = DATA.trust.reasons || [];
+    out.push(card(DATA.trust.verdict === "usable" ? "key" : "warn", "Verdict", `<b>${esc(DATA.trust.verdict)}</b>` +
+      (R.length ? `, because of ${R.map(esc).join("; ")}.` : ".") +
+      (P.length ? ` First fix: ${esc(P[0].check.toLowerCase())} (${num(P[0].count)}). ${esc(P[0].fix)}.` : " No data problems found.")));
+    out.push(card("", "Confirm", `Stage order: ${DATA.stage_mapping.order.map(esc).join(" &gt; ")}. ${esc(DATA.stage_mapping.order_source)}. Won: ${DATA.stage_mapping.won.map(esc).join(", ")}. Lost: ${DATA.stage_mapping.lost.map(esc).join(", ")}.`));
+    tiles("#tiles", [["Deals with history", num(C.deals_with_history)], ["Closed, no history", num(C.closed_without_history)], ["Out of order", num(DATA.data_quality.deals_out_of_order)], ["Skipped stages", num(DATA.data_quality.skipped_stage_entries)]]);
+  } else {
+    const first = ST[0], ff = fixOf(first.stage), E = F.early_losses;
+    if (E && E.before_stage) out.push(card("key","Early losses", `${pct(E.share)} of lost deals die before <b>${esc(E.before_stage)}</b>: ${num(E.deals)} of ${num(C.lost)}.`));
+    out.push(card("", "First stage", `${rate(first)} of deals that leave <b>${esc(first.stage)}</b> move on to ${esc(first.to)}. ` +
+      (ff && ff.value_per_year ? `Hitting ${targetText(ff)} is worth ${money(ff.value_per_year)} a year. ${ff.evidence === "holds up" ? "That quarter holds up." : "That quarter could be luck."}` : "")));
+    out.push(card("", "Where the money is", fixLine(HEAD)));
+    tiles("#tiles", [["First stage converts", rate(first)], [`Lost before ${E && E.before_stage ? E.before_stage : "midway"}`, pct(E && E.share)], ["Entering a year", num(ff ? ff.deals_per_year : 0)], ["Win rate", pct(O.win_rate)]]);
+  }
+  $("#insights").innerHTML = out.join("");
+}
+document.querySelectorAll(".roles button").forEach(b => b.addEventListener("click", () => renderRole(b.dataset.role)));
+
+// ---------- tooltip ----------
+const tip = $("#tip");
+document.addEventListener("mousemove", e => {
+  const t = e.target.closest("[data-tip]"); if (!t){ tip.style.display = "none"; return; }
+  tip.innerHTML = t.dataset.tip; tip.style.display = "block";
+  const x = Math.min(e.clientX + 14, window.innerWidth - tip.offsetWidth - 8), y = Math.min(e.clientY + 14, window.innerHeight - tip.offsetHeight - 8);
+  tip.style.left = x + "px"; tip.style.top = y + "px";
+});
+
+// ---------- stage by stage ----------
+function drawConversion(){
+  $("#convBars").innerHTML = ST.map(x => {
+    const f = fixOf(x.stage), w = (x.conversion||0)*100, t = f && f.target_rate != null && f.method === "best quarter" ? f.target_rate*100 : null;
+    const lab = rate(x);
+    const inside = w > 18;
+    const tipTxt = esc(`<b>${pair(x)}</b><br>${x.moved_on} moved on, ${x.lost_here} lost here, ${x.open_here} still open<br>` + (t != null ? `Best quarter: ${pct(f.target_rate)} in ${f.best_quarter}` : ""));
+    return `<div class="rb${x.stage===LOWEST ? " flag" : ""}" data-tip="${tipTxt}"><div class="nm">${esc(x.stage)} to ${esc(x.to)}${x.stage===LOWEST ? ' <span class="pill lift">Lowest</span>' : ""}<small>${num(x.moved_on + x.lost_here)} left this stage</small></div>` +
+      `<div class="track"><div class="bar solid" style="width:${w}%"></div>` +
+      `<div class="bar-in" style="${inside ? `left:8px;color:#fff` : `left:calc(${w}% + 6px)`}">${lab}</div>` +
+      (t != null ? `<div class="mark target" style="left:calc(${t}% - 1px)"></div>` : "") + `</div>` +
+      `<div class="side">${num(x.lost_here)} lost here${x.open_here ? `<br>${num(x.open_here)} still open` : ""}</div></div>`;
+  }).join("");
+  $("#convTable").innerHTML = `<tr><th>Stage</th><th>Reached</th><th>Moved on</th><th>Lost here</th><th>Still open</th><th>Skipped through</th><th>Moves on</th></tr>` +
+    ST.map(x => `<tr><td>${esc(pair(x))}</td><td>${num(x.reached)}</td><td>${num(x.moved_on)}</td><td>${num(x.lost_here)}</td><td>${num(x.open_here)}</td><td>${num(x.skipped_through)}</td><td>${rate(x)}</td></tr>`).join("");
+}
+
+// ---------- where lost deals die ----------
+let LM = "deals";
+function drawLosses(){
+  const val = x => LM === "deals" ? x.losses.deals : LM === "value" ? (x.losses.lost_value||0) : (x.losses.median_lost_deal||0);
+  const fmt = x => LM === "deals" ? `${num(x.losses.deals)} (${pct(x.losses.share_of_losses)})` : LM === "value" ? money(x.losses.lost_value) : (x.losses.with_amount ? money(x.losses.median_lost_deal) : "n/a");
+  const max = Math.max(1, ...ST.map(val));
+  const top = ST.reduce((a,b) => val(b) > val(a) ? b : a, ST[0]);
+  $("#lossBars").innerHTML = ST.map(x => { const w = val(x)/max*100;
+    return `<div class="rb${x===top ? " flag" : ""}" data-tip="${esc(`<b>${x.stage}</b><br>${x.losses.deals} lost deals, ${x.losses.with_amount} with an amount<br>Lost value: ${money(x.losses.lost_value)}<br>Typical lost deal: ${x.losses.with_amount ? money(x.losses.median_lost_deal) : "n/a"}`)}">` +
+      `<div class="nm">${esc(x.stage)}${x===top ? ' <span class="pill lift">Most</span>' : ""}</div>` +
+      `<div class="track"><div class="bar solid" style="width:${w}%"></div></div><div class="side"><b>${fmt(x)}</b></div></div>`; }).join("");
+  const noAmt = ST.reduce((t,x)=>t + x.losses.deals - x.losses.with_amount, 0);
+  $("#lossNote").textContent = LM === "deals" ? `${num(C.lost)} lost deals in all.` :
+    (noAmt ? `${num(noAmt)} lost deals have no amount and add nothing to value. Most sit in the early stages.` : "Every lost deal has an amount.");
+}
+document.querySelectorAll("[data-lm]").forEach(b => b.addEventListener("click", () => {
+  LM = b.dataset.lm; document.querySelectorAll("[data-lm]").forEach(x => x.setAttribute("aria-pressed", x===b)); drawLosses(); }));
+
+// ---------- time in stage ----------
+function drawTime(){
+  const max = Math.max(1, ...ST.map(x => Math.max(x.days.p90||0, x.stall ? x.stall.line_days : 0)));
+  const sp = F.biggest_stall_penalty;
+  $("#timeBars").innerHTML = ST.map(x => { const m = (x.days.median||0)/max*100, p = (x.days.p75||0)/max*100;
+    const line = x.stall ? x.stall.line_days/max*100 : null;
+    return `<div class="rb${x.stage===sp ? " flag" : ""}" data-tip="${esc(`<b>${x.stage}</b><br>Median: ${days(x.days.median)}<br>Slowest quarter from: ${days(x.days.p75)}<br>Slowest tenth from: ${days(x.days.p90)}<br>Stall line: ${x.stall ? days(x.stall.line_days) : "n/a"}<br>Timed deals: ${x.days.deals_timed}`)}">` +
+      `<div class="nm">${esc(x.stage)}${x.stage===sp ? ' <span class="pill lift">Costly wait</span>' : ""}<small>${num(x.days.deals_timed)} deals timed</small></div>` +
+      `<div class="track"><div class="bar hatch" style="width:${p}%"></div><div class="bar solid" style="width:${m}%"></div>` +
+      (line != null ? `<div class="mark dash" style="left:${line}%"></div>` : "") + `</div>` +
+      `<div class="side"><b>${days(x.days.median)}</b>${x.stall ? `<br>stalls after ${days(x.stall.line_days)}` : ""}</div></div>`; }).join("");
+  const wr = g => g.small_sample ? `${g.won} of ${g.deals}` : pct(g.win_rate);
+  $("#stallTable").innerHTML = `<tr><th>Stage</th><th>Stall line</th><th>Left in time</th><th>Win rate</th><th>Sat past it</th><th>Win rate</th></tr>` +
+    ST.filter(x => x.stall).map(x => `<tr class="${x.stage===sp ? "top" : ""}"><td>${esc(x.stage)}${x.stage===sp ? " (costliest wait)" : ""}</td><td>${days(x.stall.line_days)}</td>` +
+      `<td>${num(x.stall.under.deals)}</td><td>${wr(x.stall.under)}</td><td>${num(x.stall.over.deals)}</td><td>${wr(x.stall.over)}</td></tr>`).join("");
+}
+
+// ---------- the fix ----------
+function drawFixes(){
+  $("#fixTable").innerHTML = `<tr><th>Rank</th><th style="text-align:left">Stage</th><th>Now</th><th>Target</th><th style="text-align:left">Evidence</th><th>Deals a year</th><th>Extra wins a year</th><th>Closed revenue a year</th></tr>` +
+    FX.map(f => `<tr class="${HEAD && f.stage===HEAD.stage ? "top" : ""}"><td>${f.rank}</td><td style="text-align:left">${esc(f.stage)} to ${esc(f.to)}</td><td>${pct(f.current_rate)}</td>` +
+      `<td>${f.target_rate != null ? targetText(f) : "n/a"}</td><td style="text-align:left">${evidence(f)}</td><td>${num(f.deals_per_year)}</td>` +
+      `<td>${f.extra_wins_per_year != null ? f.extra_wins_per_year.toFixed(1) : "n/a"}</td><td>${f.value_per_year != null ? money(f.value_per_year) : "n/a"}</td></tr>`).join("");
+  $("#pStage").innerHTML = FX.filter(f => f.current_rate != null).map(f => `<option value="${esc(f.stage)}">${esc(f.stage)} to ${esc(f.to)}</option>`).join("");
+  $("#pStage").value = HEAD ? HEAD.stage : FX[0].stage;
+  setPlanner(true);
+}
+function setPlanner(reset){
+  const f = fixOf($("#pStage").value), r = $("#pRate");
+  r.min = (f.current_rate*100).toFixed(1);
+  if (reset) r.value = ((f.target_rate != null ? f.target_rate : f.current_rate)*100).toFixed(1);
+  planner();
+}
+function planner(){
+  const f = fixOf($("#pStage").value), t = +$("#pRate").value/100;
+  $("#pRateV").textContent = pct(t, 1);
+  const lift = Math.max(0, t - f.current_rate), moved = f.deals_per_year*lift, wins = moved*f.downstream_win_rate, val = wins*f.avg_won_deal;
+  $("#pOut").innerHTML = lift > 0 ? `${esc(f.stage)} to ${esc(f.to)} from ${pct(f.current_rate, 1)} to ${pct(t, 1)}: about ${Math.round(moved)} more deals reach ${esc(f.to)}, ${wins.toFixed(1)} more wins, <b>${money(val)}</b> in closed revenue a year.` :
+    `Move the target above today's ${pct(f.current_rate)} to see what a fix is worth.`;
+  $("#pHow").textContent = `${num(f.deals_per_year)} deals passed through ${f.stage} in the last year. ${pct(f.downstream_win_rate)} of deals that move on end up won. Average won deal: ${money(f.avg_won_deal)}. A projection at today's pace, not a forecast.`;
+  drawQuarters(f, t);
+}
+$("#pStage").addEventListener("change", () => setPlanner(true));
+$("#pRate").addEventListener("input", planner);
+$("#pReset").addEventListener("click", () => setPlanner(true));
+
+function drawQuarters(f, t){
+  const x = stageOf(f.stage), Q = x.quarters.filter(q => q.rate != null);
+  const W = 900, H = 260, L = 44, R = 12, T = 26, B = 40, pw = W-L-R, ph = H-T-B;
+  const bw = Math.min(56, pw/Math.max(1,Q.length) - 8);
+  const y = v => T + ph*(1 - v);
+  let s = `<g class="grid">${[0,.25,.5,.75,1].map(v=>`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/>`).join("")}</g>`;
+  s += [0,.25,.5,.75,1].map(v=>`<text x="${L-6}" y="${y(v)+4}" text-anchor="end" font-size="11">${pct(v)}</text>`).join("");
+  Q.forEach((q,i) => { const cx = L + (i+0.5)*pw/Q.length, top = y(q.rate), best = q.quarter === f.best_quarter;
+    const fill = best ? "var(--amber)" : q.counts ? "var(--blue)" : "var(--hollow)";
+    const stroke = q.counts || best ? "none" : "var(--ink)";
+    const tipTxt = esc(`<b>${q.quarter}</b><br>${q.moved_on} of ${q.resolved} moved on (${pct(q.rate)})<br>${q.entered} entered${q.counts ? "" : "<br>Not counted: " + (q.complete ? "too few deals or too many still open" : "quarter not finished")}`);
+    s += `<rect class="qcol" data-tip="${tipTxt}" x="${cx-bw/2}" y="${top}" width="${bw}" height="${Math.max(0, y(0)-top)}" rx="3" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`;
+    s += `<text x="${cx}" y="${H-B+16}" text-anchor="middle" font-size="11">${q.quarter.replace(" ", " ")}</text>`;
+    if (best) s += `<text x="${cx}" y="${top-6}" text-anchor="middle" font-size="12" font-weight="700">Best ${pct(q.rate)}</text>`; });
+  s += `<line x1="${L}" x2="${W-R}" y1="${y(f.current_rate)}" y2="${y(f.current_rate)}" class="qline"/>`;
+  $("#qChart").innerHTML = s;
+  $("#allQ").textContent = `All quarters: ${pct(f.current_rate)}`;
+}
+
+// ---------- stuck ----------
+function drawStuck(){
+  const q = ($("#stuckSearch").value||"").toLowerCase(), S = DATA.stalled_deals;
+  $("#stuckCap").textContent = S.length ? `${S.length} open deals, worth ${money(stuckTotal())}, have sat in their stage longer than its stall line. Biggest first.` : "No open deal is past its stage's stall line.";
+  const rows = S.filter(d => !q || String(d.deal).toLowerCase().includes(q) || String(d.id).toLowerCase().includes(q)).slice(0, 200);
+  $("#stuckTable").innerHTML = `<tr><th>Deal</th><th>Stage</th><th>Days in stage</th><th>Stall line</th><th>Amount</th></tr>` +
+    rows.map(d => `<tr><td>${esc(d.deal)}</td><td>${esc(d.stage)}</td><td>${d.days_in_stage}</td><td>${days(d.stall_line_days)}</td><td>${d.amount ? money(d.amount) : "n/a"}</td></tr>`).join("");
+}
+$("#stuckSearch").addEventListener("input", drawStuck);
+
+// ---------- trust ----------
+function drawTrust(){
+  const D = DATA.data_quality, T = DATA.trust;
+  tiles("#trustTiles", [["Verdict", esc(T.verdict)], ["Deals read", num(C.deals)], ["With stage history", num(C.deals_with_history)], ["Problems found", num(T.problems.length)]]);
+  const f = [];
+  f.push(card(T.verdict === "usable" ? "key" : "warn", "Verdict", T.verdict === "usable" ? "The stage history holds up. Read the stages as they are." :
+    T.verdict === "not usable" ? "Too many deals have no stage history or dates out of order. Fix the data first." : "Usable, with the problems below. Fix them before the next export."));
+  f.push(card("", "Stage order", `${DATA.stage_mapping.order.map(esc).join(" &gt; ")}. ${esc(DATA.stage_mapping.order_source)}. Won: ${DATA.stage_mapping.won.map(esc).join(", ")}. Lost: ${DATA.stage_mapping.lost.map(esc).join(", ")}.`));
+  const op = Object.entries(D.other_pipelines||{});
+  if (op.length) f.push(card("", "Left out", `Deals from other pipelines: ${op.map(([k,v]) => `${esc(k)} (${v})`).join(", ")}. This read covers ${esc(D.pipeline)} only.`));
+  $("#trustFlags").innerHTML = f.join("");
+  $("#dqTable").innerHTML = `<tr><th>Check</th><th>Count</th><th style="text-align:left">What the skill did</th></tr>` +
+    DATA.checks.map(c => `<tr><td>${esc(c.check)}</td><td>${num(c.count)}</td><td style="text-align:left">${c.count ? esc(c.what_the_skill_did) : ""}</td></tr>`).join("");
+  const P = T.problems || [];
+  $("#probTable").innerHTML = P.length ? `<tr><th>Fix, in this order</th><th>Count</th><th style="text-align:left">How</th><th style="text-align:left">Example deals</th></tr>` +
+    P.map(x => `<tr><td>${esc(x.check)}</td><td>${num(x.count)}</td><td style="text-align:left">${esc(x.fix)}</td><td style="text-align:left">${x.examples.map(esc).join(", ")}</td></tr>`).join("") : "";
+}
+
+drawConversion(); drawLosses(); drawTime(); drawFixes(); drawStuck(); drawTrust();
+renderRole(QUESTIONS[START_ROLE] ? START_ROLE : "ceo");
+</script>
+</body>
+</html>
