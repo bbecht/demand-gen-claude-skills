@@ -1,0 +1,71 @@
+{
+ "campaign": {
+  "name": "H1 pipeline push",
+  "id": "VANT-H1",
+  "objective": "pipeline"
+ },
+ "target": {
+  "pipeline": "$500,000",
+  "due_date": "April 30, 2027"
+ },
+ "audience": {
+  "accounts": "US health systems with 5 or more hospitals, on Epic",
+  "roles": [
+   "CIO",
+   "Chief Data Officer",
+   "VP Analytics"
+  ],
+  "tag": "hs-cdo"
+ },
+ "offer": {
+  "offer": "The Epic Data Readiness Assessment, a 2-week review that scores the health system's Epic data for AI use.",
+  "cta": "Request the assessment",
+  "asset": true
+ },
+ "message": {
+  "claim": "Vantacor turns Epic Clarity data into an AI-ready model in 30 days, where a build takes health systems 9 months.",
+  "proof": "Three health systems went live in under 30 days."
+ },
+ "channels": [
+  {
+   "name": "LinkedIn ads",
+   "type": "paid_social",
+   "platform": "linkedin",
+   "budget": "$30,000",
+   "cost_per_lead": "$150",
+   "reach": "Title targeting on CIO, Chief Data Officer and VP Analytics at health systems on Epic"
+  },
+  {
+   "name": "Partner webinar",
+   "type": "webinar",
+   "platform": "epic-partner",
+   "budget": "$10,000",
+   "cost_per_lead": "$100",
+   "reach": "Promoted to the Epic consulting partner's client list"
+  }
+ ],
+ "budget_total": "$40,000",
+ "launch": {
+  "date": "February 1, 2027",
+  "run": "6 weeks"
+ },
+ "funnel": {
+  "avg_deal": "$50,000",
+  "lead_to_opp_rate": "5%",
+  "lead_to_opp_days": "10 weeks"
+ },
+ "sales": {
+  "reps": "1",
+  "opps_per_rep_month": "12"
+ },
+ "revenue": {},
+ "owners": {},
+ "tracking": "Salesforce campaign VANT-H1 on every lead, primary campaign source on the opportunity.",
+ "risks": [
+  {
+   "risk": "The webinar partner controls the invitation list.",
+   "owner": "Eli Grant"
+  }
+ ],
+ "assumptions": []
+}

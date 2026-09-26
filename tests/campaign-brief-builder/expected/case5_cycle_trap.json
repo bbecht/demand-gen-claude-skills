@@ -1,0 +1,303 @@
+{
+ "funnel": {
+  "target": 500000.0,
+  "avg_deal": 50000.0,
+  "rate": 0.05,
+  "budget": 40000.0,
+  "opps_needed": 10,
+  "leads_needed": 200,
+  "planned_leads": 300,
+  "planned_opps": 15.0,
+  "planned_pipeline": 750000.0,
+  "gap": 0.0,
+  "blended_cpl": 133.333333,
+  "cpl_ceiling": 200.0,
+  "extra_leads": 0,
+  "extra_budget": 0,
+  "reaches_target": true
+ },
+ "timing": {
+  "launch": "2027-02-01",
+  "end": "2027-03-14",
+  "due": "2027-04-30",
+  "weeks": 6,
+  "lag_days": 70.0,
+  "weeks_in_time": 2,
+  "weeks_late": 4,
+  "pipeline_in_time": 250000.0,
+  "opps_in_time": 5.0,
+  "first_land": "2027-04-18",
+  "last_land": "2027-05-23",
+  "shift_weeks": 4,
+  "meets_target_in_time": false
+ },
+ "landings": [
+  {
+   "lead_week": 1,
+   "leads": 50,
+   "lands_on": "2027-04-18",
+   "opps": 2.5,
+   "pipeline_cum": 125000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 2,
+   "leads": 50,
+   "lands_on": "2027-04-25",
+   "opps": 2.5,
+   "pipeline_cum": 250000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 3,
+   "leads": 50,
+   "lands_on": "2027-05-02",
+   "opps": 2.5,
+   "pipeline_cum": 375000.0,
+   "in_time": false
+  },
+  {
+   "lead_week": 4,
+   "leads": 50,
+   "lands_on": "2027-05-09",
+   "opps": 2.5,
+   "pipeline_cum": 500000.0,
+   "in_time": false
+  },
+  {
+   "lead_week": 5,
+   "leads": 50,
+   "lands_on": "2027-05-16",
+   "opps": 2.5,
+   "pipeline_cum": 625000.0,
+   "in_time": false
+  },
+  {
+   "lead_week": 6,
+   "leads": 50,
+   "lands_on": "2027-05-23",
+   "opps": 2.5,
+   "pipeline_cum": 750000.0,
+   "in_time": false
+  }
+ ],
+ "checks": [
+  {
+   "n": 1,
+   "name": "Target reachable on budget",
+   "by": "script",
+   "state": "pass",
+   "reason": "The plan buys 300 leads, 15 opportunities and $750K in pipeline against a $500K target.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 2,
+   "name": "Opportunities land before the due date",
+   "by": "script",
+   "state": "fail",
+   "reason": "Leads from the last 4 weeks land after Apr 30, 2027. Only $250K of pipeline lands in time against a $500K target.",
+   "fix": "Launch 4 weeks earlier, or move the due date to May 23, 2027.",
+   "not_run": false
+  },
+  {
+   "n": 3,
+   "name": "Every channel can buy at least one opportunity",
+   "by": "script",
+   "state": "pass",
+   "reason": "Every channel buys at least one opportunity in the window.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 4,
+   "name": "Sales capacity",
+   "by": "script",
+   "state": "pass",
+   "reason": "The plan sends 10.8 opportunities a month. The team can work 12.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 5,
+   "name": "Audience specific enough to target",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Names health systems, a size floor, the country, the EHR and three titles.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 6,
+   "name": "Offer fits the audience",
+   "by": "claude",
+   "state": "pass",
+   "reason": "AI readiness of Epic data is a problem the CDO and VP Analytics own. The CTA is one action.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 7,
+   "name": "One provable message",
+   "by": "claude",
+   "state": "pass",
+   "reason": "One claim, 30 days against 9 months, with three live health systems as proof. With a competitor's name in it, the claim is false.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 8,
+   "name": "Channels reach the named buying roles",
+   "by": "claude",
+   "state": "pass",
+   "reason": "LinkedIn targets the titles at Epic health systems, and the webinar reaches the partner's client list.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 9,
+   "name": "Tracking to pipeline defined",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Names the Salesforce campaign and primary campaign source.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 10,
+   "name": "Risks named",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Names the partner's control of the list as a risk, with an owner.",
+   "fix": "",
+   "not_run": false
+  }
+ ],
+ "verdict": "Not ready",
+ "strategy_lines": [
+  {
+   "id": "T1",
+   "label": "Pipeline target",
+   "text": "$500,000 in pipeline by Apr 30, 2027",
+   "covered": true
+  },
+  {
+   "id": "A1",
+   "label": "Audience",
+   "text": "US health systems with 5 or more hospitals, on Epic. Roles: CIO, Chief Data Officer, VP Analytics.",
+   "covered": true
+  },
+  {
+   "id": "O1",
+   "label": "Offer",
+   "text": "The Epic Data Readiness Assessment, a 2-week review that scores the health system's Epic data for AI use. CTA: Request the assessment.",
+   "covered": true
+  },
+  {
+   "id": "M1",
+   "label": "Message",
+   "text": "Vantacor turns Epic Clarity data into an AI-ready model in 30 days, where a build takes health systems 9 months. Proof: Three health systems went live in under 30 days.",
+   "covered": true
+  },
+  {
+   "id": "C1",
+   "label": "Channel: LinkedIn ads",
+   "covered": true,
+   "text": "LinkedIn ads (paid social), $30,000 at $150 a lead"
+  },
+  {
+   "id": "C2",
+   "label": "Channel: Partner webinar",
+   "covered": true,
+   "text": "Partner webinar (webinar), $10,000 at $100 a lead"
+  },
+  {
+   "id": "K1",
+   "label": "Tracking",
+   "covered": true,
+   "text": "Salesforce campaign VANT-H1 on every lead, primary campaign source on the opportunity."
+  },
+  {
+   "id": "B1",
+   "label": "Budget",
+   "text": "$40,000 total",
+   "covered": false
+  },
+  {
+   "id": "L1",
+   "label": "Launch",
+   "text": "Feb 1, 2027 for 6 weeks, to Mar 14, 2027",
+   "covered": false
+  },
+  {
+   "id": "F1",
+   "label": "Funnel",
+   "covered": false,
+   "text": "Average deal $50,000, 5% of leads become opportunities in 70 days"
+  }
+ ],
+ "channels": [
+  {
+   "id": "C1",
+   "name": "LinkedIn ads",
+   "type": "paid_social",
+   "platform": "linkedin",
+   "reach": "Title targeting on CIO, Chief Data Officer and VP Analytics at health systems on Epic",
+   "budget": 30000.0,
+   "cpl": 150.0,
+   "leads": 200,
+   "opps": 10.0,
+   "pipeline": 500000.0,
+   "weekly_spend": 5000.0,
+   "min_budget_one_opp": 3000.0,
+   "cpl_assumed": false
+  },
+  {
+   "id": "C2",
+   "name": "Partner webinar",
+   "type": "webinar",
+   "platform": "epic-partner",
+   "reach": "Promoted to the Epic consulting partner's client list",
+   "budget": 10000.0,
+   "cpl": 100.0,
+   "leads": 100,
+   "opps": 5.0,
+   "pipeline": 250000.0,
+   "weekly_spend": 1666.666667,
+   "min_budget_one_opp": 2000.0,
+   "cpl_assumed": false
+  }
+ ],
+ "functions": {
+  "ads": {
+   "active": true,
+   "because": "Called for by C1."
+  },
+  "pr": {
+   "active": false,
+   "because": "Not in this campaign. Channels C1 to C2 include no channel that uses PR."
+  },
+  "content": {
+   "active": true,
+   "because": "Called for by O1, C2."
+  },
+  "operations": {
+   "active": true,
+   "because": "Every campaign needs tracking and follow-up."
+  },
+  "sales": {
+   "active": true,
+   "because": "Every campaign needs tracking and follow-up."
+  },
+  "creative": {
+   "active": true,
+   "because": "Called for by C1, C2."
+  }
+ },
+ "notes": [
+  "'10 weeks' read as 70 days"
+ ],
+ "warnings": [
+  "The plan rests on 15 expected opportunities, fewer than 20. One deal swings the result, so read counts, not rates."
+ ]
+}

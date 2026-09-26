@@ -1,0 +1,79 @@
+{
+ "campaign": {
+  "name": "Q2 freight push",
+  "id": "",
+  "objective": "pipeline"
+ },
+ "target": {
+  "pipeline": "$1.2 million",
+  "due_date": "07/31/2027"
+ },
+ "audience": {
+  "accounts": "Mid-size food and beverage manufacturers (500-5,000 employees). Warehouse-heavy.",
+  "roles": [
+   "Ops director",
+   "Logistics director",
+   "VP supply chain"
+  ],
+  "tag": "fb-ops"
+ },
+ "offer": {
+  "offer": "Free freight spend audit, we send back a savings map in 5 business days",
+  "cta": "Request the audit",
+  "asset": true
+ },
+ "message": {
+  "claim": "RouteHaven cuts LTL freight spend 12% in the first 90 days for food and beverage shippers",
+  "proof": ""
+ },
+ "channels": [
+  {
+   "name": "LinkedIn ads",
+   "type": "paid_social",
+   "platform": "linkedin",
+   "budget": "$40k",
+   "cost_per_lead": "$220",
+   "reach": "Targeting ops/logistics directors + VP supply chain at F&B manufacturers"
+  },
+  {
+   "name": "Partner webinar",
+   "type": "webinar",
+   "platform": "3pl-partner",
+   "budget": "20,000",
+   "cost_per_lead": "$95",
+   "reach": "Partner promotes to their shipper list"
+  },
+  {
+   "name": "Trade show",
+   "type": "event",
+   "platform": "ift",
+   "budget": "",
+   "cost_per_lead": "$500",
+   "reach": "Booth traffic is F&B ops people"
+  },
+  {
+   "name": "Direct mail",
+   "type": "direct_mail",
+   "platform": "mail",
+   "budget": "$12,500",
+   "cost_per_lead": "TBD",
+   "reach": "Goes to named directors on the account list"
+  }
+ ],
+ "budget_total": "$60K",
+ "launch": {
+  "date": "04/05/2027",
+  "run": "3 months"
+ },
+ "funnel": {
+  "avg_deal": "35k",
+  "lead_to_opp_rate": "8",
+  "lead_to_opp_days": "2 weeks"
+ },
+ "sales": {},
+ "revenue": {},
+ "owners": {},
+ "tracking": "We tag everything with UTMs",
+ "risks": [],
+ "assumptions": []
+}

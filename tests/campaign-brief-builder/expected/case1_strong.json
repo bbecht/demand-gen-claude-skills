@@ -1,0 +1,389 @@
+{
+ "funnel": {
+  "target": 900000.0,
+  "avg_deal": 45000.0,
+  "rate": 0.1,
+  "budget": 75000.0,
+  "opps_needed": 20,
+  "leads_needed": 200,
+  "planned_leads": 410,
+  "planned_opps": 41.0,
+  "planned_pipeline": 1845000.0,
+  "gap": 0.0,
+  "blended_cpl": 182.926829,
+  "cpl_ceiling": 375.0,
+  "extra_leads": 0,
+  "extra_budget": 0,
+  "reaches_target": true
+ },
+ "timing": {
+  "launch": "2027-03-01",
+  "end": "2027-05-23",
+  "due": "2027-06-30",
+  "weeks": 12,
+  "lag_days": 14.0,
+  "weeks_in_time": 12,
+  "weeks_late": 0,
+  "pipeline_in_time": 1845000.0,
+  "opps_in_time": 41.0,
+  "first_land": "2027-03-21",
+  "last_land": "2027-06-06",
+  "shift_weeks": 0,
+  "meets_target_in_time": true
+ },
+ "landings": [
+  {
+   "lead_week": 1,
+   "leads": 35,
+   "lands_on": "2027-03-21",
+   "opps": 3.5,
+   "pipeline_cum": 157500.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 2,
+   "leads": 35,
+   "lands_on": "2027-03-28",
+   "opps": 3.5,
+   "pipeline_cum": 315000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 3,
+   "leads": 34,
+   "lands_on": "2027-04-04",
+   "opps": 3.4,
+   "pipeline_cum": 468000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 4,
+   "leads": 34,
+   "lands_on": "2027-04-11",
+   "opps": 3.4,
+   "pipeline_cum": 621000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 5,
+   "leads": 34,
+   "lands_on": "2027-04-18",
+   "opps": 3.4,
+   "pipeline_cum": 774000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 6,
+   "leads": 34,
+   "lands_on": "2027-04-25",
+   "opps": 3.4,
+   "pipeline_cum": 927000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 7,
+   "leads": 34,
+   "lands_on": "2027-05-02",
+   "opps": 3.4,
+   "pipeline_cum": 1080000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 8,
+   "leads": 34,
+   "lands_on": "2027-05-09",
+   "opps": 3.4,
+   "pipeline_cum": 1233000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 9,
+   "leads": 34,
+   "lands_on": "2027-05-16",
+   "opps": 3.4,
+   "pipeline_cum": 1386000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 10,
+   "leads": 34,
+   "lands_on": "2027-05-23",
+   "opps": 3.4,
+   "pipeline_cum": 1539000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 11,
+   "leads": 34,
+   "lands_on": "2027-05-30",
+   "opps": 3.4,
+   "pipeline_cum": 1692000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 12,
+   "leads": 34,
+   "lands_on": "2027-06-06",
+   "opps": 3.4,
+   "pipeline_cum": 1845000.0,
+   "in_time": true
+  }
+ ],
+ "checks": [
+  {
+   "n": 1,
+   "name": "Target reachable on budget",
+   "by": "script",
+   "state": "pass",
+   "reason": "The plan buys 410 leads, 41 opportunities and $1.85M in pipeline against a $900K target.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 2,
+   "name": "Opportunities land before the due date",
+   "by": "script",
+   "state": "pass",
+   "reason": "Every week's leads become opportunities by Jun 30, 2027. The last land on Jun 6, 2027.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 3,
+   "name": "Every channel can buy at least one opportunity",
+   "by": "script",
+   "state": "pass",
+   "reason": "Every channel buys at least one opportunity in the window.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 4,
+   "name": "Sales capacity",
+   "by": "script",
+   "state": "pass",
+   "reason": "The plan sends 14.8 opportunities a month. The team can work 20.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 5,
+   "name": "Audience specific enough to target",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Names bank type, an asset band, two regions, the core systems and three titles. A media buyer can build the list without a question.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 6,
+   "name": "Offer fits the audience",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Exam readiness is a problem the CISO and Chief Risk Officer own. The CTA is one action.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 7,
+   "name": "One provable message",
+   "by": "claude",
+   "state": "pass",
+   "reason": "One claim tied to the FFIEC handbook, proven by 14 banks with zero detection findings. With a competitor's name in it, the claim is false.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 8,
+   "name": "Channels reach the named buying roles",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Every channel names how it reaches the roles: title targeting, association invitations, a house list of bank security leaders, and trade press these roles read.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 9,
+   "name": "Tracking to pipeline defined",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Names the Salesforce campaign and the first-touch rule inside 60 days.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 10,
+   "name": "Risks named",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Names the association partners as a point of failure, with an owner.",
+   "fix": "",
+   "not_run": false
+  }
+ ],
+ "verdict": "Ready",
+ "strategy_lines": [
+  {
+   "id": "T1",
+   "label": "Pipeline target",
+   "text": "$900,000 in pipeline by Jun 30, 2027",
+   "covered": true
+  },
+  {
+   "id": "A1",
+   "label": "Audience",
+   "text": "US community and regional banks with $1B to $10B in assets, in the Mid-Atlantic and Midwest, running Jack Henry or Fiserv cores. Roles: CISO, CIO, Chief Risk Officer.",
+   "covered": true
+  },
+  {
+   "id": "O1",
+   "label": "Offer",
+   "text": "The Examiner Readiness Review. A 45-minute session that maps the bank's detection coverage to the FFIEC examination handbook and hands back the three gaps an examiner will flag first. CTA: Book the review.",
+   "covered": true
+  },
+  {
+   "id": "M1",
+   "label": "Message",
+   "text": "Halvern is the only managed detection service built on the FFIEC handbook, so every alert maps to an exam finding before the examiner arrives. Proof: 14 banks passed their last exam with zero detection findings on Halvern.",
+   "covered": true
+  },
+  {
+   "id": "C1",
+   "label": "Channel: LinkedIn ads",
+   "covered": true,
+   "text": "LinkedIn ads (paid social), $36,000 at $180 a lead"
+  },
+  {
+   "id": "C2",
+   "label": "Channel: CISO roundtables",
+   "covered": true,
+   "text": "CISO roundtables (event), $24,000 at $400 a lead"
+  },
+  {
+   "id": "C3",
+   "label": "Channel: House email",
+   "covered": true,
+   "text": "House email (email), $6,000 at $50 a lead"
+  },
+  {
+   "id": "C4",
+   "label": "Channel: Breach report PR",
+   "covered": true,
+   "text": "Breach report PR (pr), $9,000 at $300 a lead"
+  },
+  {
+   "id": "K1",
+   "label": "Tracking",
+   "covered": true,
+   "text": "Every lead gets the Salesforce campaign HALV-EXAM-27. Opportunities take primary campaign source from the first campaign touch in the 60 days before creation."
+  },
+  {
+   "id": "B1",
+   "label": "Budget",
+   "text": "$75,000 total",
+   "covered": false
+  },
+  {
+   "id": "L1",
+   "label": "Launch",
+   "text": "Mar 1, 2027 for 12 weeks, to May 23, 2027",
+   "covered": false
+  },
+  {
+   "id": "F1",
+   "label": "Funnel",
+   "covered": false,
+   "text": "Average deal $45,000, 10% of leads become opportunities in 14 days"
+  }
+ ],
+ "channels": [
+  {
+   "id": "C1",
+   "name": "LinkedIn ads",
+   "type": "paid_social",
+   "platform": "linkedin",
+   "reach": "Title targeting on CISO, CIO and Chief Risk Officer at banks of $1B to $10B in assets in our regions",
+   "budget": 36000.0,
+   "cpl": 180.0,
+   "leads": 200,
+   "opps": 20.0,
+   "pipeline": 900000.0,
+   "weekly_spend": 3000.0,
+   "min_budget_one_opp": 1800.0,
+   "cpl_assumed": false
+  },
+  {
+   "id": "C2",
+   "name": "CISO roundtables",
+   "type": "event",
+   "platform": "association",
+   "reach": "Invitations go to the named account list through two state banking association partners",
+   "budget": 24000.0,
+   "cpl": 400.0,
+   "leads": 60,
+   "opps": 6.0,
+   "pipeline": 270000.0,
+   "weekly_spend": 2000.0,
+   "min_budget_one_opp": 4000.0,
+   "cpl_assumed": false
+  },
+  {
+   "id": "C3",
+   "name": "House email",
+   "type": "email",
+   "platform": "hubspot",
+   "reach": "House list of bank security leaders",
+   "budget": 6000.0,
+   "cpl": 50.0,
+   "leads": 120,
+   "opps": 12.0,
+   "pipeline": 540000.0,
+   "weekly_spend": 500.0,
+   "min_budget_one_opp": 500.0,
+   "cpl_assumed": false
+  },
+  {
+   "id": "C4",
+   "name": "Breach report PR",
+   "type": "pr",
+   "platform": "press",
+   "reach": "Pitched to American Banker and Banking Dive, whose readers are these roles",
+   "budget": 9000.0,
+   "cpl": 300.0,
+   "leads": 30,
+   "opps": 3.0,
+   "pipeline": 135000.0,
+   "weekly_spend": 750.0,
+   "min_budget_one_opp": 3000.0,
+   "cpl_assumed": false
+  }
+ ],
+ "functions": {
+  "ads": {
+   "active": true,
+   "because": "Called for by C1."
+  },
+  "pr": {
+   "active": true,
+   "because": "Called for by C4."
+  },
+  "content": {
+   "active": true,
+   "because": "Called for by O1, C2, C3."
+  },
+  "operations": {
+   "active": true,
+   "because": "Every campaign needs tracking and follow-up."
+  },
+  "sales": {
+   "active": true,
+   "because": "Every campaign needs tracking and follow-up."
+  },
+  "creative": {
+   "active": true,
+   "because": "Called for by C1, C2, C3."
+  }
+ },
+ "notes": [],
+ "warnings": []
+}

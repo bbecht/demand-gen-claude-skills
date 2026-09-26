@@ -1,0 +1,333 @@
+{
+ "funnel": {
+  "target": 800000.0,
+  "avg_deal": 40000.0,
+  "rate": 0.1,
+  "budget": 30000.0,
+  "opps_needed": 20,
+  "leads_needed": 200,
+  "planned_leads": 180,
+  "planned_opps": 18.0,
+  "planned_pipeline": 720000.0,
+  "gap": 80000.0,
+  "blended_cpl": 166.666667,
+  "cpl_ceiling": 150.0,
+  "extra_leads": 20,
+  "extra_budget": 3334,
+  "reaches_target": false
+ },
+ "timing": {
+  "launch": "2027-03-15",
+  "end": "2027-05-23",
+  "due": "2027-06-30",
+  "weeks": 10,
+  "lag_days": 14.0,
+  "weeks_in_time": 10,
+  "weeks_late": 0,
+  "pipeline_in_time": 720000.0,
+  "opps_in_time": 18.0,
+  "first_land": "2027-04-04",
+  "last_land": "2027-06-06",
+  "shift_weeks": 0,
+  "meets_target_in_time": false
+ },
+ "landings": [
+  {
+   "lead_week": 1,
+   "leads": 18,
+   "lands_on": "2027-04-04",
+   "opps": 1.8,
+   "pipeline_cum": 72000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 2,
+   "leads": 18,
+   "lands_on": "2027-04-11",
+   "opps": 1.8,
+   "pipeline_cum": 144000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 3,
+   "leads": 18,
+   "lands_on": "2027-04-18",
+   "opps": 1.8,
+   "pipeline_cum": 216000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 4,
+   "leads": 18,
+   "lands_on": "2027-04-25",
+   "opps": 1.8,
+   "pipeline_cum": 288000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 5,
+   "leads": 18,
+   "lands_on": "2027-05-02",
+   "opps": 1.8,
+   "pipeline_cum": 360000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 6,
+   "leads": 18,
+   "lands_on": "2027-05-09",
+   "opps": 1.8,
+   "pipeline_cum": 432000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 7,
+   "leads": 18,
+   "lands_on": "2027-05-16",
+   "opps": 1.8,
+   "pipeline_cum": 504000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 8,
+   "leads": 18,
+   "lands_on": "2027-05-23",
+   "opps": 1.8,
+   "pipeline_cum": 576000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 9,
+   "leads": 18,
+   "lands_on": "2027-05-30",
+   "opps": 1.8,
+   "pipeline_cum": 648000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 10,
+   "leads": 18,
+   "lands_on": "2027-06-06",
+   "opps": 1.8,
+   "pipeline_cum": 720000.0,
+   "in_time": true
+  }
+ ],
+ "checks": [
+  {
+   "n": 1,
+   "name": "Target reachable on budget",
+   "by": "script",
+   "state": "fail",
+   "reason": "The plan buys $720K in pipeline against a $800K target, $80K short. It needs 200 leads and buys 180.",
+   "fix": "Add $3,334 at today's blended cost per lead of $167, bring the blended cost per lead down to $150, or cut the target to $720K.",
+   "not_run": false
+  },
+  {
+   "n": 2,
+   "name": "Opportunities land before the due date",
+   "by": "script",
+   "state": "pass",
+   "reason": "Every week's leads become opportunities by Jun 30, 2027. The last land on Jun 6, 2027.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 3,
+   "name": "Every channel can buy at least one opportunity",
+   "by": "script",
+   "state": "pass",
+   "reason": "Every channel buys at least one opportunity in the window.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 4,
+   "name": "Sales capacity",
+   "by": "script",
+   "state": "pass",
+   "reason": "The plan sends 7.8 opportunities a month. The team can work 16.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 5,
+   "name": "Audience specific enough to target",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Names employer size, two industries, the country, self-insured status and three titles.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 6,
+   "name": "Offer fits the audience",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Claims leakage is a cost problem the VP HR and CFO own. The CTA is one action.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 7,
+   "name": "One provable message",
+   "by": "claude",
+   "state": "pass",
+   "reason": "One claim, 3% to 5% of claims spend, backed by 40 audits. With a competitor's name in it, the claim is false.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 8,
+   "name": "Channels reach the named buying roles",
+   "by": "claude",
+   "state": "pass",
+   "reason": "LinkedIn targets the titles and the vendor filters on HR and finance titles at the named industries.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 9,
+   "name": "Tracking to pipeline defined",
+   "by": "claude",
+   "state": "fail",
+   "reason": "The strategy says nothing about how an opportunity gets credited to this campaign.",
+   "fix": "Name the CRM campaign and the rule that credits an opportunity to it.",
+   "not_run": false
+  },
+  {
+   "n": 10,
+   "name": "Risks named",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Names the thin healthcare list as a risk, with an owner.",
+   "fix": "",
+   "not_run": false
+  }
+ ],
+ "verdict": "Not ready",
+ "strategy_lines": [
+  {
+   "id": "T1",
+   "label": "Pipeline target",
+   "text": "$800,000 in pipeline by Jun 30, 2027",
+   "covered": true
+  },
+  {
+   "id": "A1",
+   "label": "Audience",
+   "text": "US employers with 500 to 2,500 employees in healthcare and education, self-insured. Roles: VP HR, Benefits Director, CFO.",
+   "covered": true
+  },
+  {
+   "id": "O1",
+   "label": "Offer",
+   "text": "The Benefits Leakage Report, built from the employer's own claims file, showing dollars lost to ineligible dependents. CTA: Send your file.",
+   "covered": true
+  },
+  {
+   "id": "M1",
+   "label": "Message",
+   "text": "Cresthaven finds 3% to 5% of self-insured claims spend going to ineligible dependents, and removes them before renewal. Proof: 40 audits in 2026 found an average of 4%.",
+   "covered": true
+  },
+  {
+   "id": "C1",
+   "label": "Channel: LinkedIn ads",
+   "covered": true,
+   "text": "LinkedIn ads (paid social), $20,000 at $250 a lead"
+  },
+  {
+   "id": "C2",
+   "label": "Channel: Content syndication",
+   "covered": true,
+   "text": "Content syndication (syndication), $10,000 at $100 a lead"
+  },
+  {
+   "id": "K1",
+   "label": "Tracking",
+   "covered": true,
+   "text": "Not stated in the strategy."
+  },
+  {
+   "id": "B1",
+   "label": "Budget",
+   "text": "$30,000 total",
+   "covered": false
+  },
+  {
+   "id": "L1",
+   "label": "Launch",
+   "text": "Mar 15, 2027 for 10 weeks, to May 23, 2027",
+   "covered": false
+  },
+  {
+   "id": "F1",
+   "label": "Funnel",
+   "covered": false,
+   "text": "Average deal $40,000, 10% of leads become opportunities in 14 days"
+  }
+ ],
+ "channels": [
+  {
+   "id": "C1",
+   "name": "LinkedIn ads",
+   "type": "paid_social",
+   "platform": "linkedin",
+   "reach": "Title targeting VP HR and Benefits Director at self-insured employers of 500 to 2,500",
+   "budget": 20000.0,
+   "cpl": 250.0,
+   "leads": 80,
+   "opps": 8.0,
+   "pipeline": 320000.0,
+   "weekly_spend": 2000.0,
+   "min_budget_one_opp": 2500.0,
+   "cpl_assumed": false
+  },
+  {
+   "id": "C2",
+   "name": "Content syndication",
+   "type": "syndication",
+   "platform": "vendor",
+   "reach": "Vendor filter on HR and finance titles at healthcare and education employers",
+   "budget": 10000.0,
+   "cpl": 100.0,
+   "leads": 100,
+   "opps": 10.0,
+   "pipeline": 400000.0,
+   "weekly_spend": 1000.0,
+   "min_budget_one_opp": 1000.0,
+   "cpl_assumed": false
+  }
+ ],
+ "functions": {
+  "ads": {
+   "active": true,
+   "because": "Called for by C1, C2."
+  },
+  "pr": {
+   "active": false,
+   "because": "Not in this campaign. Channels C1 to C2 include no channel that uses PR."
+  },
+  "content": {
+   "active": true,
+   "because": "Called for by O1, C2."
+  },
+  "operations": {
+   "active": true,
+   "because": "Every campaign needs tracking and follow-up."
+  },
+  "sales": {
+   "active": true,
+   "because": "Every campaign needs tracking and follow-up."
+  },
+  "creative": {
+   "active": true,
+   "because": "Called for by C1."
+  }
+ },
+ "notes": [],
+ "warnings": [
+  "The plan rests on 18 expected opportunities, fewer than 20. One deal swings the result, so read counts, not rates."
+ ]
+}

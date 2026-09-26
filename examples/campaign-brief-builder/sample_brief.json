@@ -1,0 +1,187 @@
+{
+ "approval": {
+  "name": "Ana Ferris",
+  "seat": "VP Marketing",
+  "date": "2026-12-14"
+ },
+ "risk_owners": {
+  "2": "Priya Nand, demand gen"
+ },
+ "requirements": [
+  {
+   "key": "ads-li",
+   "function": "ads",
+   "traces_to": "C1",
+   "channel": "C1",
+   "carries_budget": true,
+   "when": "pre-launch",
+   "depends_on": [
+    "cre-li",
+    "ops-form"
+   ],
+   "requirement": "Build the LinkedIn campaigns: CFO, Controller and AP manager titles at the account list, 200 to 1,000 employees. Manual bidding with a cost cap. LinkedIn Audience Network off. A Lead Gen Form that offers the Month-End Close Benchmark.",
+   "acceptance": "Campaigns sit in draft with titles, company size and the account list applied, Audience Network off, and a test form submission reaches Salesforce."
+  },
+  {
+   "key": "ads-stop",
+   "function": "ads",
+   "traces_to": "T1",
+   "channel": "C1",
+   "when": "ongoing",
+   "requirement": "Stop rule: pause any ad set whose cost per lead runs above $180 for two straight weeks. $180 is the most a lead can cost for the budget to reach the target.",
+   "acceptance": "Every Monday the cost per lead of each ad set is compared to $180, and the ones above it for two weeks are paused."
+  },
+  {
+   "key": "ads-synd",
+   "function": "ads",
+   "traces_to": "C3",
+   "channel": "C3",
+   "carries_budget": true,
+   "when": "pre-launch",
+   "depends_on": [
+    "con-bench"
+   ],
+   "requirement": "Brief the syndication vendor: finance titles at US manufacturers of 200 to 1,000 employees, delivered weekly, with the benchmark PDF as the asset.",
+   "acceptance": "The signed insertion order names the titles, the size band, the region, weekly delivery and the benchmark PDF."
+  },
+  {
+   "key": "con-bench",
+   "function": "content",
+   "traces_to": "O1",
+   "when": "pre-launch",
+   "requirement": "Build the Month-End Close Benchmark: the 20-minute read-out from the buyer's own AP numbers, and a gated PDF version for syndication.",
+   "acceptance": "The read-out runs end to end on a test account's AP numbers, and the PDF is approved."
+  },
+  {
+   "key": "con-web",
+   "function": "content",
+   "traces_to": "C2",
+   "channel": "C2",
+   "carries_budget": true,
+   "when": "pre-launch",
+   "requirement": "Produce the webinar with the NetSuite partner: one customer speaker who closed on day 4, and the benchmark as the follow-up offer.",
+   "acceptance": "The speaker is confirmed in writing, the run of show is approved, and the registration page is live."
+  },
+  {
+   "key": "con-proof",
+   "function": "content",
+   "traces_to": "M1",
+   "when": "pre-launch",
+   "requirement": "Write one proof piece per named manufacturing customer, each showing the close moving to day 4.",
+   "acceptance": "Each customer has approved its piece in writing."
+  },
+  {
+   "key": "con-backup",
+   "function": "content",
+   "traces_to": "C2",
+   "channel": "C2",
+   "when": "pre-launch",
+   "owner": "Tom Ellery, content",
+   "requirement": "Line up a second customer speaker for the webinar, from the three named manufacturing customers, briefed on the same run of show.",
+   "acceptance": "A second speaker has confirmed in writing and has the run of show.",
+   "prevents": "R1"
+  },
+  {
+   "key": "ops-form",
+   "function": "operations",
+   "traces_to": "K1",
+   "when": "pre-launch",
+   "depends_on": [
+    "con-bench"
+   ],
+   "requirement": "Forms on the benchmark page and the LinkedIn Lead Gen Form push every lead to Salesforce with the campaign and its UTMs.",
+   "acceptance": "A test submission from each form shows the campaign and all four UTMs on the Salesforce lead."
+  },
+  {
+   "key": "ops-route",
+   "function": "operations",
+   "traces_to": "A1",
+   "when": "pre-launch",
+   "requirement": "Route benchmark leads from accounts on the list to the account's SDR. Leads from off-list accounts go to a review queue.",
+   "acceptance": "A test lead from a listed account lands with its SDR, and one from an unlisted account lands in the review queue."
+  },
+  {
+   "key": "ops-mql",
+   "function": "operations",
+   "traces_to": "O1",
+   "when": "pre-launch",
+   "requirement": "MQL definition: a lead from a target account, in a named buying role, who books a close review or attends the webinar.",
+   "acceptance": "The definition is live in Salesforce and sales has signed off on it."
+  },
+  {
+   "key": "ops-dash",
+   "function": "operations",
+   "traces_to": "T1",
+   "when": "pre-launch",
+   "requirement": "Dashboard: pipeline and opportunities against the $1.2M target by week, with leads and spend by channel against the weekly pacing in this brief.",
+   "acceptance": "The dashboard shows a test week against the weekly targets, and the sales director can open it."
+  },
+  {
+   "key": "sal-sla",
+   "function": "sales",
+   "traces_to": "O1",
+   "when": "ongoing",
+   "requirement": "Follow-up SLA: an SDR calls every benchmark lead and every close review request within one business day.",
+   "acceptance": "Salesforce shows a logged call within one business day on every campaign lead."
+  },
+  {
+   "key": "sal-seq",
+   "function": "sales",
+   "traces_to": "C4",
+   "channel": "C4",
+   "carries_budget": true,
+   "when": "pre-launch",
+   "requirement": "SDR outbound: sequences to Controllers and AP managers on the account list that open with the benchmark.",
+   "acceptance": "Sequences are loaded in Outreach for every contact on the list and approved by the sales director."
+  },
+  {
+   "key": "sal-talk",
+   "function": "sales",
+   "traces_to": "M1",
+   "when": "pre-launch",
+   "depends_on": [
+    "con-proof"
+   ],
+   "requirement": "Talk track and objection sheet: the day-4 close claim, the customer proof pieces, and answers on NetSuite and Sage Intacct integration.",
+   "acceptance": "Every SDR and AE has run the talk track once in a role play with the sales director."
+  },
+  {
+   "key": "sal-cap",
+   "function": "sales",
+   "traces_to": "T1",
+   "when": "ongoing",
+   "requirement": "Capacity: the three AEs keep room for the opportunity flow in the pacing table through the run.",
+   "acceptance": "Each week, every new campaign opportunity has an AE owner within one business day."
+  },
+  {
+   "key": "cre-li",
+   "function": "creative",
+   "traces_to": "M1",
+   "channel": "C1",
+   "when": "pre-launch",
+   "depends_on": [
+    "con-proof"
+   ],
+   "requirement": "LinkedIn concepts on the day-4 close claim: single image and document ad formats, with two copy variants per concept.",
+   "acceptance": "Final files in every LinkedIn size, approved against the core message."
+  },
+  {
+   "key": "cre-web",
+   "function": "creative",
+   "traces_to": "C2",
+   "channel": "C2",
+   "when": "pre-launch",
+   "requirement": "Webinar promo kit: registration page art, email headers and social tiles.",
+   "acceptance": "The kit is delivered and live on the registration page."
+  },
+  {
+   "key": "cre-test",
+   "function": "creative",
+   "traces_to": "C1",
+   "channel": "C1",
+   "when": "ongoing",
+   "requirement": "Test plan: run the LinkedIn concepts against each other for the first two weeks, then move budget to the concept with the lowest cost per opportunity.",
+   "acceptance": "After two weeks, the winning concept holds the largest share of LinkedIn spend."
+  }
+ ]
+}

@@ -1,0 +1,132 @@
+{
+ "_note": "Written by hand from the rubric and the planted numbers, before the skill ran. Checks 1 to 4 are the script's. Checks 5 to 10 are the answer key for Claude's rubric calls in the blind runs.",
+ "sample": {
+  "checks": {
+   "1": "pass",
+   "2": "flag",
+   "3": "pass",
+   "4": "pass",
+   "5": "pass",
+   "6": "pass",
+   "7": "pass",
+   "8": "pass",
+   "9": "pass",
+   "10": "pass"
+  },
+  "verdict": "Ready with flags"
+ },
+ "case1_strong": {
+  "checks": {
+   "1": "pass",
+   "2": "pass",
+   "3": "pass",
+   "4": "pass",
+   "5": "pass",
+   "6": "pass",
+   "7": "pass",
+   "8": "pass",
+   "9": "pass",
+   "10": "pass"
+  },
+  "verdict": "Ready"
+ },
+ "case2_weak": {
+  "checks": {
+   "1": "fail",
+   "2": "fail",
+   "3": "pass",
+   "4": "flag",
+   "5": "fail",
+   "6": "flag",
+   "7": "fail",
+   "8": "flag",
+   "9": "fail",
+   "10": "flag"
+  },
+  "verdict": "Not ready"
+ },
+ "case3_messy": {
+  "stop": "inputs",
+  "question_fields": [
+   "launch.date",
+   "channels.Trade show.budget",
+   "channels.Direct mail.cost_per_lead",
+   "budget_total"
+  ]
+ },
+ "case3_messy_resolved": {
+  "checks": {
+   "1": "pass",
+   "2": "pass",
+   "3": "pass",
+   "4": "flag",
+   "5": "flag",
+   "6": "pass",
+   "7": "flag",
+   "8": "pass",
+   "9": "flag",
+   "10": "flag"
+  },
+  "verdict": "Ready with flags"
+ },
+ "case4_assumptions": {
+  "checks": {
+   "1": "pass",
+   "2": "pass",
+   "3": "pass",
+   "4": "pass",
+   "5": "pass",
+   "6": "pass",
+   "7": "pass",
+   "8": "pass",
+   "9": "pass",
+   "10": "pass"
+  },
+  "verdict": "Untested"
+ },
+ "case5_cycle_trap": {
+  "checks": {
+   "1": "pass",
+   "2": "fail",
+   "3": "pass",
+   "4": "pass",
+   "5": "pass",
+   "6": "pass",
+   "7": "pass",
+   "8": "pass",
+   "9": "pass",
+   "10": "pass"
+  },
+  "verdict": "Not ready"
+ },
+ "case6_round1": {
+  "checks": {
+   "1": "fail",
+   "2": "pass",
+   "3": "pass",
+   "4": "pass",
+   "5": "pass",
+   "6": "pass",
+   "7": "pass",
+   "8": "pass",
+   "9": "fail",
+   "10": "pass"
+  },
+  "verdict": "Not ready"
+ },
+ "case6_round2": {
+  "checks": {
+   "1": "pass",
+   "2": "pass",
+   "3": "pass",
+   "4": "pass",
+   "5": "pass",
+   "6": "pass",
+   "7": "pass",
+   "8": "pass",
+   "9": "pass",
+   "10": "pass"
+  },
+  "verdict": "Ready"
+ }
+}

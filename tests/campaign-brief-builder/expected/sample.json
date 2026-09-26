@@ -1,0 +1,377 @@
+{
+ "funnel": {
+  "target": 1200000.0,
+  "avg_deal": 30000.0,
+  "rate": 0.08,
+  "budget": 90000.0,
+  "opps_needed": 40,
+  "leads_needed": 500,
+  "planned_leads": 700,
+  "planned_opps": 56.0,
+  "planned_pipeline": 1680000.0,
+  "gap": 0.0,
+  "blended_cpl": 128.571429,
+  "cpl_ceiling": 180.0,
+  "extra_leads": 0,
+  "extra_budget": 0,
+  "reaches_target": true
+ },
+ "timing": {
+  "launch": "2027-01-11",
+  "end": "2027-03-21",
+  "due": "2027-03-31",
+  "weeks": 10,
+  "lag_days": 21.0,
+  "weeks_in_time": 8,
+  "weeks_late": 2,
+  "pipeline_in_time": 1344000.0,
+  "opps_in_time": 44.8,
+  "first_land": "2027-02-07",
+  "last_land": "2027-04-11",
+  "shift_weeks": 2,
+  "meets_target_in_time": true
+ },
+ "landings": [
+  {
+   "lead_week": 1,
+   "leads": 70,
+   "lands_on": "2027-02-07",
+   "opps": 5.6,
+   "pipeline_cum": 168000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 2,
+   "leads": 70,
+   "lands_on": "2027-02-14",
+   "opps": 5.6,
+   "pipeline_cum": 336000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 3,
+   "leads": 70,
+   "lands_on": "2027-02-21",
+   "opps": 5.6,
+   "pipeline_cum": 504000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 4,
+   "leads": 70,
+   "lands_on": "2027-02-28",
+   "opps": 5.6,
+   "pipeline_cum": 672000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 5,
+   "leads": 70,
+   "lands_on": "2027-03-07",
+   "opps": 5.6,
+   "pipeline_cum": 840000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 6,
+   "leads": 70,
+   "lands_on": "2027-03-14",
+   "opps": 5.6,
+   "pipeline_cum": 1008000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 7,
+   "leads": 70,
+   "lands_on": "2027-03-21",
+   "opps": 5.6,
+   "pipeline_cum": 1176000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 8,
+   "leads": 70,
+   "lands_on": "2027-03-28",
+   "opps": 5.6,
+   "pipeline_cum": 1344000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 9,
+   "leads": 70,
+   "lands_on": "2027-04-04",
+   "opps": 5.6,
+   "pipeline_cum": 1512000.0,
+   "in_time": false
+  },
+  {
+   "lead_week": 10,
+   "leads": 70,
+   "lands_on": "2027-04-11",
+   "opps": 5.6,
+   "pipeline_cum": 1680000.0,
+   "in_time": false
+  }
+ ],
+ "checks": [
+  {
+   "n": 1,
+   "name": "Target reachable on budget",
+   "by": "script",
+   "state": "pass",
+   "reason": "The plan buys 700 leads, 56 opportunities and $1.68M in pipeline against a $1.2M target.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 2,
+   "name": "Opportunities land before the due date",
+   "by": "script",
+   "state": "flag",
+   "reason": "Leads from the last 2 weeks land after Mar 31, 2027. The pipeline that lands in time, $1.34M, still meets the target.",
+   "fix": "Launch 2 weeks earlier, or move the due date to Apr 11, 2027.",
+   "not_run": false
+  },
+  {
+   "n": 3,
+   "name": "Every channel can buy at least one opportunity",
+   "by": "script",
+   "state": "pass",
+   "reason": "Every channel buys at least one opportunity in the window.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 4,
+   "name": "Sales capacity",
+   "by": "script",
+   "state": "pass",
+   "reason": "The plan sends 24.3 opportunities a month. The team can work 30.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 5,
+   "name": "Audience specific enough to target",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Names the industry, a 200 to 1,000 employee size band, the region, the ERP and an invoice volume, and three buying roles by title. A media buyer can build this list without a question.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 6,
+   "name": "Offer fits the audience",
+   "by": "claude",
+   "state": "pass",
+   "reason": "The benchmark shows where the close loses days, a problem the CFO and Controller own. The CTA asks for one thing: a close review.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 7,
+   "name": "One provable message",
+   "by": "claude",
+   "state": "pass",
+   "reason": "One claim: approval from 9 days to 2 and a day-4 close on NetSuite or Sage Intacct, backed by three named customers. With a competitor's name in it, the claim is no longer true.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 8,
+   "name": "Channels reach the named buying roles",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Every channel says how it reaches the roles: title and size targeting, a partner's finance list, a vendor filter on finance titles, and SDRs on the account list.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 9,
+   "name": "Tracking to pipeline defined",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Leads get the Salesforce campaign on creation, and opportunities within 90 days of a touch take it as primary campaign source.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 10,
+   "name": "Risks named",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Names the single customer speaker as a point of failure, with an owner.",
+   "fix": "",
+   "not_run": false
+  }
+ ],
+ "verdict": "Ready with flags",
+ "strategy_lines": [
+  {
+   "id": "T1",
+   "label": "Pipeline target",
+   "text": "$1,200,000 in pipeline by Mar 31, 2027",
+   "covered": true
+  },
+  {
+   "id": "A1",
+   "label": "Audience",
+   "text": "US manufacturers with 200 to 1,000 employees that run NetSuite or Sage Intacct and process more than 2,000 supplier invoices a month. Roles: CFO, Controller, AP manager.",
+   "covered": true
+  },
+  {
+   "id": "O1",
+   "label": "Offer",
+   "text": "The Month-End Close Benchmark: a 20-minute read-out that shows where a manufacturer's close loses days, built from the buyer's own AP numbers. CTA: Book a close review.",
+   "covered": true
+  },
+  {
+   "id": "M1",
+   "label": "Message",
+   "text": "Brasswick cuts invoice approval from 9 days to 2 for manufacturers on NetSuite or Sage Intacct, so the books close on day 4. Proof: Three named manufacturing customers closed on day 4 within two quarters of go-live.",
+   "covered": true
+  },
+  {
+   "id": "C1",
+   "label": "Channel: LinkedIn ads",
+   "covered": true,
+   "text": "LinkedIn ads (paid social), $40,000 at $200 a lead"
+  },
+  {
+   "id": "C2",
+   "label": "Channel: Webinar",
+   "covered": true,
+   "text": "Webinar (webinar), $15,000 at $100 a lead"
+  },
+  {
+   "id": "C3",
+   "label": "Channel: Content syndication",
+   "covered": true,
+   "text": "Content syndication (syndication), $20,000 at $80 a lead"
+  },
+  {
+   "id": "C4",
+   "label": "Channel: SDR outbound",
+   "covered": true,
+   "text": "SDR outbound (outbound), $15,000 at $150 a lead"
+  },
+  {
+   "id": "K1",
+   "label": "Tracking",
+   "covered": true,
+   "text": "Every lead gets the Salesforce campaign brasswick-q1 on creation. Opportunities created within 90 days of a campaign touch take it as primary campaign source."
+  },
+  {
+   "id": "B1",
+   "label": "Budget",
+   "text": "$90,000 total",
+   "covered": false
+  },
+  {
+   "id": "L1",
+   "label": "Launch",
+   "text": "Jan 11, 2027 for 10 weeks, to Mar 21, 2027",
+   "covered": false
+  },
+  {
+   "id": "F1",
+   "label": "Funnel",
+   "covered": false,
+   "text": "Average deal $30,000, 8% of leads become opportunities in 21 days"
+  }
+ ],
+ "channels": [
+  {
+   "id": "C1",
+   "name": "LinkedIn ads",
+   "type": "paid_social",
+   "platform": "linkedin",
+   "reach": "Job title and company size targeting on CFO, Controller and AP manager at the account list",
+   "budget": 40000.0,
+   "cpl": 200.0,
+   "leads": 200,
+   "opps": 16.0,
+   "pipeline": 480000.0,
+   "weekly_spend": 4000.0,
+   "min_budget_one_opp": 2600.0,
+   "cpl_assumed": false
+  },
+  {
+   "id": "C2",
+   "name": "Webinar",
+   "type": "webinar",
+   "platform": "zoom",
+   "reach": "Co-hosted with a NetSuite partner and promoted to the partner's finance list",
+   "budget": 15000.0,
+   "cpl": 100.0,
+   "leads": 150,
+   "opps": 12.0,
+   "pipeline": 360000.0,
+   "weekly_spend": 1500.0,
+   "min_budget_one_opp": 1300.0,
+   "cpl_assumed": false
+  },
+  {
+   "id": "C3",
+   "name": "Content syndication",
+   "type": "syndication",
+   "platform": "netline",
+   "reach": "Vendor delivers leads filtered to finance titles at manufacturers of 200 to 1,000 employees",
+   "budget": 20000.0,
+   "cpl": 80.0,
+   "leads": 250,
+   "opps": 20.0,
+   "pipeline": 600000.0,
+   "weekly_spend": 2000.0,
+   "min_budget_one_opp": 1040.0,
+   "cpl_assumed": false
+  },
+  {
+   "id": "C4",
+   "name": "SDR outbound",
+   "type": "outbound",
+   "platform": "outreach",
+   "reach": "Two SDRs call and email Controllers and AP managers on the account list",
+   "budget": 15000.0,
+   "cpl": 150.0,
+   "leads": 100,
+   "opps": 8.0,
+   "pipeline": 240000.0,
+   "weekly_spend": 1500.0,
+   "min_budget_one_opp": 1950.0,
+   "cpl_assumed": false
+  }
+ ],
+ "functions": {
+  "ads": {
+   "active": true,
+   "because": "Called for by C1, C3."
+  },
+  "pr": {
+   "active": false,
+   "because": "Not in this campaign. Channels C1 to C4 include no channel that uses PR."
+  },
+  "content": {
+   "active": true,
+   "because": "Called for by O1, C2, C3."
+  },
+  "operations": {
+   "active": true,
+   "because": "Every campaign needs tracking and follow-up."
+  },
+  "sales": {
+   "active": true,
+   "because": "Every campaign needs tracking and follow-up."
+  },
+  "creative": {
+   "active": true,
+   "because": "Called for by C1, C2."
+  }
+ },
+ "notes": [
+  "'$1.2M' read as $1,200,000",
+  "'3 weeks' read as 21 days",
+  "Budget total: '$90K' read as $90,000"
+ ],
+ "warnings": []
+}

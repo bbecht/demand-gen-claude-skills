@@ -1,0 +1,97 @@
+{
+ "campaign": {
+  "name": "Examiner-Ready SOC",
+  "id": "HALV-EXAM-27",
+  "objective": "pipeline"
+ },
+ "target": {
+  "pipeline": "$900,000",
+  "due_date": "June 30, 2027"
+ },
+ "audience": {
+  "accounts": "US community and regional banks with $1B to $10B in assets, in the Mid-Atlantic and Midwest, running Jack Henry or Fiserv cores",
+  "roles": [
+   "CISO",
+   "CIO",
+   "Chief Risk Officer"
+  ],
+  "tag": "bank-ciso"
+ },
+ "offer": {
+  "offer": "The Examiner Readiness Review. A 45-minute session that maps the bank's detection coverage to the FFIEC examination handbook and hands back the three gaps an examiner will flag first.",
+  "cta": "Book the review",
+  "asset": true
+ },
+ "message": {
+  "claim": "Halvern is the only managed detection service built on the FFIEC handbook, so every alert maps to an exam finding before the examiner arrives.",
+  "proof": "14 banks passed their last exam with zero detection findings on Halvern."
+ },
+ "channels": [
+  {
+   "name": "LinkedIn ads",
+   "type": "paid_social",
+   "platform": "linkedin",
+   "budget": "$36,000",
+   "cost_per_lead": "$180",
+   "reach": "Title targeting on CISO, CIO and Chief Risk Officer at banks of $1B to $10B in assets in our regions"
+  },
+  {
+   "name": "CISO roundtables",
+   "type": "event",
+   "platform": "association",
+   "budget": "$24,000",
+   "cost_per_lead": "$400",
+   "reach": "Invitations go to the named account list through two state banking association partners"
+  },
+  {
+   "name": "House email",
+   "type": "email",
+   "platform": "hubspot",
+   "budget": "$6,000",
+   "cost_per_lead": "$50",
+   "reach": "House list of bank security leaders"
+  },
+  {
+   "name": "Breach report PR",
+   "type": "pr",
+   "platform": "press",
+   "budget": "$9,000",
+   "cost_per_lead": "$300",
+   "reach": "Pitched to American Banker and Banking Dive, whose readers are these roles"
+  }
+ ],
+ "budget_total": "$75,000",
+ "launch": {
+  "date": "March 1, 2027",
+  "run": "12 weeks"
+ },
+ "funnel": {
+  "avg_deal": "$45,000",
+  "lead_to_opp_rate": "10%",
+  "lead_to_opp_days": "14 days"
+ },
+ "sales": {
+  "reps": "2",
+  "opps_per_rep_month": "10"
+ },
+ "revenue": {
+  "win_rate": "30%",
+  "sales_cycle_days": "120"
+ },
+ "owners": {
+  "ads": "Jess Obi",
+  "pr": "Carla Mendes",
+  "content": "Ray Tsai",
+  "operations": "Lee Park",
+  "sales": "Sam Duval",
+  "creative": "Ray Tsai"
+ },
+ "tracking": "Every lead gets the Salesforce campaign HALV-EXAM-27. Opportunities take primary campaign source from the first campaign touch in the 60 days before creation.",
+ "risks": [
+  {
+   "risk": "The roundtables depend on the two association partners sending invitations on time.",
+   "owner": "Sam Duval"
+  }
+ ],
+ "assumptions": []
+}

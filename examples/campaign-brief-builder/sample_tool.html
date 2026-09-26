@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Campaign Brief Builder</title>
+<style>
+  :root{
+    --bg:#ffffff; --surface:#ffffff; --soft:#eef2f8; --border:#bdbdbd; --ink:#000000;
+    --blue:#1d4ed8; --blue-soft:rgba(29,78,216,0.10); --amber:#d97706; --amber-soft:rgba(217,119,6,0.14);
+    --hollow:#ffffff; --btn:#000000; --btn-ink:#ffffff;
+  }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+    --bg:#000000; --surface:#0b0b0c; --soft:#1a1d24; --border:#5a5a5a; --ink:#ffffff;
+    --blue:#3b82f6; --blue-soft:rgba(59,130,246,0.16); --amber:#c77a08; --amber-soft:rgba(199,122,8,0.20);
+    --hollow:#0b0b0c; --btn:#ffffff; --btn-ink:#000000; } }
+  :root[data-theme="dark"]{
+    --bg:#000000; --surface:#0b0b0c; --soft:#1a1d24; --border:#5a5a5a; --ink:#ffffff;
+    --blue:#3b82f6; --blue-soft:rgba(59,130,246,0.16); --amber:#c77a08; --amber-soft:rgba(199,122,8,0.20);
+    --hollow:#0b0b0c; --btn:#ffffff; --btn-ink:#000000; }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  b,strong,th{font-weight:600}
+  a{color:var(--ink);text-decoration:underline}
+  .wrap{max-width:1040px;margin:0 auto;padding:32px 40px 48px}
+  h1{font-size:24px;font-weight:600;margin:0 0 4px}
+  h2{font-size:17px;margin:0 0 6px}
+  h3{font-size:15px;margin:0 0 6px}
+  .meta{font-size:13px;margin:0 0 10px}
+  .label{font-size:12px;text-transform:uppercase;letter-spacing:0.08em;font-weight:700;margin:32px 0 8px}
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+  .cap{font-size:14px;margin:0 0 12px}
+  .roles{display:flex;flex-wrap:wrap;gap:6px;margin:18px 0 4px}
+  .roles button,.tbtn,.xbtn{font:inherit;font-weight:600;padding:6px 12px;border:1px solid var(--border);background:var(--surface);color:var(--ink);cursor:pointer;border-radius:8px}
+  .roles button[aria-pressed="true"]{background:var(--blue-soft);border-color:var(--blue);box-shadow:inset 0 -3px 0 var(--blue)}
+  .xbtn{background:var(--btn);color:var(--btn-ink);border-color:var(--btn)}
+  .xbtn[disabled]{opacity:.45;cursor:not-allowed}
+  .q{font-size:19px;font-weight:600;margin:14px 0 12px}
+  .insights{display:grid;gap:8px}
+  .card{border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-size:15px}
+  .card.warn{border-left:4px solid var(--amber)}
+  .card.key{border-left:4px solid var(--blue)}
+  .card.stop{border-left:4px solid var(--ink)}
+  .stamp{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;letter-spacing:0.02em;padding:6px 14px;border-radius:999px;border:2px solid var(--ink);margin:6px 0 0}
+  .stamp.ready{background:var(--blue-soft);border-color:var(--blue)}
+  .stamp.flags{background:var(--amber-soft);border-color:var(--amber)}
+  .stamp.untested{border-style:dashed}
+  .stamp.notready{background:var(--ink);color:var(--bg)}
+  .st{display:inline-flex;align-items:center;gap:5px;white-space:nowrap;font-size:11px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:2px 9px;border-radius:999px;border:1px solid var(--ink)}
+  .st.pass{background:var(--blue-soft);border-color:var(--blue)}
+  .st.flag{background:var(--amber-soft);border-color:var(--amber)}
+  .st.flag.nr{border-style:dashed}
+  .st.fail{background:var(--ink);color:var(--bg)}
+  .by{font-size:11px;text-transform:uppercase;letter-spacing:0.06em;font-weight:700}
+  .tiles{display:grid;grid-template-columns:repeat(4,1fr);margin-top:4px}
+  .tiles > div{padding:4px 16px;border-left:1px solid var(--border)}
+  .tiles > div:first-child{border-left:0;padding-left:0}
+  .tiles .v{font-size:24px;font-weight:600}
+  .tiles .l{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;font-weight:600}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{border-bottom:1px solid var(--border);padding:7px 6px;text-align:left;vertical-align:top}
+  td.n,th.n{text-align:right;white-space:nowrap}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:0.06em}
+  tr:last-child td{border-bottom:0}
+  tr.unassigned td:first-child{box-shadow:inset 4px 0 0 var(--amber);padding-left:10px}
+  .scroll{overflow-x:auto}
+  .controls{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin:0 0 12px}
+  .controls label{font-weight:600;font-size:13px;display:flex;gap:6px;align-items:center}
+  select{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:5px 8px}
+  input[type=range]{accent-color:var(--blue);width:100%}
+  input:focus,select:focus,button:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
+  .fb{display:grid;grid-template-columns:230px 1fr;gap:10px;align-items:center;margin:8px 0}
+  .fb .nm{font-weight:600;font-size:13px}
+  .track{position:relative;height:24px;background:var(--soft);border-radius:0 4px 4px 0}
+  .bar{position:absolute;left:0;top:0;height:24px;border-radius:0 4px 4px 0}
+  .bar.solid{background:var(--blue)}
+  .bar.hollow{background:var(--hollow);box-shadow:inset 0 0 0 2px var(--ink)}
+  .bar.hatch{background:repeating-linear-gradient(45deg,var(--hollow) 0 4px,var(--ink) 4px 5px);box-shadow:inset 0 0 0 1px var(--ink)}
+  .bar-in{position:absolute;top:0;line-height:24px;font-size:12px;font-weight:700;white-space:nowrap}
+  .mark{position:absolute;top:-5px;height:34px;border-left:3px solid var(--amber)}
+  .mark::after{content:"";position:absolute;left:-7px;top:-6px;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid var(--amber)}
+  .legend{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;margin:10px 0 0;align-items:center}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .sw{display:inline-block;width:18px;height:12px;border-radius:2px;vertical-align:-1px}
+  .planner{display:grid;grid-template-columns:repeat(3,1fr);gap:14px 22px}
+  .planner label{font-size:13px;font-weight:600;display:block}
+  .planner .val{font-weight:700}
+  .wi-out{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+  .wi-out > div{border:1px solid var(--border);border-radius:8px;padding:10px 12px}
+  .wi-out .v{font-size:20px;font-weight:600}
+  .wi-out .l{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;font-weight:600}
+  .whatif-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:2px 8px;border-radius:4px;border:1px dashed var(--ink);margin-left:8px;vertical-align:2px}
+  svg{display:block;width:100%}
+  svg text{fill:var(--ink);font-family:inherit}
+  .axis line,.axis path{stroke:var(--ink)}
+  .grid line{stroke:var(--border);stroke-dasharray:2 3}
+  .sec{border-top:1px solid var(--border);padding:18px 0 6px}
+  .sec:first-child{border-top:0;padding-top:0}
+  .sec.off h3::after{content:" \00B7  Not in this campaign";font-weight:400}
+  .req-id{font-weight:700;white-space:nowrap}
+  .utm{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11px;word-break:break-all;margin-top:4px}
+  details{border:1px solid var(--border);padding:12px 16px;border-radius:12px;margin-top:10px;background:var(--surface)}
+  summary{font-weight:600;cursor:pointer}
+  .guide p{margin:0 0 10px}
+  .guide h4{margin:14px 0 4px;font-size:14px}
+  .exports{display:flex;flex-wrap:wrap;gap:8px}
+  footer{margin-top:32px;font-size:13px;font-weight:600}
+  .hide{display:none}
+  #tip{position:fixed;pointer-events:none;background:var(--surface);color:var(--ink);border:1px solid var(--ink);border-radius:8px;padding:8px 10px;font-size:12px;line-height:1.45;display:none;z-index:10;max-width:260px}
+  @media (max-width:760px){
+    .wrap{padding:20px 16px 40px}
+    .tiles,.wi-out{grid-template-columns:1fr 1fr;row-gap:12px}
+    .tiles > div:nth-child(3){border-left:0;padding-left:0}
+    .planner{grid-template-columns:1fr}
+    .fb{grid-template-columns:1fr;gap:4px}
+    .scroll table{min-width:680px}
+    .scroll table.stack{min-width:0}
+    table.stack,table.stack tbody,table.stack tr,table.stack td{display:block;width:100%}
+    table.stack tr:first-child{display:none}
+    table.stack tr{border-bottom:1px solid var(--border);padding:10px 0}
+    table.stack tr:last-child{border-bottom:0}
+    table.stack td{border:0;padding:2px 0;text-align:left}
+    table.stack td[data-l]::before{content:attr(data-l) ": ";font-weight:700}
+    .scroll svg{min-width:620px}
+  }
+  @media print{
+    .roles,.no-print,#whatif-block,.exports{display:none !important}
+    body{font-size:11px}
+    .panel,details{border:0;padding:0}
+    details{display:block}
+    details > *{display:block}
+    tr{break-inside:avoid}
+    .wrap{padding:0;max-width:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Campaign Brief Builder</h1>
+  <div class="meta" id="meta"></div>
+  <div id="stamp"></div>
+
+  <div class="roles no-print" role="group" aria-label="Choose your seat">
+    <button data-role="ceo">CEO or owner</button>
+    <button data-role="marketing">Marketing lead</button>
+    <button data-role="agency">Agency</button>
+    <button data-role="cro">VP Sales or CRO</button>
+  </div>
+  <div class="q" id="q"></div>
+  <div class="insights" id="cards"></div>
+
+  <div class="label">The ten checks</div>
+  <div class="panel">
+    <p class="cap">Checks 1 to 4 are the script's arithmetic on your own numbers. Checks 5 to 10 are Claude's calls against a written rubric. Any Fail blocks the brief.</p>
+    <div class="scroll"><table id="checks" class="stack"></table></div>
+  </div>
+
+  <div class="label">The reverse funnel</div>
+  <div class="panel">
+    <div class="tiles" id="tiles"></div>
+    <div style="margin-top:18px" id="fbars"></div>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--blue)"></i>What the plan buys, in time</span>
+      <span><i class="sw" style="background:repeating-linear-gradient(45deg,var(--hollow) 0 4px,var(--ink) 4px 5px);box-shadow:inset 0 0 0 1px var(--ink)"></i>Bought, but lands after the due date</span>
+      <span><i class="sw" style="border-left:3px solid var(--amber);border-radius:0;width:6px"></i>Needed to hit the target</span>
+    </div>
+    <h3 style="margin-top:20px">By channel</h3>
+    <div class="scroll"><table id="chans"></table></div>
+  </div>
+
+  <div id="whatif-block">
+    <div class="label">What if? <span class="whatif-tag">What-if only</span></div>
+    <div class="panel">
+      <p class="cap">Move a lever and see checks 1 and 2 again, with the same math. This never changes the approved strategy or the brief. To change those, tell Claude and the checks rerun.</p>
+      <div class="planner" id="planner"></div>
+      <div class="wi-out" id="wiout"></div>
+    </div>
+  </div>
+
+  <div class="label">Weekly pacing</div>
+  <div class="panel">
+    <p class="cap" id="pacecap"></p>
+    <div class="scroll"><svg id="pace" viewBox="0 0 900 300" role="img" aria-label="Pipeline landing by week"></svg></div>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--blue)"></i>Pipeline landing that week</span>
+      <span><svg width="26" height="12" style="display:inline;width:26px"><line x1="0" y1="6" x2="26" y2="6" stroke="currentColor" stroke-width="2"/><rect x="10" y="3" width="6" height="6" fill="currentColor"/></svg>Pipeline to date</span>
+      <span><svg width="26" height="12" style="display:inline;width:26px"><line x1="0" y1="6" x2="26" y2="6" stroke="var(--amber)" stroke-width="3" stroke-dasharray="6 4"/></svg>Target</span>
+      <span><svg width="14" height="14" style="display:inline;width:14px"><line x1="7" y1="0" x2="7" y2="14" stroke="currentColor" stroke-width="2" stroke-dasharray="3 2"/></svg>Due date</span>
+    </div>
+    <details><summary>Week by week</summary><div class="scroll"><table id="pacetab"></table></div></details>
+  </div>
+
+  <div class="label">The brief</div>
+  <div class="panel" id="brief"></div>
+
+  <div class="label no-print">Export</div>
+  <div class="panel exports no-print">
+    <button class="xbtn" id="x-md">Download the brief (Markdown)</button>
+    <button class="xbtn" id="x-csv">Download requirements (CSV)</button>
+    <button class="xbtn" id="x-print">Print or save as PDF</button>
+  </div>
+
+  <details id="readbox"><summary>What the script read</summary><div id="read"></div></details>
+  <details class="guide"><summary>How the numbers work</summary>
+    <h4>The reverse funnel</h4>
+    <p>Opportunities needed = target divided by average deal size, rounded up. Leads needed = opportunities needed divided by the share of leads that become opportunities, rounded up. Each channel buys its budget divided by its cost per lead, in whole leads.</p>
+    <h4>Timing</h4>
+    <p>Leads are spread evenly across the run weeks. Each week's leads count on the week's last day and become opportunities after your days from lead to opportunity. Check 2 asks whether that falls on or before the due date.</p>
+    <h4>Opportunities with a decimal</h4>
+    <p>They are expected values. 471 leads at 8% is 37.7 opportunities on average.</p>
+    <h4>The verdict</h4>
+    <p>Any Fail: Not ready, and the brief is blocked. An assumed number: Untested. Flags only: Ready with flags. All ten pass: Ready.</p>
+    <h4>Not a forecast</h4>
+    <p>Every number is a projection at your own rates. No benchmarks are used.</p>
+  </details>
+
+  <footer>Built by Marketing Systems Guild. Turning strangers into clients.</footer>
+</div>
+<div id="tip"></div>
+<script>
+const DATA = {"tool":"campaign-brief-builder","version":"1.0.0","mode":"brief","campaign":{"name":"Close the Books Faster","id":"brasswick-q1","objective":"pipeline","audience_tag":"cfo-mfg"},"round":1,"inputs":{"target":1200000.0,"due":"2027-03-31","launch":"2027-01-11","end":"2027-03-21","weeks":10,"avg_deal":30000.0,"rate":0.08,"lag_days":21.0,"budget_total":90000.0,"roles":["CFO","Controller","AP manager"],"reps":3.0,"per_rep":10.0,"win_rate":0.25,"cycle_days":90.0,"owners":{"ads":"Priya Nand, demand gen","content":"Tom Ellery, content","operations":"Dana Ruiz, RevOps","sales":"Marcus Webb, sales director","creative":"Northfield Studio (agency)"},"utm_convention":null},"notes":["'$1.2M' read as $1,200,000","'3 weeks' read as 21 days","Budget total: '$90K' read as $90,000"],"assumptions":[],"strategy_lines":[{"id":"T1","label":"Pipeline target","text":"$1,200,000 in pipeline by Mar 31, 2027","covered":true},{"id":"A1","label":"Audience","text":"US manufacturers with 200 to 1,000 employees that run NetSuite or Sage Intacct and process more than 2,000 supplier invoices a month. Roles: CFO, Controller, AP manager.","covered":true},{"id":"O1","label":"Offer","text":"The Month-End Close Benchmark: a 20-minute read-out that shows where a manufacturer's close loses days, built from the buyer's own AP numbers. CTA: Book a close review.","covered":true},{"id":"M1","label":"Message","text":"Brasswick cuts invoice approval from 9 days to 2 for manufacturers on NetSuite or Sage Intacct, so the books close on day 4. Proof: Three named manufacturing customers closed on day 4 within two quarters of go-live.","covered":true},{"id":"C1","label":"Channel: LinkedIn ads","covered":true,"text":"LinkedIn ads (paid social), $40,000 at $200 a lead"},{"id":"C2","label":"Channel: Webinar","covered":true,"text":"Webinar (webinar), $15,000 at $100 a lead"},{"id":"C3","label":"Channel: Content syndication","covered":true,"text":"Content syndication (syndication), $20,000 at $80 a lead"},{"id":"C4","label":"Channel: SDR outbound","covered":true,"text":"SDR outbound (outbound), $15,000 at $150 a lead"},{"id":"K1","label":"Tracking","covered":true,"text":"Every lead gets the Salesforce campaign brasswick-q1 on creation. Opportunities created within 90 days of a campaign touch take it as primary campaign source."},{"id":"B1","label":"Budget","text":"$90,000 total","covered":false},{"id":"L1","label":"Launch","text":"Jan 11, 2027 for 10 weeks, to Mar 21, 2027","covered":false},{"id":"F1","label":"Funnel","covered":false,"text":"Average deal $30,000, 8% of leads become opportunities in 21 days"}],"channels":[{"id":"C1","name":"LinkedIn ads","type":"paid_social","platform":"linkedin","reach":"Job title and company size targeting on CFO, Controller and AP manager at the account list","budget":40000.0,"cpl":200.0,"leads":200,"opps":16.0,"pipeline":480000.0,"weekly_spend":4000.0,"min_budget_one_opp":2600.0,"cpl_assumed":false},{"id":"C2","name":"Webinar","type":"webinar","platform":"zoom","reach":"Co-hosted with a NetSuite partner and promoted to the partner's finance list","budget":15000.0,"cpl":100.0,"leads":150,"opps":12.0,"pipeline":360000.0,"weekly_spend":1500.0,"min_budget_one_opp":1300.0,"cpl_assumed":false},{"id":"C3","name":"Content syndication","type":"syndication","platform":"netline","reach":"Vendor delivers leads filtered to finance titles at manufacturers of 200 to 1,000 employees","budget":20000.0,"cpl":80.0,"leads":250,"opps":20.0,"pipeline":600000.0,"weekly_spend":2000.0,"min_budget_one_opp":1040.0,"cpl_assumed":false},{"id":"C4","name":"SDR outbound","type":"outbound","platform":"outreach","reach":"Two SDRs call and email Controllers and AP managers on the account list","budget":15000.0,"cpl":150.0,"leads":100,"opps":8.0,"pipeline":240000.0,"weekly_spend":1500.0,"min_budget_one_opp":1950.0,"cpl_assumed":false}],"funnel":{"target":1200000.0,"avg_deal":30000.0,"rate":0.08,"budget":90000.0,"opps_needed":40,"leads_needed":500,"planned_leads":700,"planned_opps":56.0,"planned_pipeline":1680000.0,"gap":0.0,"blended_cpl":128.571429,"cpl_ceiling":180.0,"extra_leads":0,"extra_budget":0,"reaches_target":true},"timing":{"launch":"2027-01-11","end":"2027-03-21","due":"2027-03-31","weeks":10,"lag_days":21.0,"weeks_in_time":8,"weeks_late":2,"pipeline_in_time":1344000.0,"opps_in_time":44.8,"first_land":"2027-02-07","last_land":"2027-04-11","shift_weeks":2,"meets_target_in_time":true},"landings":[{"lead_week":1,"leads":70,"lands_on":"2027-02-07","opps":5.6,"pipeline_cum":168000.0,"in_time":true},{"lead_week":2,"leads":70,"lands_on":"2027-02-14","opps":5.6,"pipeline_cum":336000.0,"in_time":true},{"lead_week":3,"leads":70,"lands_on":"2027-02-21","opps":5.6,"pipeline_cum":504000.0,"in_time":true},{"lead_week":4,"leads":70,"lands_on":"2027-02-28","opps":5.6,"pipeline_cum":672000.0,"in_time":true},{"lead_week":5,"leads":70,"lands_on":"2027-03-07","opps":5.6,"pipeline_cum":840000.0,"in_time":true},{"lead_week":6,"leads":70,"lands_on":"2027-03-14","opps":5.6,"pipeline_cum":1008000.0,"in_time":true},{"lead_week":7,"leads":70,"lands_on":"2027-03-21","opps":5.6,"pipeline_cum":1176000.0,"in_time":true},{"lead_week":8,"leads":70,"lands_on":"2027-03-28","opps":5.6,"pipeline_cum":1344000.0,"in_time":true},{"lead_week":9,"leads":70,"lands_on":"2027-04-04","opps":5.6,"pipeline_cum":1512000.0,"in_time":false},{"lead_week":10,"leads":70,"lands_on":"2027-04-11","opps":5.6,"pipeline_cum":1680000.0,"in_time":false}],"pacing":[{"week":1,"start":"2027-01-11","end":"2027-01-17","spend":9000.0,"leads":70,"opps_landing":0.0,"pipeline_cum":0.0,"after_due":false,"contains_due":false},{"week":2,"start":"2027-01-18","end":"2027-01-24","spend":9000.0,"leads":70,"opps_landing":0.0,"pipeline_cum":0.0,"after_due":false,"contains_due":false},{"week":3,"start":"2027-01-25","end":"2027-01-31","spend":9000.0,"leads":70,"opps_landing":0.0,"pipeline_cum":0.0,"after_due":false,"contains_due":false},{"week":4,"start":"2027-02-01","end":"2027-02-07","spend":9000.0,"leads":70,"opps_landing":5.6,"pipeline_cum":168000.0,"after_due":false,"contains_due":false},{"week":5,"start":"2027-02-08","end":"2027-02-14","spend":9000.0,"leads":70,"opps_landing":5.6,"pipeline_cum":336000.0,"after_due":false,"contains_due":false},{"week":6,"start":"2027-02-15","end":"2027-02-21","spend":9000.0,"leads":70,"opps_landing":5.6,"pipeline_cum":504000.0,"after_due":false,"contains_due":false},{"week":7,"start":"2027-02-22","end":"2027-02-28","spend":9000.0,"leads":70,"opps_landing":5.6,"pipeline_cum":672000.0,"after_due":false,"contains_due":false},{"week":8,"start":"2027-03-01","end":"2027-03-07","spend":9000.0,"leads":70,"opps_landing":5.6,"pipeline_cum":840000.0,"after_due":false,"contains_due":false},{"week":9,"start":"2027-03-08","end":"2027-03-14","spend":9000.0,"leads":70,"opps_landing":5.6,"pipeline_cum":1008000.0,"after_due":false,"contains_due":false},{"week":10,"start":"2027-03-15","end":"2027-03-21","spend":9000.0,"leads":70,"opps_landing":5.6,"pipeline_cum":1176000.0,"after_due":false,"contains_due":false},{"week":11,"start":"2027-03-22","end":"2027-03-28","spend":0.0,"leads":0,"opps_landing":5.6,"pipeline_cum":1344000.0,"after_due":false,"contains_due":false},{"week":12,"start":"2027-03-29","end":"2027-04-04","spend":0.0,"leads":0,"opps_landing":5.6,"pipeline_cum":1512000.0,"after_due":false,"contains_due":true},{"week":13,"start":"2027-04-05","end":"2027-04-11","spend":0.0,"leads":0,"opps_landing":5.6,"pipeline_cum":1680000.0,"after_due":true,"contains_due":false}],"capacity":{"reps":3.0,"per_rep":10.0,"capacity":30.0,"monthly_opps":24.266667,"over":false,"reps_needed":3},"monthly_opps":24.266667,"revenue":{"win_rate":0.25,"projected":420000.0,"cycle_days":90.0,"lands_by":"2027-07-10"},"checks":[{"n":1,"name":"Target reachable on budget","by":"script","state":"pass","reason":"The plan buys 700 leads, 56 opportunities and $1.68M in pipeline against a $1.2M target.","fix":"","not_run":false},{"n":2,"name":"Opportunities land before the due date","by":"script","state":"flag","reason":"Leads from the last 2 weeks land after Mar 31, 2027. The pipeline that lands in time, $1.34M, still meets the target.","fix":"Launch 2 weeks earlier, or move the due date to Apr 11, 2027.","not_run":false},{"n":3,"name":"Every channel can buy at least one opportunity","by":"script","state":"pass","reason":"Every channel buys at least one opportunity in the window.","fix":"","not_run":false},{"n":4,"name":"Sales capacity","by":"script","state":"pass","reason":"The plan sends 24.3 opportunities a month. The team can work 30.","fix":"","not_run":false},{"n":5,"name":"Audience specific enough to target","by":"claude","state":"pass","reason":"Names the industry, a 200 to 1,000 employee size band, the region, the ERP and an invoice volume, and three buying roles by title. A media buyer can build this list without a question.","fix":"","not_run":false},{"n":6,"name":"Offer fits the audience","by":"claude","state":"pass","reason":"The benchmark shows where the close loses days, a problem the CFO and Controller own. The CTA asks for one thing: a close review.","fix":"","not_run":false},{"n":7,"name":"One provable message","by":"claude","state":"pass","reason":"One claim: approval from 9 days to 2 and a day-4 close on NetSuite or Sage Intacct, backed by three named customers. With a competitor's name in it, the claim is no longer true.","fix":"","not_run":false},{"n":8,"name":"Channels reach the named buying roles","by":"claude","state":"pass","reason":"Every channel says how it reaches the roles: title and size targeting, a partner's finance list, a vendor filter on finance titles, and SDRs on the account list.","fix":"","not_run":false},{"n":9,"name":"Tracking to pipeline defined","by":"claude","state":"pass","reason":"Leads get the Salesforce campaign on creation, and opportunities within 90 days of a touch take it as primary campaign source.","fix":"","not_run":false},{"n":10,"name":"Risks named","by":"claude","state":"pass","reason":"Names the single customer speaker as a point of failure, with an owner.","fix":"","not_run":false}],"verdict":"Ready with flags","functions":{"ads":{"active":true,"because":"Called for by C1, C3."},"pr":{"active":false,"because":"Not in this campaign. Channels C1 to C4 include no channel that uses PR."},"content":{"active":true,"because":"Called for by O1, C2, C3."},"operations":{"active":true,"because":"Every campaign needs tracking and follow-up."},"sales":{"active":true,"because":"Every campaign needs tracking and follow-up."},"creative":{"active":true,"because":"Called for by C1, C2."}},"risks_named":[{"id":"R1","risk":"The webinar depends on one customer speaker. If she drops out, the webinar has no proof point.","owner":"Tom Ellery"}],"warnings":[],"small_sample":false,"changes":[],"brief":{"approval":{"name":"Ana Ferris","seat":"VP Marketing","date":"2026-12-14","date_label":"Dec 14, 2026"},"stamp":"Ready with flags","sections":[{"function":"ads","name":"Ads","active":true,"because":"Called for by C1, C3.","requirements":["ADS-01","ADS-02","ADS-03"]},{"function":"pr","name":"PR","active":false,"because":"Not in this campaign. Channels C1 to C4 include no channel that uses PR.","requirements":[]},{"function":"content","name":"Content","active":true,"because":"Called for by O1, C2, C3.","requirements":["CON-01","CON-02","CON-03","CON-04"]},{"function":"operations","name":"Operations","active":true,"because":"Every campaign needs tracking and follow-up.","requirements":["OPS-01","OPS-02","OPS-03","OPS-04","OPS-05"]},{"function":"sales","name":"Sales enablement","active":true,"because":"Every campaign needs tracking and follow-up.","requirements":["SAL-01","SAL-02","SAL-03","SAL-04"]},{"function":"creative","name":"Creative","active":true,"because":"Called for by C1, C2.","requirements":["CRE-01","CRE-02","CRE-03"]}],"requirements":[{"id":"ADS-01","function":"ads","requirement":"Build the LinkedIn campaigns: CFO, Controller and AP manager titles at the account list, 200 to 1,000 employees. Manual bidding with a cost cap. LinkedIn Audience Network off. A Lead Gen Form that offers the Month-End Close Benchmark.","traces_to":"C1","trace_label":"C1: Channel: LinkedIn ads","owner":"Priya Nand, demand gen","due":"2027-01-04","due_label":"Jan 4, 2027","budget":40000.0,"budget_label":"$40,000, the C1 budget","depends_on_ids":["CRE-01","OPS-02"],"acceptance":"Campaigns sit in draft with titles, company size and the account list applied, Audience Network off, and a test form submission reaches Salesforce.","channel":"C1","utm":{"source":"linkedin","medium":"paid_social","campaign":"brasswick-q1_pipeline_cfo-mfg_202701","content":"ads-01","query":"?utm_source=linkedin&utm_medium=paid_social&utm_campaign=brasswick-q1_pipeline_cfo-mfg_202701&utm_content=ads-01"},"auto":false,"when":"pre-launch","prevents":null},{"id":"ADS-02","function":"ads","requirement":"Stop rule: pause any ad set whose cost per lead runs above $180 for two straight weeks. $180 is the most a lead can cost for the budget to reach the target.","traces_to":"T1","trace_label":"T1: Pipeline target","owner":"Priya Nand, demand gen","due":null,"due_label":"Ongoing, Jan 11, 2027 to Mar 21, 2027","budget":null,"budget_label":"No separate budget","depends_on_ids":[],"acceptance":"Every Monday the cost per lead of each ad set is compared to $180, and the ones above it for two weeks are paused.","channel":"C1","utm":{"source":"linkedin","medium":"paid_social","campaign":"brasswick-q1_pipeline_cfo-mfg_202701","content":"ads-02","query":"?utm_source=linkedin&utm_medium=paid_social&utm_campaign=brasswick-q1_pipeline_cfo-mfg_202701&utm_content=ads-02"},"auto":false,"when":"ongoing","prevents":null},{"id":"ADS-03","function":"ads","requirement":"Brief the syndication vendor: finance titles at US manufacturers of 200 to 1,000 employees, delivered weekly, with the benchmark PDF as the asset.","traces_to":"C3","trace_label":"C3: Channel: Content syndication","owner":"Priya Nand, demand gen","due":"2027-01-04","due_label":"Jan 4, 2027","budget":20000.0,"budget_label":"$20,000, the C3 budget","depends_on_ids":["CON-01"],"acceptance":"The signed insertion order names the titles, the size band, the region, weekly delivery and the benchmark PDF.","channel":"C3","utm":{"source":"netline","medium":"syndication","campaign":"brasswick-q1_pipeline_cfo-mfg_202701","content":"ads-03","query":"?utm_source=netline&utm_medium=syndication&utm_campaign=brasswick-q1_pipeline_cfo-mfg_202701&utm_content=ads-03"},"auto":false,"when":"pre-launch","prevents":null},{"id":"CON-01","function":"content","requirement":"Build the Month-End Close Benchmark: the 20-minute read-out from the buyer's own AP numbers, and a gated PDF version for syndication.","traces_to":"O1","trace_label":"O1: Offer","owner":"Tom Ellery, content","due":"2026-12-21","due_label":"Dec 21, 2026","budget":null,"budget_label":"No separate budget","depends_on_ids":[],"acceptance":"The read-out runs end to end on a test account's AP numbers, and the PDF is approved.","channel":null,"utm":null,"auto":false,"when":"pre-launch","prevents":null},{"id":"CON-02","function":"content","requirement":"Produce the webinar with the NetSuite partner: one customer speaker who closed on day 4, and the benchmark as the follow-up offer.","traces_to":"C2","trace_label":"C2: Channel: Webinar","owner":"Tom Ellery, content","due":"2026-12-21","due_label":"Dec 21, 2026","budget":15000.0,"budget_label":"$15,000, the C2 budget","depends_on_ids":[],"acceptance":"The speaker is confirmed in writing, the run of show is approved, and the registration page is live.","channel":"C2","utm":{"source":"zoom","medium":"webinar","campaign":"brasswick-q1_pipeline_cfo-mfg_202701","content":"con-02","query":"?utm_source=zoom&utm_medium=webinar&utm_campaign=brasswick-q1_pipeline_cfo-mfg_202701&utm_content=con-02"},"auto":false,"when":"pre-launch","prevents":null},{"id":"CON-03","function":"content","requirement":"Write one proof piece per named manufacturing customer, each showing the close moving to day 4.","traces_to":"M1","trace_label":"M1: Message","owner":"Tom Ellery, content","due":"2026-12-21","due_label":"Dec 21, 2026","budget":null,"budget_label":"No separate budget","depends_on_ids":[],"acceptance":"Each customer has approved its piece in writing.","channel":null,"utm":null,"auto":false,"when":"pre-launch","prevents":null},{"id":"CON-04","function":"content","requirement":"Line up a second customer speaker for the webinar, from the three named manufacturing customers, briefed on the same run of show.","traces_to":"C2","trace_label":"C2: Channel: Webinar","owner":"Tom Ellery, content","due":"2026-12-21","due_label":"Dec 21, 2026","budget":null,"budget_label":"No separate budget","depends_on_ids":[],"acceptance":"A second speaker has confirmed in writing and has the run of show.","channel":"C2","utm":{"source":"zoom","medium":"webinar","campaign":"brasswick-q1_pipeline_cfo-mfg_202701","content":"con-04","query":"?utm_source=zoom&utm_medium=webinar&utm_campaign=brasswick-q1_pipeline_cfo-mfg_202701&utm_content=con-04"},"auto":false,"when":"pre-launch","prevents":"R1"},{"id":"OPS-01","function":"operations","requirement":"Set up CRM campaign brasswick-q1, or confirm it exists. Every opportunity from this campaign carries it as its campaign source, under the credit rule in line K1. Every link uses the UTMs in this brief.","traces_to":"K1","trace_label":"K1: Tracking","owner":"Dana Ruiz, RevOps","due":"2027-01-01","due_label":"Jan 1, 2027","budget":null,"budget_label":"No separate budget","depends_on_ids":[],"acceptance":"A test lead from each channel creates a record that shows campaign brasswick-q1 and its UTMs in the CRM.","channel":null,"utm":null,"auto":true,"when":"pre-launch","prevents":null},{"id":"OPS-02","function":"operations","requirement":"Forms on the benchmark page and the LinkedIn Lead Gen Form push every lead to Salesforce with the campaign and its UTMs.","traces_to":"K1","trace_label":"K1: Tracking","owner":"Dana Ruiz, RevOps","due":"2027-01-01","due_label":"Jan 1, 2027","budget":null,"budget_label":"No separate budget","depends_on_ids":["CON-01"],"acceptance":"A test submission from each form shows the campaign and all four UTMs on the Salesforce lead.","channel":null,"utm":null,"auto":false,"when":"pre-launch","prevents":null},{"id":"OPS-03","function":"operations","requirement":"Route benchmark leads from accounts on the list to the account's SDR. Leads from off-list accounts go to a review queue.","traces_to":"A1","trace_label":"A1: Audience","owner":"Dana Ruiz, RevOps","due":"2027-01-01","due_label":"Jan 1, 2027","budget":null,"budget_label":"No separate budget","depends_on_ids":[],"acceptance":"A test lead from a listed account lands with its SDR, and one from an unlisted account lands in the review queue.","channel":null,"utm":null,"auto":false,"when":"pre-launch","prevents":null},{"id":"OPS-04","function":"operations","requirement":"MQL definition: a lead from a target account, in a named buying role, who books a close review or attends the webinar.","traces_to":"O1","trace_label":"O1: Offer","owner":"Dana Ruiz, RevOps","due":"2027-01-01","due_label":"Jan 1, 2027","budget":null,"budget_label":"No separate budget","depends_on_ids":[],"acceptance":"The definition is live in Salesforce and sales has signed off on it.","channel":null,"utm":null,"auto":false,"when":"pre-launch","prevents":null},{"id":"OPS-05","function":"operations","requirement":"Dashboard: pipeline and opportunities against the $1.2M target by week, with leads and spend by channel against the weekly pacing in this brief.","traces_to":"T1","trace_label":"T1: Pipeline target","owner":"Dana Ruiz, RevOps","due":"2027-01-01","due_label":"Jan 1, 2027","budget":null,"budget_label":"No separate budget","depends_on_ids":[],"acceptance":"The dashboard shows a test week against the weekly targets, and the sales director can open it.","channel":null,"utm":null,"auto":false,"when":"pre-launch","prevents":null},{"id":"SAL-01","function":"sales","requirement":"Follow-up SLA: an SDR calls every benchmark lead and every close review request within one business day.","traces_to":"O1","trace_label":"O1: Offer","owner":"Marcus Webb, sales director","due":null,"due_label":"Ongoing, Jan 11, 2027 to Mar 21, 2027","budget":null,"budget_label":"No separate budget","depends_on_ids":[],"acceptance":"Salesforce shows a logged call within one business day on every campaign lead.","channel":null,"utm":null,"auto":false,"when":"ongoing","prevents":null},{"id":"SAL-02","function":"sales","requirement":"SDR outbound: sequences to Controllers and AP managers on the account list that open with the benchmark.","traces_to":"C4","trace_label":"C4: Channel: SDR outbound","owner":"Marcus Webb, sales director","due":"2027-01-06","due_label":"Jan 6, 2027","budget":15000.0,"budget_label":"$15,000, the C4 budget","depends_on_ids":[],"acceptance":"Sequences are loaded in Outreach for every contact on the list and approved by the sales director.","channel":"C4","utm":{"source":"outreach","medium":"outbound","campaign":"brasswick-q1_pipeline_cfo-mfg_202701","content":"sal-02","query":"?utm_source=outreach&utm_medium=outbound&utm_campaign=brasswick-q1_pipeline_cfo-mfg_202701&utm_content=sal-02"},"auto":false,"when":"pre-launch","prevents":null},{"id":"SAL-03","function":"sales","requirement":"Talk track and objection sheet: the day-4 close claim, the customer proof pieces, and answers on NetSuite and Sage Intacct integration.","traces_to":"M1","trace_label":"M1: Message","owner":"Marcus Webb, sales director","due":"2027-01-06","due_label":"Jan 6, 2027","budget":null,"budget_label":"No separate budget","depends_on_ids":["CON-03"],"acceptance":"Every SDR and AE has run the talk track once in a role play with the sales director.","channel":null,"utm":null,"auto":false,"when":"pre-launch","prevents":null},{"id":"SAL-04","function":"sales","requirement":"Capacity: the three AEs keep room for the opportunity flow in the pacing table through the run.","traces_to":"T1","trace_label":"T1: Pipeline target","owner":"Marcus Webb, sales director","due":null,"due_label":"Ongoing, Jan 11, 2027 to Mar 21, 2027","budget":null,"budget_label":"No separate budget","depends_on_ids":[],"acceptance":"Each week, every new campaign opportunity has an AE owner within one business day.","channel":null,"utm":null,"auto":false,"when":"ongoing","prevents":null},{"id":"CRE-01","function":"creative","requirement":"LinkedIn concepts on the day-4 close claim: single image and document ad formats, with two copy variants per concept.","traces_to":"M1","trace_label":"M1: Message","owner":"Northfield Studio (agency)","due":"2026-12-21","due_label":"Dec 21, 2026","budget":null,"budget_label":"No separate budget","depends_on_ids":["CON-03"],"acceptance":"Final files in every LinkedIn size, approved against the core message.","channel":"C1","utm":{"source":"linkedin","medium":"paid_social","campaign":"brasswick-q1_pipeline_cfo-mfg_202701","content":"cre-01","query":"?utm_source=linkedin&utm_medium=paid_social&utm_campaign=brasswick-q1_pipeline_cfo-mfg_202701&utm_content=cre-01"},"auto":false,"when":"pre-launch","prevents":null},{"id":"CRE-02","function":"creative","requirement":"Webinar promo kit: registration page art, email headers and social tiles.","traces_to":"C2","trace_label":"C2: Channel: Webinar","owner":"Northfield Studio (agency)","due":"2026-12-21","due_label":"Dec 21, 2026","budget":null,"budget_label":"No separate budget","depends_on_ids":[],"acceptance":"The kit is delivered and live on the registration page.","channel":"C2","utm":{"source":"zoom","medium":"webinar","campaign":"brasswick-q1_pipeline_cfo-mfg_202701","content":"cre-02","query":"?utm_source=zoom&utm_medium=webinar&utm_campaign=brasswick-q1_pipeline_cfo-mfg_202701&utm_content=cre-02"},"auto":false,"when":"pre-launch","prevents":null},{"id":"CRE-03","function":"creative","requirement":"Test plan: run the LinkedIn concepts against each other for the first two weeks, then move budget to the concept with the lowest cost per opportunity.","traces_to":"C1","trace_label":"C1: Channel: LinkedIn ads","owner":"Northfield Studio (agency)","due":null,"due_label":"Ongoing, Jan 11, 2027 to Mar 21, 2027","budget":null,"budget_label":"No separate budget","depends_on_ids":[],"acceptance":"After two weeks, the winning concept holds the largest share of LinkedIn spend.","channel":"C1","utm":{"source":"linkedin","medium":"paid_social","campaign":"brasswick-q1_pipeline_cfo-mfg_202701","content":"cre-03","query":"?utm_source=linkedin&utm_medium=paid_social&utm_campaign=brasswick-q1_pipeline_cfo-mfg_202701&utm_content=cre-03"},"auto":false,"when":"ongoing","prevents":null}],"unassigned":[],"dependency_conflicts":[],"lead_times":[{"function":"creative","name":"Creative","days":21,"source":"As shipped"},{"function":"content","name":"Content","days":21,"source":"As shipped"},{"function":"pr","name":"PR","days":14,"source":"As shipped"},{"function":"operations","name":"Operations","days":10,"source":"As shipped"},{"function":"ads","name":"Ads","days":7,"source":"As shipped"},{"function":"sales","name":"Sales enablement","days":5,"source":"As shipped"}],"reconciliation":{"channels_total":90000.0,"budget_total":90000.0,"requirements_total":90000.0,"ok":true},"risks":[{"source":"Check 2: Opportunities land before the due date","risk":"Leads from the last 2 weeks land after Mar 31, 2027. The pipeline that lands in time, $1.34M, still meets the target.","fix":"Launch 2 weeks earlier, or move the due date to Apr 11, 2027.","owner":"Priya Nand, demand gen"},{"source":"Named in the strategy (R1)","risk":"The webinar depends on one customer speaker. If she drops out, the webinar has no proof point.","fix":"See CON-04","owner":"Tom Ellery"}],"measurement":{"primary":"$1.2M in pipeline and 40 opportunities by Mar 31, 2027","leading":["70 leads a week","5.6 opportunities a week once leads convert","$9,000 spend a week"],"revenue":"$420K closed revenue at a 25% win rate, the last of it by Jul 10, 2027. A projection, not a forecast.","crm_campaign":"brasswick-q1","diagnostics_only":"Clicks, impressions and MQL counts are Ads diagnostics, never KPIs."}}};
+let ROLE = "ceo";
+const MD = "# Campaign brief: Close the Books Faster\n\n**Verdict: Ready with flags.** CRM campaign `brasswick-q1`. Round 1.\nApproved by Ana Ferris, VP Marketing, on Dec 14, 2026.\n\n## The target\n\n- **Primary KPI:** $1.2M in pipeline and 40 opportunities by Mar 31, 2027.\n- **Leading indicators:** 70 leads a week, 5.6 opportunities a week once leads convert, $9,000 spend a week.\n- **Closed revenue:** $420K closed revenue at a 25% win rate, the last of it by Jul 10, 2027. A projection, not a forecast.\n- **Not KPIs:** clicks, impressions and MQL counts. Ads diagnostics only.\n\n| Reverse funnel | Value |\n|---|---|\n| Pipeline target | $1.2M |\n| Due date | Mar 31, 2027 |\n| Opportunities needed | 40 |\n| Leads needed | 500 |\n| Leads the plan buys | 700 |\n| Expected opportunities | 56 |\n| Pipeline the plan buys | $1.68M |\n| Pipeline that lands by the due date | $1.34M |\n| Cost per lead today (blended) | $129 |\n| Cost per lead ceiling | $180 |\n\n## The ten checks\n\n| # | Check | State | Reason | Fix |\n|---|---|---|---|---|\n| 1 | Target reachable on budget | Pass | The plan buys 700 leads, 56 opportunities and $1.68M in pipeline against a $1.2M target. |  |\n| 2 | Opportunities land before the due date | Flag | Leads from the last 2 weeks land after Mar 31, 2027. The pipeline that lands in time, $1.34M, still meets the target. | Launch 2 weeks earlier, or move the due date to Apr 11, 2027. |\n| 3 | Every channel can buy at least one opportunity | Pass | Every channel buys at least one opportunity in the window. |  |\n| 4 | Sales capacity | Pass | The plan sends 24.3 opportunities a month. The team can work 30. |  |\n| 5 | Audience specific enough to target | Pass | Names the industry, a 200 to 1,000 employee size band, the region, the ERP and an invoice volume, and three buying roles by title. A media buyer can build this list without a question. |  |\n| 6 | Offer fits the audience | Pass | The benchmark shows where the close loses days, a problem the CFO and Controller own. The CTA asks for one thing: a close review. |  |\n| 7 | One provable message | Pass | One claim: approval from 9 days to 2 and a day-4 close on NetSuite or Sage Intacct, backed by three named customers. With a competitor's name in it, the claim is no longer true. |  |\n| 8 | Channels reach the named buying roles | Pass | Every channel says how it reaches the roles: title and size targeting, a partner's finance list, a vendor filter on finance titles, and SDRs on the account list. |  |\n| 9 | Tracking to pipeline defined | Pass | Leads get the Salesforce campaign on creation, and opportunities within 90 days of a touch take it as primary campaign source. |  |\n| 10 | Risks named | Pass | Names the single customer speaker as a point of failure, with an owner. |  |\n\n## The strategy it traces to\n\n| Line | What | As stated |\n|---|---|---|\n| T1 | Pipeline target | $1,200,000 in pipeline by Mar 31, 2027 |\n| A1 | Audience | US manufacturers with 200 to 1,000 employees that run NetSuite or Sage Intacct and process more than 2,000 supplier invoices a month. Roles: CFO, Controller, AP manager. |\n| O1 | Offer | The Month-End Close Benchmark: a 20-minute read-out that shows where a manufacturer's close loses days, built from the buyer's own AP numbers. CTA: Book a close review. |\n| M1 | Message | Brasswick cuts invoice approval from 9 days to 2 for manufacturers on NetSuite or Sage Intacct, so the books close on day 4. Proof: Three named manufacturing customers closed on day 4 within two quarters of go-live. |\n| C1 | Channel: LinkedIn ads | LinkedIn ads (paid social), $40,000 at $200 a lead |\n| C2 | Channel: Webinar | Webinar (webinar), $15,000 at $100 a lead |\n| C3 | Channel: Content syndication | Content syndication (syndication), $20,000 at $80 a lead |\n| C4 | Channel: SDR outbound | SDR outbound (outbound), $15,000 at $150 a lead |\n| K1 | Tracking | Every lead gets the Salesforce campaign brasswick-q1 on creation. Opportunities created within 90 days of a campaign touch take it as primary campaign source. |\n| B1 | Budget | $90,000 total |\n| L1 | Launch | Jan 11, 2027 for 10 weeks, to Mar 21, 2027 |\n| F1 | Funnel | Average deal $30,000, 8% of leads become opportunities in 21 days |\n\n## Channels\n\n| ID | Channel | Budget | Cost per lead | Leads | Expected opportunities | Pipeline |\n|---|---|---|---|---|---|---|\n| C1 | LinkedIn ads | $40,000 | $200 | 200 | 16 | $480K |\n| C2 | Webinar | $15,000 | $100 | 150 | 12 | $360K |\n| C3 | Content syndication | $20,000 | $80 | 250 | 20 | $600K |\n| C4 | SDR outbound | $15,000 | $150 | 100 | 8 | $240K |\n\n## Ads\n\n| ID | Requirement | Traces to | Owner | Due | Budget | Depends on | Acceptance |\n|---|---|---|---|---|---|---|---|\n| ADS-01 | Build the LinkedIn campaigns: CFO, Controller and AP manager titles at the account list, 200 to 1,000 employees. Manual bidding with a cost cap. LinkedIn Audience Network off. A Lead Gen Form that offers the Month-End Close Benchmark. | C1: Channel: LinkedIn ads | Priya Nand, demand gen | Jan 4, 2027 | $40,000, the C1 budget | CRE-01, OPS-02 | Campaigns sit in draft with titles, company size and the account list applied, Audience Network off, and a test form submission reaches Salesforce. |\n| ADS-02 | Stop rule: pause any ad set whose cost per lead runs above $180 for two straight weeks. $180 is the most a lead can cost for the budget to reach the target. | T1: Pipeline target | Priya Nand, demand gen | Ongoing, Jan 11, 2027 to Mar 21, 2027 | No separate budget | None | Every Monday the cost per lead of each ad set is compared to $180, and the ones above it for two weeks are paused. |\n| ADS-03 | Brief the syndication vendor: finance titles at US manufacturers of 200 to 1,000 employees, delivered weekly, with the benchmark PDF as the asset. | C3: Channel: Content syndication | Priya Nand, demand gen | Jan 4, 2027 | $20,000, the C3 budget | CON-01 | The signed insertion order names the titles, the size band, the region, weekly delivery and the benchmark PDF. |\n\n## PR\n\nNot in this campaign. Channels C1 to C4 include no channel that uses PR.\n\n## Content\n\n| ID | Requirement | Traces to | Owner | Due | Budget | Depends on | Acceptance |\n|---|---|---|---|---|---|---|---|\n| CON-01 | Build the Month-End Close Benchmark: the 20-minute read-out from the buyer's own AP numbers, and a gated PDF version for syndication. | O1: Offer | Tom Ellery, content | Dec 21, 2026 | No separate budget | None | The read-out runs end to end on a test account's AP numbers, and the PDF is approved. |\n| CON-02 | Produce the webinar with the NetSuite partner: one customer speaker who closed on day 4, and the benchmark as the follow-up offer. | C2: Channel: Webinar | Tom Ellery, content | Dec 21, 2026 | $15,000, the C2 budget | None | The speaker is confirmed in writing, the run of show is approved, and the registration page is live. |\n| CON-03 | Write one proof piece per named manufacturing customer, each showing the close moving to day 4. | M1: Message | Tom Ellery, content | Dec 21, 2026 | No separate budget | None | Each customer has approved its piece in writing. |\n| CON-04 | Line up a second customer speaker for the webinar, from the three named manufacturing customers, briefed on the same run of show. | C2: Channel: Webinar | Tom Ellery, content | Dec 21, 2026 | No separate budget | None | A second speaker has confirmed in writing and has the run of show. |\n\n## Operations\n\n| ID | Requirement | Traces to | Owner | Due | Budget | Depends on | Acceptance |\n|---|---|---|---|---|---|---|---|\n| OPS-01 | Set up CRM campaign brasswick-q1, or confirm it exists. Every opportunity from this campaign carries it as its campaign source, under the credit rule in line K1. Every link uses the UTMs in this brief. | K1: Tracking | Dana Ruiz, RevOps | Jan 1, 2027 | No separate budget | None | A test lead from each channel creates a record that shows campaign brasswick-q1 and its UTMs in the CRM. |\n| OPS-02 | Forms on the benchmark page and the LinkedIn Lead Gen Form push every lead to Salesforce with the campaign and its UTMs. | K1: Tracking | Dana Ruiz, RevOps | Jan 1, 2027 | No separate budget | CON-01 | A test submission from each form shows the campaign and all four UTMs on the Salesforce lead. |\n| OPS-03 | Route benchmark leads from accounts on the list to the account's SDR. Leads from off-list accounts go to a review queue. | A1: Audience | Dana Ruiz, RevOps | Jan 1, 2027 | No separate budget | None | A test lead from a listed account lands with its SDR, and one from an unlisted account lands in the review queue. |\n| OPS-04 | MQL definition: a lead from a target account, in a named buying role, who books a close review or attends the webinar. | O1: Offer | Dana Ruiz, RevOps | Jan 1, 2027 | No separate budget | None | The definition is live in Salesforce and sales has signed off on it. |\n| OPS-05 | Dashboard: pipeline and opportunities against the $1.2M target by week, with leads and spend by channel against the weekly pacing in this brief. | T1: Pipeline target | Dana Ruiz, RevOps | Jan 1, 2027 | No separate budget | None | The dashboard shows a test week against the weekly targets, and the sales director can open it. |\n\n## Sales enablement\n\n| ID | Requirement | Traces to | Owner | Due | Budget | Depends on | Acceptance |\n|---|---|---|---|---|---|---|---|\n| SAL-01 | Follow-up SLA: an SDR calls every benchmark lead and every close review request within one business day. | O1: Offer | Marcus Webb, sales director | Ongoing, Jan 11, 2027 to Mar 21, 2027 | No separate budget | None | Salesforce shows a logged call within one business day on every campaign lead. |\n| SAL-02 | SDR outbound: sequences to Controllers and AP managers on the account list that open with the benchmark. | C4: Channel: SDR outbound | Marcus Webb, sales director | Jan 6, 2027 | $15,000, the C4 budget | None | Sequences are loaded in Outreach for every contact on the list and approved by the sales director. |\n| SAL-03 | Talk track and objection sheet: the day-4 close claim, the customer proof pieces, and answers on NetSuite and Sage Intacct integration. | M1: Message | Marcus Webb, sales director | Jan 6, 2027 | No separate budget | CON-03 | Every SDR and AE has run the talk track once in a role play with the sales director. |\n| SAL-04 | Capacity: the three AEs keep room for the opportunity flow in the pacing table through the run. | T1: Pipeline target | Marcus Webb, sales director | Ongoing, Jan 11, 2027 to Mar 21, 2027 | No separate budget | None | Each week, every new campaign opportunity has an AE owner within one business day. |\n\n## Creative\n\n| ID | Requirement | Traces to | Owner | Due | Budget | Depends on | Acceptance |\n|---|---|---|---|---|---|---|---|\n| CRE-01 | LinkedIn concepts on the day-4 close claim: single image and document ad formats, with two copy variants per concept. | M1: Message | Northfield Studio (agency) | Dec 21, 2026 | No separate budget | CON-03 | Final files in every LinkedIn size, approved against the core message. |\n| CRE-02 | Webinar promo kit: registration page art, email headers and social tiles. | C2: Channel: Webinar | Northfield Studio (agency) | Dec 21, 2026 | No separate budget | None | The kit is delivered and live on the registration page. |\n| CRE-03 | Test plan: run the LinkedIn concepts against each other for the first two weeks, then move budget to the concept with the lowest cost per opportunity. | C1: Channel: LinkedIn ads | Northfield Studio (agency) | Ongoing, Jan 11, 2027 to Mar 21, 2027 | No separate budget | None | After two weeks, the winning concept holds the largest share of LinkedIn spend. |\n\n## Risks\n\n| From | Risk | Fix | Owner |\n|---|---|---|---|\n| Check 2: Opportunities land before the due date | Leads from the last 2 weeks land after Mar 31, 2027. The pipeline that lands in time, $1.34M, still meets the target. | Launch 2 weeks earlier, or move the due date to Apr 11, 2027. | Priya Nand, demand gen |\n| Named in the strategy (R1) | The webinar depends on one customer speaker. If she drops out, the webinar has no proof point. | See CON-04 | Tom Ellery |\n\n## UTMs\n\n| ID | utm_source | utm_medium | utm_campaign | utm_content |\n|---|---|---|---|---|\n| ADS-01 | linkedin | paid_social | brasswick-q1_pipeline_cfo-mfg_202701 | ads-01 |\n| ADS-02 | linkedin | paid_social | brasswick-q1_pipeline_cfo-mfg_202701 | ads-02 |\n| ADS-03 | netline | syndication | brasswick-q1_pipeline_cfo-mfg_202701 | ads-03 |\n| CON-02 | zoom | webinar | brasswick-q1_pipeline_cfo-mfg_202701 | con-02 |\n| CON-04 | zoom | webinar | brasswick-q1_pipeline_cfo-mfg_202701 | con-04 |\n| SAL-02 | outreach | outbound | brasswick-q1_pipeline_cfo-mfg_202701 | sal-02 |\n| CRE-01 | linkedin | paid_social | brasswick-q1_pipeline_cfo-mfg_202701 | cre-01 |\n| CRE-02 | zoom | webinar | brasswick-q1_pipeline_cfo-mfg_202701 | cre-02 |\n| CRE-03 | linkedin | paid_social | brasswick-q1_pipeline_cfo-mfg_202701 | cre-03 |\n\n## Lead times\n\n| Function | Days before launch | Source |\n|---|---|---|\n| Creative | 21 | As shipped |\n| Content | 21 | As shipped |\n| PR | 14 | As shipped |\n| Operations | 10 | As shipped |\n| Ads | 7 | As shipped |\n| Sales enablement | 5 | As shipped |\n\n**Budget check:** channels $90,000, total $90,000, requirements $90,000. They reconcile.\n\n## Weekly pacing\n\n| Week | Starts | Spend | Leads | Opportunities landing | Pipeline to date |\n|---|---|---|---|---|---|\n| 1 | Jan 11, 2027 | $9,000 | 70 | 0 | $0 |\n| 2 | Jan 18, 2027 | $9,000 | 70 | 0 | $0 |\n| 3 | Jan 25, 2027 | $9,000 | 70 | 0 | $0 |\n| 4 | Feb 1, 2027 | $9,000 | 70 | 5.6 | $168K |\n| 5 | Feb 8, 2027 | $9,000 | 70 | 5.6 | $336K |\n| 6 | Feb 15, 2027 | $9,000 | 70 | 5.6 | $504K |\n| 7 | Feb 22, 2027 | $9,000 | 70 | 5.6 | $672K |\n| 8 | Mar 1, 2027 | $9,000 | 70 | 5.6 | $840K |\n| 9 | Mar 8, 2027 | $9,000 | 70 | 5.6 | $1.01M |\n| 10 | Mar 15, 2027 | $9,000 | 70 | 5.6 | $1.18M |\n| 11 | Mar 22, 2027 | $0 | 0 | 5.6 | $1.34M |\n| 12 | Mar 29, 2027 (due week) | $0 | 0 | 5.6 | $1.51M |\n| 13 | Apr 5, 2027 | $0 | 0 | 5.6 | $1.68M |\n\nEvery number is a projection at the user's own rates, not a forecast.\n\n*Built by Marketing Systems Guild. Turning strangers into clients.*\n";
+const CSV = "ID,Function,Requirement,Traces to,Owner,Due,Budget,Depends on,Acceptance,utm_source,utm_medium,utm_campaign,utm_content\nADS-01,Ads,\"Build the LinkedIn campaigns: CFO, Controller and AP manager titles at the account list, 200 to 1,000 employees. Manual bidding with a cost cap. LinkedIn Audience Network off. A Lead Gen Form that offers the Month-End Close Benchmark.\",C1: Channel: LinkedIn ads,\"Priya Nand, demand gen\",2027-01-04,40000,CRE-01 OPS-02,\"Campaigns sit in draft with titles, company size and the account list applied, Audience Network off, and a test form submission reaches Salesforce.\",linkedin,paid_social,brasswick-q1_pipeline_cfo-mfg_202701,ads-01\nADS-02,Ads,Stop rule: pause any ad set whose cost per lead runs above $180 for two straight weeks. $180 is the most a lead can cost for the budget to reach the target.,T1: Pipeline target,\"Priya Nand, demand gen\",\"Ongoing, Jan 11, 2027 to Mar 21, 2027\",No separate budget,,\"Every Monday the cost per lead of each ad set is compared to $180, and the ones above it for two weeks are paused.\",linkedin,paid_social,brasswick-q1_pipeline_cfo-mfg_202701,ads-02\nADS-03,Ads,\"Brief the syndication vendor: finance titles at US manufacturers of 200 to 1,000 employees, delivered weekly, with the benchmark PDF as the asset.\",C3: Channel: Content syndication,\"Priya Nand, demand gen\",2027-01-04,20000,CON-01,\"The signed insertion order names the titles, the size band, the region, weekly delivery and the benchmark PDF.\",netline,syndication,brasswick-q1_pipeline_cfo-mfg_202701,ads-03\nCON-01,Content,\"Build the Month-End Close Benchmark: the 20-minute read-out from the buyer's own AP numbers, and a gated PDF version for syndication.\",O1: Offer,\"Tom Ellery, content\",2026-12-21,No separate budget,,\"The read-out runs end to end on a test account's AP numbers, and the PDF is approved.\",,,,\nCON-02,Content,\"Produce the webinar with the NetSuite partner: one customer speaker who closed on day 4, and the benchmark as the follow-up offer.\",C2: Channel: Webinar,\"Tom Ellery, content\",2026-12-21,15000,,\"The speaker is confirmed in writing, the run of show is approved, and the registration page is live.\",zoom,webinar,brasswick-q1_pipeline_cfo-mfg_202701,con-02\nCON-03,Content,\"Write one proof piece per named manufacturing customer, each showing the close moving to day 4.\",M1: Message,\"Tom Ellery, content\",2026-12-21,No separate budget,,Each customer has approved its piece in writing.,,,,\nCON-04,Content,\"Line up a second customer speaker for the webinar, from the three named manufacturing customers, briefed on the same run of show.\",C2: Channel: Webinar,\"Tom Ellery, content\",2026-12-21,No separate budget,,A second speaker has confirmed in writing and has the run of show.,zoom,webinar,brasswick-q1_pipeline_cfo-mfg_202701,con-04\nOPS-01,Operations,\"Set up CRM campaign brasswick-q1, or confirm it exists. Every opportunity from this campaign carries it as its campaign source, under the credit rule in line K1. Every link uses the UTMs in this brief.\",K1: Tracking,\"Dana Ruiz, RevOps\",2027-01-01,No separate budget,,A test lead from each channel creates a record that shows campaign brasswick-q1 and its UTMs in the CRM.,,,,\nOPS-02,Operations,Forms on the benchmark page and the LinkedIn Lead Gen Form push every lead to Salesforce with the campaign and its UTMs.,K1: Tracking,\"Dana Ruiz, RevOps\",2027-01-01,No separate budget,CON-01,A test submission from each form shows the campaign and all four UTMs on the Salesforce lead.,,,,\nOPS-03,Operations,Route benchmark leads from accounts on the list to the account's SDR. Leads from off-list accounts go to a review queue.,A1: Audience,\"Dana Ruiz, RevOps\",2027-01-01,No separate budget,,\"A test lead from a listed account lands with its SDR, and one from an unlisted account lands in the review queue.\",,,,\nOPS-04,Operations,\"MQL definition: a lead from a target account, in a named buying role, who books a close review or attends the webinar.\",O1: Offer,\"Dana Ruiz, RevOps\",2027-01-01,No separate budget,,The definition is live in Salesforce and sales has signed off on it.,,,,\nOPS-05,Operations,\"Dashboard: pipeline and opportunities against the $1.2M target by week, with leads and spend by channel against the weekly pacing in this brief.\",T1: Pipeline target,\"Dana Ruiz, RevOps\",2027-01-01,No separate budget,,\"The dashboard shows a test week against the weekly targets, and the sales director can open it.\",,,,\nSAL-01,Sales enablement,Follow-up SLA: an SDR calls every benchmark lead and every close review request within one business day.,O1: Offer,\"Marcus Webb, sales director\",\"Ongoing, Jan 11, 2027 to Mar 21, 2027\",No separate budget,,Salesforce shows a logged call within one business day on every campaign lead.,,,,\nSAL-02,Sales enablement,SDR outbound: sequences to Controllers and AP managers on the account list that open with the benchmark.,C4: Channel: SDR outbound,\"Marcus Webb, sales director\",2027-01-06,15000,,Sequences are loaded in Outreach for every contact on the list and approved by the sales director.,outreach,outbound,brasswick-q1_pipeline_cfo-mfg_202701,sal-02\nSAL-03,Sales enablement,\"Talk track and objection sheet: the day-4 close claim, the customer proof pieces, and answers on NetSuite and Sage Intacct integration.\",M1: Message,\"Marcus Webb, sales director\",2027-01-06,No separate budget,CON-03,Every SDR and AE has run the talk track once in a role play with the sales director.,,,,\nSAL-04,Sales enablement,Capacity: the three AEs keep room for the opportunity flow in the pacing table through the run.,T1: Pipeline target,\"Marcus Webb, sales director\",\"Ongoing, Jan 11, 2027 to Mar 21, 2027\",No separate budget,,\"Each week, every new campaign opportunity has an AE owner within one business day.\",,,,\nCRE-01,Creative,\"LinkedIn concepts on the day-4 close claim: single image and document ad formats, with two copy variants per concept.\",M1: Message,Northfield Studio (agency),2026-12-21,No separate budget,CON-03,\"Final files in every LinkedIn size, approved against the core message.\",linkedin,paid_social,brasswick-q1_pipeline_cfo-mfg_202701,cre-01\nCRE-02,Creative,\"Webinar promo kit: registration page art, email headers and social tiles.\",C2: Channel: Webinar,Northfield Studio (agency),2026-12-21,No separate budget,,The kit is delivered and live on the registration page.,zoom,webinar,brasswick-q1_pipeline_cfo-mfg_202701,cre-02\nCRE-03,Creative,\"Test plan: run the LinkedIn concepts against each other for the first two weeks, then move budget to the concept with the lowest cost per opportunity.\",C1: Channel: LinkedIn ads,Northfield Studio (agency),\"Ongoing, Jan 11, 2027 to Mar 21, 2027\",No separate budget,,\"After two weeks, the winning concept holds the largest share of LinkedIn spend.\",linkedin,paid_social,brasswick-q1_pipeline_cfo-mfg_202701,cre-03\n";
+
+// ---------- formatting: identical rules to plan.py
+function fmtMoney(v){
+  if(v===null||v===undefined) return "None set";
+  const neg=v<0; v=Math.abs(v); let out;
+  if(v>=1e6){ out="$"+(Math.floor(v/1e6*100+0.5)/100).toFixed(2).replace(/0+$/,"").replace(/\.$/,"")+"M"; }
+  else if(v>=1e4){ out="$"+Math.floor(v/1000+0.5)+"K"; }
+  else { out="$"+Math.floor(v+0.5).toLocaleString("en-US"); }
+  return neg?"-"+out:out;
+}
+function fmtExact(v){ if(v===null||v===undefined) return "None set"; return "$"+(Math.round(v*100)/100).toLocaleString("en-US",{maximumFractionDigits:2}); }
+function fmtRate(r){ return Math.floor(r*100+0.5)+"%"; }
+function fmtCount(v){ const r=Math.floor(v*10+0.5)/10; return r===Math.trunc(r)?r.toLocaleString("en-US"):r.toLocaleString("en-US",{minimumFractionDigits:1,maximumFractionDigits:1}); }
+const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function pd(iso){ const [y,m,d]=iso.split("-").map(Number); return Date.UTC(y,m-1,d); }
+function fmtDate(x){ if(!x) return ""; const t=typeof x==="number"?new Date(x):new Date(pd(x)); return MON[t.getUTCMonth()]+" "+t.getUTCDate()+", "+t.getUTCFullYear(); }
+const DAY=86400000;
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const $=id=>document.getElementById(id);
+
+const F=DATA.funnel, T=DATA.timing, BR=DATA.brief||null;
+const WORD={pass:"Pass",flag:"Flag",fail:"Fail"}, SHAPE={pass:"●",flag:"▲",fail:"✕"};
+function stPill(c){ const nr=c.not_run?" nr":""; return `<span class="st ${c.state}${nr}"><span aria-hidden="true">${SHAPE[c.state]}</span>${WORD[c.state]}${c.not_run?", not run":""}</span>`; }
+function stampHtml(v){ const cls={"Ready":"ready","Ready with flags":"flags","Untested":"untested","Not ready":"notready","Pending rubric":"untested"}[v]||"untested";
+  const sh={"Ready":"●","Ready with flags":"▲","Untested":"?","Not ready":"✕","Pending rubric":"…"}[v]||"";
+  return `<span class="stamp ${cls}"><span aria-hidden="true">${sh}</span>Verdict: ${esc(v)}</span>`; }
+
+// ---------- header
+const verdict = BR ? BR.stamp : DATA.verdict;
+$("meta").innerHTML = `<b>${esc(DATA.campaign.name)}</b> &middot; CRM campaign ${esc(DATA.campaign.id)} &middot; Launch ${fmtDate(T.launch)} for ${T.weeks} weeks &middot; Due ${fmtDate(T.due)} &middot; Round ${DATA.round||1}`;
+$("stamp").innerHTML = stampHtml(verdict) + (BR?` <span class="meta">&nbsp;Approved by ${esc(BR.approval.name)}, ${esc(BR.approval.seat)}, ${esc(BR.approval.date_label)}</span>`:"");
+
+// ---------- seats
+const checks=DATA.checks, fails=checks.filter(c=>c.state==="fail"), flags=checks.filter(c=>c.state==="flag");
+const firstMove = fails[0]||flags[0]||null;
+const QS={ceo:"Can this campaign hit its number on this budget?",marketing:"Is my strategy ready to launch, and what fails first?",
+  agency:"What exactly are we on the hook to deliver, and is the target realistic?",cro:"What will sales get, when, and what do we owe the campaign?"};
+function cards(role){
+  const c=[], chk=n=>checks.find(x=>x.n===n);
+  (DATA.warnings||[]).slice(0,1).forEach(w=>c.push(["warn",esc(w)]));
+  const lead=verdict==="Not ready"?"stop":"key";
+  if(role==="ceo"){
+    c.push([lead,`<b>${esc(verdict)}.</b> The plan buys ${fmtMoney(F.planned_pipeline)} in pipeline against a ${fmtMoney(F.target)} target. ${fmtMoney(T.pipeline_in_time)} of it lands by ${fmtDate(T.due)}.`]);
+    c.push(["",firstMove?`<b>One change:</b> ${esc(firstMove.fix)}`:`<b>One move:</b> approve the strategy and build the brief.`]);
+  } else if(role==="marketing"){
+    c.push([lead,`<b>${esc(verdict)}.</b> ${fails.length} ${fails.length===1?"check fails":"checks fail"}, ${flags.length} ${flags.length===1?"flags":"flag"}.`]);
+    if(fails[0]) c.push(["",`<b>Fails first: check ${fails[0].n}, ${esc(fails[0].name)}.</b> ${esc(fails[0].reason)} <b>Fix:</b> ${esc(fails[0].fix)}`]);
+    else if(flags[0]) c.push(["",`<b>First flag: check ${flags[0].n}, ${esc(flags[0].name)}.</b> ${esc(flags[0].reason)} <b>Fix:</b> ${esc(flags[0].fix)}`]);
+  } else if(role==="agency"){
+    c.push([lead,`<b>${esc(verdict)}.</b> ` + DATA.channels.map(x=>`${esc(x.name)}: ${fmtCount(x.leads)} leads at ${x.cpl?fmtExact(x.cpl):"no cost per lead"}${x.cpl_assumed?" (Assumption)":""}`).join(". ")+"."]);
+    c.push(["",`<b>Check 1:</b> ${esc(chk(1).reason)} <b>Check 2:</b> ${esc(chk(2).reason)}`]);
+  } else {
+    c.push([lead,`<b>${fmtCount(F.planned_opps)} expected opportunities</b>, landing from ${fmtDate(T.first_land)} to ${fmtDate(T.last_land)}. ${fmtCount(T.opps_in_time)} land by ${fmtDate(T.due)}.`]);
+    c.push(["",`<b>Capacity:</b> ${esc(chk(4).reason)}`]);
+    if(BR){ const n=BR.requirements.filter(r=>r.function==="sales").length; c.push(["",`<b>Sales owes the campaign ${n} requirements</b> in the Sales enablement section of the brief.`]); }
+  }
+  return c.map(([k,h])=>`<div class="card ${k}">${h}</div>`).join("");
+}
+function setRole(r){ ROLE=r; document.querySelectorAll(".roles button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.role===r))); $("q").textContent=QS[r]; $("cards").innerHTML=cards(r); }
+document.querySelectorAll(".roles button").forEach(b=>b.addEventListener("click",()=>setRole(b.dataset.role)));
+
+// ---------- checks
+$("checks").innerHTML = `<tr><th class="n">#</th><th>Check</th><th>State</th><th>By</th><th>Reason</th><th>Fix</th></tr>` +
+  checks.map(c=>`<tr><td class="n">${c.n}</td><td><b>${esc(c.name)}</b></td><td>${stPill(c)}</td><td class="by">${c.by==="script"?"Script":"Claude"}</td><td data-l="Reason">${esc(c.reason)}</td><td data-l="Fix">${esc(c.fix)||"None needed"}</td></tr>`).join("");
+
+// ---------- funnel
+function tile(v,l){ return `<div><div class="v">${v}</div><div class="l">${l}</div></div>`; }
+$("tiles").innerHTML = tile(fmtMoney(F.target),"Pipeline target") + tile(fmtMoney(F.planned_pipeline),"Pipeline the plan buys") +
+  tile(fmtMoney(T.pipeline_in_time),"Lands by "+fmtDate(T.due)) + tile(F.cpl_ceiling?fmtMoney(F.cpl_ceiling):"None","Cost per lead ceiling");
+function fbar(name,need,got,inTime,fmt){
+  const max=Math.max(need,got,1)*1.08, pct=v=>(v/max*100).toFixed(2)+"%";
+  const hatch = inTime!==null && inTime<got ? `<div class="bar hatch" style="width:${pct(got)}"></div><div class="bar solid" style="width:${pct(inTime)}"></div>` : `<div class="bar solid" style="width:${pct(got)}"></div>`;
+  const lbl = inTime!==null && inTime<got ? `Bought ${fmt(got)}, in time ${fmt(inTime)}` : `Bought ${fmt(got)}`;
+  return `<div class="fb"><div class="nm">${name}<br><span style="font-weight:400">Needed ${fmt(need)}. ${lbl}</span></div><div class="track">${hatch}<div class="mark" style="left:${pct(need)}" title="Needed"></div></div></div>`;
+}
+$("fbars").innerHTML = fbar("Leads",F.leads_needed,F.planned_leads,null,fmtCount) +
+  fbar("Opportunities",F.opps_needed,F.planned_opps,T.opps_in_time,fmtCount) + fbar("Pipeline",F.target,F.planned_pipeline,T.pipeline_in_time,fmtMoney);
+$("chans").innerHTML = `<tr><th>ID</th><th>Channel</th><th class="n">Budget</th><th class="n">Cost per lead</th><th class="n">Leads</th><th class="n">Expected opportunities</th><th class="n">Pipeline</th></tr>` +
+  DATA.channels.map(c=>`<tr><td>${c.id}</td><td><b>${esc(c.name)}</b> <span class="by">${esc(c.type.replace("_"," "))}</span></td><td class="n">${fmtExact(c.budget)}</td><td class="n">${c.cpl?fmtExact(c.cpl):"None"}${c.cpl_assumed?" (Assumption)":""}</td><td class="n">${fmtCount(c.leads)}</td><td class="n">${fmtCount(c.opps)}</td><td class="n">${fmtMoney(c.pipeline)}</td></tr>`).join("");
+
+// ---------- what-if: the same math as plan.py
+const WI={budget:100,cpl:100,rate:Math.round(F.rate*1000)/10,lag:T.lag_days,target:F.target};
+function sim(s){
+  const rate=s.rate/100, deal=F.avg_deal, weeks=T.weeks;
+  let leads=0; DATA.channels.forEach(c=>{ const b=c.budget*s.budget/100, p=c.cpl?c.cpl*s.cpl/100:0; if(b&&p) leads+=Math.floor(b/p+1e-9); });
+  const opps=leads*rate, pipe=opps*deal;
+  const base=Math.floor(leads/weeks), extra=leads%weeks, launch=pd(T.launch), due=pd(T.due);
+  let inLeads=0, late=0;
+  for(let i=0;i<weeks;i++){ const n=base+(i<extra?1:0); const land=launch+(7*i+6+Math.ceil(s.lag))*DAY; if(land<=due) inLeads+=n; else late++; }
+  const inPipe=inLeads*rate*deal;
+  const c1=pipe+1e-9>=s.target?"pass":"fail";
+  const c2=late===0?"pass":(inPipe+1e-9>=s.target?"flag":"fail");
+  return {leads,opps,pipe,inPipe,late,c1,c2};
+}
+const SL=[["budget","Budget, % of plan",50,200,5,v=>v+"% ("+fmtMoney(F.budget*v/100)+")"],["cpl","Cost per lead, % of today",50,200,5,v=>v+"%"],
+  ["rate","Lead-to-opportunity rate",1,40,0.5,v=>v+"%"],["lag","Days from lead to opportunity",0,120,1,v=>v+" days"],
+  ["target","Pipeline target",Math.round(F.target*0.25/10000)*10000,Math.round(F.target*2/10000)*10000,10000,v=>fmtMoney(v)]];
+$("planner").innerHTML = SL.map(([k,l,mn,mx,st])=>`<div><label for="wi-${k}">${l}: <span class="val" id="wv-${k}"></span></label><input type="range" id="wi-${k}" min="${mn}" max="${mx}" step="${st}" value="${WI[k]}"></div>`).join("") +
+  `<div style="align-self:end"><button class="tbtn" id="wi-reset">Back to the plan</button></div>`;
+function drawWI(){
+  SL.forEach(([k,,,,,f])=>{ $("wv-"+k).textContent=f(WI[k]); });
+  const r=sim(WI), pill=s=>`<span class="st ${s}"><span aria-hidden="true">${SHAPE[s]}</span>${WORD[s]}</span>`;
+  $("wiout").innerHTML = `<div><div class="v">${fmtMoney(r.pipe)}</div><div class="l">Pipeline bought</div></div>`+
+    `<div><div class="v">${fmtMoney(r.inPipe)}</div><div class="l">Lands by ${fmtDate(T.due)}</div></div>`+
+    `<div><div class="v">${pill(r.c1)}</div><div class="l">Check 1, what-if</div></div>`+
+    `<div><div class="v">${pill(r.c2)}</div><div class="l">Check 2, what-if</div></div>`;
+}
+SL.forEach(([k])=>$("wi-"+k).addEventListener("input",e=>{ WI[k]=Number(e.target.value); drawWI(); }));
+$("wi-reset").addEventListener("click",()=>{ Object.assign(WI,{budget:100,cpl:100,rate:Math.round(F.rate*1000)/10,lag:T.lag_days,target:F.target}); SL.forEach(([k])=>$("wi-"+k).value=WI[k]); drawWI(); });
+
+// ---------- pacing chart
+function drawPace(){
+  const P=DATA.pacing, W=900,H=300,m={l:70,r:20,t:24,b:40}, iw=W-m.l-m.r, ih=H-m.t-m.b;
+  const raw=Math.max(F.target,F.planned_pipeline)*1.08, mag=Math.pow(10,Math.floor(Math.log10(raw/4)));
+  const step=[1,2,2.5,5,10].map(k=>k*mag).find(k=>raw/k<=5), ymax=Math.ceil(raw/step)*step, nt=Math.round(ymax/step);
+  const x=i=>m.l+i*(iw/P.length), bw=iw/P.length*0.62, y=v=>m.t+ih-v/ymax*ih;
+  let s=`<g class="grid">`; for(let i=0;i<=nt;i++){ const v=step*i; s+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y(v)}" y2="${y(v)}"/>`; } s+=`</g>`;
+  for(let i=0;i<=nt;i++){ const v=step*i; s+=`<text x="${m.l-8}" y="${y(v)+4}" text-anchor="end" font-size="11">${v?fmtMoney(v):"$0"}</text>`; }
+  P.forEach((p,i)=>{ const v=p.opps_landing*F.avg_deal; if(v>0) s+=`<rect class="bh" data-i="${i}" x="${x(i)+(iw/P.length-bw)/2}" y="${y(v)}" width="${bw}" height="${m.t+ih-y(v)}" fill="var(--blue)"/>`;
+    s+=`<text x="${x(i)+iw/P.length/2}" y="${H-m.b+16}" text-anchor="middle" font-size="11">${p.week}</text>`; });
+  s+=`<text x="${m.l+iw/2}" y="${H-6}" text-anchor="middle" font-size="11">Week from launch</text>`;
+  s+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y(F.target)}" y2="${y(F.target)}" stroke="var(--amber)" stroke-width="3" stroke-dasharray="8 5"/>`;
+  s+=`<text x="${W-m.r}" y="${y(F.target)-6}" text-anchor="end" font-size="12" font-weight="700">Target ${fmtMoney(F.target)}</text>`;
+  const dueIdx=(pd(T.due)-pd(T.launch))/DAY/7; const dx=m.l+(dueIdx+1/7)*(iw/P.length);
+  if(dx<=W-m.r){ s+=`<line x1="${dx}" x2="${dx}" y1="${m.t}" y2="${m.t+ih}" stroke="currentColor" stroke-width="2" stroke-dasharray="4 3"/><text x="${dx-6}" y="${m.t+12}" text-anchor="end" font-size="12" font-weight="700">Due ${fmtDate(T.due)}</text>`; }
+  let path=""; P.forEach((p,i)=>{ const cx=x(i)+iw/P.length/2; path+=(i?"L":"M")+cx+" "+y(p.pipeline_cum); });
+  s+=`<path d="${path}" fill="none" stroke="currentColor" stroke-width="2"/>`;
+  P.forEach((p,i)=>{ const cx=x(i)+iw/P.length/2; s+=`<rect class="pt" data-i="${i}" x="${cx-4}" y="${y(p.pipeline_cum)-4}" width="8" height="8" fill="currentColor"/>`; });
+  s+=`<g class="axis"><line x1="${m.l}" x2="${W-m.r}" y1="${m.t+ih}" y2="${m.t+ih}"/></g>`;
+  const svg=$("pace"); svg.style.color="var(--ink)"; svg.innerHTML=s;
+  svg.querySelectorAll("rect").forEach(r=>{ r.addEventListener("mousemove",e=>{ const p=P[+r.dataset.i]; const t=$("tip");
+    t.innerHTML=`<b>Week ${p.week}</b>, from ${fmtDate(p.start)}<br>Spend ${fmtMoney(p.spend)}, ${fmtCount(p.leads)} leads<br>${fmtCount(p.opps_landing)} opportunities land<br>Pipeline to date ${fmtMoney(p.pipeline_cum)}`;
+    t.style.display="block"; t.style.left=Math.min(e.clientX+14,innerWidth-270)+"px"; t.style.top=(e.clientY+14)+"px"; }); r.addEventListener("mouseleave",()=>$("tip").style.display="none"); });
+  $("pacecap").textContent=`Leads arrive evenly across ${T.weeks} weeks and become opportunities ${T.lag_days} days later. ${fmtMoney(T.pipeline_in_time)} of pipeline lands by ${fmtDate(T.due)}.`;
+  $("pacetab").innerHTML=`<tr><th class="n">Week</th><th>Starts</th><th class="n">Spend</th><th class="n">Leads</th><th class="n">Opportunities landing</th><th class="n">Pipeline to date</th></tr>`+
+    P.map(p=>`<tr><td class="n">${p.week}</td><td>${fmtDate(p.start)}${p.contains_due?" <b>(due week)</b>":""}</td><td class="n">${fmtMoney(p.spend)}</td><td class="n">${fmtCount(p.leads)}</td><td class="n">${fmtCount(p.opps_landing)}</td><td class="n">${fmtMoney(p.pipeline_cum)}</td></tr>`).join("");
+}
+
+// ---------- brief
+function drawBrief(){
+  const el=$("brief");
+  if(!BR){
+    el.innerHTML = verdict==="Not ready"
+      ? `<div class="card stop"><b>Blocked.</b> The verdict is Not ready. A Fail blocks the brief and cannot be overridden. Fix ${fails.map(c=>"check "+c.n).join(", ")} and rerun.</div>`
+      : `<div class="card key"><b>Not built yet.</b> The brief builds once the strategy is approved.</div>`;
+    return;
+  }
+  const owners=[...new Set(BR.requirements.map(r=>r.owner))].sort();
+  const byId=Object.fromEntries(BR.requirements.map(r=>[r.id,r]));
+  let h=`<div class="controls no-print"><label>Owner <select id="ownf"><option value="">Everyone</option>${owners.map(o=>`<option>${esc(o)}</option>`).join("")}</select></label></div>`;
+  if(BR.unassigned.length) h+=`<div class="card warn" style="margin-bottom:10px"><b>Unassigned:</b> ${BR.unassigned.join(", ")}. Name an owner for each.</div>`;
+  if(BR.dependency_conflicts.length) h+=`<div class="card warn" style="margin-bottom:10px"><b>Dependency conflicts:</b> ${BR.dependency_conflicts.map(esc).join(" ")}</div>`;
+  h+=`<div id="secs"></div>`;
+  const m=BR.measurement;
+  h+=`<div class="sec"><h3>Measurement</h3><p style="margin:0 0 4px"><b>Primary KPI:</b> ${esc(m.primary)}.</p><p style="margin:0 0 4px"><b>Leading indicators:</b> ${m.leading.map(esc).join(", ")}.</p>${m.revenue?`<p style="margin:0 0 4px"><b>Closed revenue:</b> ${esc(m.revenue)}</p>`:""}<p style="margin:0"><b>Not KPIs:</b> clicks, impressions and MQL counts. Ads diagnostics only.</p></div>`;
+  h+=`<div class="sec"><h3>Risks</h3>${BR.risks.length?`<div class="scroll"><table><tr><th>From</th><th>Risk</th><th>Fix</th><th>Owner</th></tr>${BR.risks.map(r=>`<tr class="${r.owner==="Unassigned"?"unassigned":""}"><td>${esc(r.source)}</td><td>${esc(r.risk)}</td><td>${esc(r.fix)||"None given"}</td><td>${esc(r.owner)}</td></tr>`).join("")}</table></div>`:"None named."}</div>`;
+  h+=`<div class="sec"><h3>Lead times</h3><div class="scroll"><table><tr><th>Function</th><th class="n">Days before launch</th><th>Source</th></tr>${BR.lead_times.map(x=>`<tr><td>${esc(x.name)}</td><td class="n">${x.days}</td><td>${esc(x.source)}</td></tr>`).join("")}</table></div></div>`;
+  const rc=BR.reconciliation;
+  h+=`<div class="sec"><h3>Budget check</h3><p style="margin:0">Channels ${fmtExact(rc.channels_total)}, total ${fmtExact(rc.budget_total)}, requirements ${fmtExact(rc.requirements_total)}. <b>${rc.ok?"They reconcile.":"They do not reconcile."}</b></p></div>`;
+  el.innerHTML=h;
+  const draw=()=>{ const o=$("ownf").value;
+    $("secs").innerHTML=BR.sections.map(s=>{
+      if(!s.active) return `<div class="sec off"><h3>${esc(s.name)}</h3><p style="margin:0">${esc(s.because)}</p></div>`;
+      const rs=s.requirements.map(i=>byId[i]).filter(r=>!o||r.owner===o);
+      if(!rs.length) return `<div class="sec"><h3>${esc(s.name)}</h3><p style="margin:0">Nothing for this owner.</p></div>`;
+      return `<div class="sec"><h3>${esc(s.name)}</h3><div class="scroll"><table><tr><th>ID</th><th>Requirement</th><th>Traces to</th><th>Owner</th><th>Due</th><th>Budget</th><th>Depends on</th><th>Acceptance</th></tr>`+
+        rs.map(r=>`<tr class="${r.owner==="Unassigned"?"unassigned":""}"><td class="req-id">${r.id}</td><td>${esc(r.requirement)}${r.utm?`<div class="utm">${esc(r.utm.query)}</div>`:""}</td><td>${esc(r.trace_label)}</td><td>${esc(r.owner)}</td><td>${esc(r.due_label)}</td><td>${esc(r.budget_label)}</td><td>${r.depends_on_ids.join(", ")||"None"}</td><td>${esc(r.acceptance)}</td></tr>`).join("")+`</table></div></div>`;
+    }).join(""); };
+  $("ownf").addEventListener("change",draw); draw();
+}
+
+// ---------- what the script read
+function drawRead(){
+  let h="";
+  if((DATA.changes||[]).length) h+=`<h4>What changed since the last round</h4><div class="scroll"><table><tr><th>What</th><th>From</th><th>To</th></tr>${DATA.changes.map(c=>`<tr><td>${esc(c.what)}</td><td>${esc(c.from)}</td><td>${esc(c.to)}</td></tr>`).join("")}</table></div>`;
+  if((DATA.assumptions||[]).length) h+=`<h4>Assumptions</h4><p>${DATA.assumptions.map(a=>esc(a.label)+" "+esc(a.value)).join("; ")}. Each is labeled Assumption. The verdict can be no better than Untested.</p>`;
+  if((DATA.notes||[]).length) h+=`<h4>How your words were read</h4><p>${DATA.notes.map(esc).join(". ")}.</p>`;
+  if((DATA.warnings||[]).length) h+=`<h4>Warnings</h4><p>${DATA.warnings.map(esc).join(" ")}</p>`;
+  h+=`<h4>The strategy lines</h4><div class="scroll"><table><tr><th>Line</th><th>What</th><th>As stated</th></tr>${DATA.strategy_lines.map(l=>`<tr><td>${l.id}</td><td>${esc(l.label)}</td><td>${esc(l.text)}</td></tr>`).join("")}</table></div>`;
+  $("read").innerHTML=h;
+  if((DATA.changes||[]).length) $("readbox").open=true;
+}
+
+// ---------- exports
+function dl(name,text,type){ const b=new Blob([text],{type}); const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download=name; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();},500); }
+const base=(DATA.campaign.id||"campaign").replace(/[^a-z0-9-]+/gi,"-").toLowerCase();
+$("x-md").addEventListener("click",()=>dl(base+"-brief.md",MD,"text/markdown"));
+if(CSV) $("x-csv").addEventListener("click",()=>dl(base+"-requirements.csv",CSV,"text/csv")); else { $("x-csv").disabled=true; $("x-csv").title="The requirements exist once the brief is built."; }
+$("x-print").addEventListener("click",()=>window.print());
+
+setRole(ROLE); drawWI(); drawPace(); drawBrief(); drawRead();
+</script>
+</body>
+</html>

@@ -1,5 +1,24 @@
 # Changelog
 
+## Campaign Brief Builder
+
+### 1.0.0 (September 2026)
+
+- Takes a campaign strategy in any form: pasted text, a doc or a deck. Claude maps it to a fixed template and asks for each missing part, one question at a time
+- Reads the user's own words: "$90k", "1.2 million", "about $300 a lead", "3 weeks", "3 months", slash dates, and asks when a date could be read two ways
+- The reverse funnel: opportunities and leads the target needs, against the leads each channel's budget buys at its own cost per lead
+- Ten checks, each Pass, Flag or Fail with the fix. Four are arithmetic: target on budget, timing to the due date, channel minimum, sales capacity. Six are Claude's calls against a written rubric: audience, offer, message, channel reach, tracking, risks
+- Verdict assembled by the script: Ready, Ready with flags, Untested (built on guessed numbers), Not ready. A Fail blocks the brief with no override
+- Revision rounds with a report of what changed, then a typed approval with the approver's name and title
+- The brief: six sections for ads, PR, content, operations, sales enablement and creative. Every requirement carries an ID, the strategy line it traces to, an owner, a due date from lead times the user confirms, a budget line, dependencies and a yes-or-no acceptance test
+- UTMs for every link, from a default convention or the user's own, and one CRM campaign ID on every opportunity
+- Measured on pipeline: the primary KPI is pipeline and opportunities by the due date, with weekly leads, opportunities and spend as leading indicators
+- A linter that fails any number or date Claude writes that the script or the strategy did not produce, any assumed number without its label, em-dashes, hedges and forecast language
+- Readouts for four seats: CEO or owner, marketing lead, agency, VP Sales or CRO
+- Interactive tool with the ten checks, the reverse funnel, a what-if planner, weekly pacing, the brief by owner, and exports to Markdown and CSV
+- Plain-language method guide, rubric, lead-time table and strategy template
+- Synthetic MIT sample campaign with its full output
+
 ## Pipeline Leak Finder
 
 ### 1.0.0 (September 2026)

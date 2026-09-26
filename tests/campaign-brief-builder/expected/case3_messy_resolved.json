@@ -1,0 +1,407 @@
+{
+ "funnel": {
+  "target": 1200000.0,
+  "avg_deal": 35000.0,
+  "rate": 0.08,
+  "budget": 87500.0,
+  "opps_needed": 35,
+  "leads_needed": 438,
+  "planned_leads": 471,
+  "planned_opps": 37.68,
+  "planned_pipeline": 1318800.0,
+  "gap": 0.0,
+  "blended_cpl": 185.774947,
+  "cpl_ceiling": 199.771689,
+  "extra_leads": 0,
+  "extra_budget": 0,
+  "reaches_target": true
+ },
+ "timing": {
+  "launch": "2027-04-05",
+  "end": "2027-07-04",
+  "due": "2027-07-31",
+  "weeks": 13,
+  "lag_days": 14.0,
+  "weeks_in_time": 13,
+  "weeks_late": 0,
+  "pipeline_in_time": 1318800.0,
+  "opps_in_time": 37.68,
+  "first_land": "2027-04-25",
+  "last_land": "2027-07-18",
+  "shift_weeks": 0,
+  "meets_target_in_time": true
+ },
+ "landings": [
+  {
+   "lead_week": 1,
+   "leads": 37,
+   "lands_on": "2027-04-25",
+   "opps": 2.96,
+   "pipeline_cum": 103600.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 2,
+   "leads": 37,
+   "lands_on": "2027-05-02",
+   "opps": 2.96,
+   "pipeline_cum": 207200.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 3,
+   "leads": 37,
+   "lands_on": "2027-05-09",
+   "opps": 2.96,
+   "pipeline_cum": 310800.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 4,
+   "leads": 36,
+   "lands_on": "2027-05-16",
+   "opps": 2.88,
+   "pipeline_cum": 411600.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 5,
+   "leads": 36,
+   "lands_on": "2027-05-23",
+   "opps": 2.88,
+   "pipeline_cum": 512400.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 6,
+   "leads": 36,
+   "lands_on": "2027-05-30",
+   "opps": 2.88,
+   "pipeline_cum": 613200.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 7,
+   "leads": 36,
+   "lands_on": "2027-06-06",
+   "opps": 2.88,
+   "pipeline_cum": 714000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 8,
+   "leads": 36,
+   "lands_on": "2027-06-13",
+   "opps": 2.88,
+   "pipeline_cum": 814800.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 9,
+   "leads": 36,
+   "lands_on": "2027-06-20",
+   "opps": 2.88,
+   "pipeline_cum": 915600.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 10,
+   "leads": 36,
+   "lands_on": "2027-06-27",
+   "opps": 2.88,
+   "pipeline_cum": 1016400.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 11,
+   "leads": 36,
+   "lands_on": "2027-07-04",
+   "opps": 2.88,
+   "pipeline_cum": 1117200.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 12,
+   "leads": 36,
+   "lands_on": "2027-07-11",
+   "opps": 2.88,
+   "pipeline_cum": 1218000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 13,
+   "leads": 36,
+   "lands_on": "2027-07-18",
+   "opps": 2.88,
+   "pipeline_cum": 1318800.0,
+   "in_time": true
+  }
+ ],
+ "checks": [
+  {
+   "n": 1,
+   "name": "Target reachable on budget",
+   "by": "script",
+   "state": "pass",
+   "reason": "The plan buys 471 leads, 37.7 opportunities and $1.32M in pipeline against a $1.2M target.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 2,
+   "name": "Opportunities land before the due date",
+   "by": "script",
+   "state": "pass",
+   "reason": "Every week's leads become opportunities by Jul 31, 2027. The last land on Jul 18, 2027.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 3,
+   "name": "Every channel can buy at least one opportunity",
+   "by": "script",
+   "state": "pass",
+   "reason": "Every channel buys at least one opportunity in the window.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 4,
+   "name": "Sales capacity",
+   "by": "script",
+   "state": "flag",
+   "reason": "Not run. Sales capacity was not given. The plan sends 12.6 opportunities a month.",
+   "fix": "Get the number of reps who will work these opportunities, and how many new opportunities each can take a month.",
+   "not_run": true
+  },
+  {
+   "n": 5,
+   "name": "Audience specific enough to target",
+   "by": "claude",
+   "state": "flag",
+   "reason": "Names the industry, a size band and three roles, but no region.",
+   "fix": "Add the region or countries, so the list can be built without a question.",
+   "not_run": false
+  },
+  {
+   "n": 6,
+   "name": "Offer fits the audience",
+   "by": "claude",
+   "state": "pass",
+   "reason": "A freight spend audit answers a cost problem the logistics roles own. The CTA is one action.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 7,
+   "name": "One provable message",
+   "by": "claude",
+   "state": "flag",
+   "reason": "One specific claim that fails with a competitor's name in it, but no proof point.",
+   "fix": "Add the customer or data behind the 12% figure.",
+   "not_run": false
+  },
+  {
+   "n": 8,
+   "name": "Channels reach the named buying roles",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Every channel says how it reaches the roles: title targeting, the partner's shipper list, booth traffic from F&B ops, and named directors.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 9,
+   "name": "Tracking to pipeline defined",
+   "by": "claude",
+   "state": "flag",
+   "reason": "Names UTMs, but not how an opportunity gets credited to the campaign.",
+   "fix": "Name the CRM campaign and the rule that credits an opportunity to it.",
+   "not_run": false
+  },
+  {
+   "n": 10,
+   "name": "Risks named",
+   "by": "claude",
+   "state": "flag",
+   "reason": "No risk is named.",
+   "fix": "Name the single point of failure, such as the trade show carrying the event budget, and give it an owner.",
+   "not_run": false
+  }
+ ],
+ "verdict": "Ready with flags",
+ "strategy_lines": [
+  {
+   "id": "T1",
+   "label": "Pipeline target",
+   "text": "$1,200,000 in pipeline by Jul 31, 2027",
+   "covered": true
+  },
+  {
+   "id": "A1",
+   "label": "Audience",
+   "text": "Mid-size food and beverage manufacturers (500-5,000 employees). Warehouse-heavy. Roles: Ops director, Logistics director, VP supply chain.",
+   "covered": true
+  },
+  {
+   "id": "O1",
+   "label": "Offer",
+   "text": "Free freight spend audit, we send back a savings map in 5 business days. CTA: Request the audit.",
+   "covered": true
+  },
+  {
+   "id": "M1",
+   "label": "Message",
+   "text": "RouteHaven cuts LTL freight spend 12% in the first 90 days for food and beverage shippers.",
+   "covered": true
+  },
+  {
+   "id": "C1",
+   "label": "Channel: LinkedIn ads",
+   "covered": true,
+   "text": "LinkedIn ads (paid social), $40,000 at $220 a lead"
+  },
+  {
+   "id": "C2",
+   "label": "Channel: Partner webinar",
+   "covered": true,
+   "text": "Partner webinar (webinar), $20,000 at $95 a lead"
+  },
+  {
+   "id": "C3",
+   "label": "Channel: Trade show",
+   "covered": true,
+   "text": "Trade show (event), $15,000 at $500 a lead"
+  },
+  {
+   "id": "C4",
+   "label": "Channel: Direct mail",
+   "covered": true,
+   "text": "Direct mail (direct mail), $12,500 at $250 a lead"
+  },
+  {
+   "id": "K1",
+   "label": "Tracking",
+   "covered": true,
+   "text": "We tag everything with UTMs"
+  },
+  {
+   "id": "B1",
+   "label": "Budget",
+   "text": "$87,500 total",
+   "covered": false
+  },
+  {
+   "id": "L1",
+   "label": "Launch",
+   "text": "Apr 5, 2027 for 13 weeks, to Jul 4, 2027",
+   "covered": false
+  },
+  {
+   "id": "F1",
+   "label": "Funnel",
+   "covered": false,
+   "text": "Average deal $35,000, 8% of leads become opportunities in 14 days"
+  }
+ ],
+ "channels": [
+  {
+   "id": "C1",
+   "name": "LinkedIn ads",
+   "type": "paid_social",
+   "platform": "linkedin",
+   "reach": "Targeting ops/logistics directors + VP supply chain at F&B manufacturers",
+   "budget": 40000.0,
+   "cpl": 220.0,
+   "leads": 181,
+   "opps": 14.48,
+   "pipeline": 506800.0,
+   "weekly_spend": 3076.923077,
+   "min_budget_one_opp": 2860.0,
+   "cpl_assumed": false
+  },
+  {
+   "id": "C2",
+   "name": "Partner webinar",
+   "type": "webinar",
+   "platform": "3pl-partner",
+   "reach": "Partner promotes to their shipper list",
+   "budget": 20000.0,
+   "cpl": 95.0,
+   "leads": 210,
+   "opps": 16.8,
+   "pipeline": 588000.0,
+   "weekly_spend": 1538.461538,
+   "min_budget_one_opp": 1235.0,
+   "cpl_assumed": false
+  },
+  {
+   "id": "C3",
+   "name": "Trade show",
+   "type": "event",
+   "platform": "ift",
+   "reach": "Booth traffic is F&B ops people",
+   "budget": 15000.0,
+   "cpl": 500.0,
+   "leads": 30,
+   "opps": 2.4,
+   "pipeline": 84000.0,
+   "weekly_spend": 1153.846154,
+   "min_budget_one_opp": 6500.0,
+   "cpl_assumed": false
+  },
+  {
+   "id": "C4",
+   "name": "Direct mail",
+   "type": "direct_mail",
+   "platform": "mail",
+   "reach": "Goes to named directors on the account list",
+   "budget": 12500.0,
+   "cpl": 250.0,
+   "leads": 50,
+   "opps": 4.0,
+   "pipeline": 140000.0,
+   "weekly_spend": 961.538462,
+   "min_budget_one_opp": 3250.0,
+   "cpl_assumed": false
+  }
+ ],
+ "functions": {
+  "ads": {
+   "active": true,
+   "because": "Called for by C1."
+  },
+  "pr": {
+   "active": false,
+   "because": "Not in this campaign. Channels C1 to C4 include no channel that uses PR."
+  },
+  "content": {
+   "active": true,
+   "because": "Called for by O1, C2, C3, C4."
+  },
+  "operations": {
+   "active": true,
+   "because": "Every campaign needs tracking and follow-up."
+  },
+  "sales": {
+   "active": true,
+   "because": "Every campaign needs tracking and follow-up."
+  },
+  "creative": {
+   "active": true,
+   "because": "Called for by C1, C2, C3, C4."
+  }
+ },
+ "notes": [
+  "'$1.2 million' read as $1,200,000",
+  "'07/31/2027' read as Jul 31, 2027",
+  "'3 months' read as 13 weeks",
+  "'35k' read as $35,000",
+  "'8' read as 8%",
+  "'2 weeks' read as 14 days",
+  "LinkedIn ads budget: '$40k' read as $40,000",
+  "Trade show budget: '$15k' read as $15,000",
+  "Budget total: '$87.5K' read as $87,500"
+ ],
+ "warnings": []
+}

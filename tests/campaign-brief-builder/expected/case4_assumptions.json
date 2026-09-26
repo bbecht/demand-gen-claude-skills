@@ -1,0 +1,317 @@
+{
+ "funnel": {
+  "target": 600000.0,
+  "avg_deal": 20000.0,
+  "rate": 0.1,
+  "budget": 40000.0,
+  "opps_needed": 30,
+  "leads_needed": 300,
+  "planned_leads": 300,
+  "planned_opps": 30.0,
+  "planned_pipeline": 600000.0,
+  "gap": 0.0,
+  "blended_cpl": 133.333333,
+  "cpl_ceiling": 133.333333,
+  "extra_leads": 0,
+  "extra_budget": 0,
+  "reaches_target": true
+ },
+ "timing": {
+  "launch": "2027-07-12",
+  "end": "2027-09-05",
+  "due": "2027-09-30",
+  "weeks": 8,
+  "lag_days": 21.0,
+  "weeks_in_time": 8,
+  "weeks_late": 0,
+  "pipeline_in_time": 600000.0,
+  "opps_in_time": 30.0,
+  "first_land": "2027-08-08",
+  "last_land": "2027-09-26",
+  "shift_weeks": 0,
+  "meets_target_in_time": true
+ },
+ "landings": [
+  {
+   "lead_week": 1,
+   "leads": 38,
+   "lands_on": "2027-08-08",
+   "opps": 3.8,
+   "pipeline_cum": 76000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 2,
+   "leads": 38,
+   "lands_on": "2027-08-15",
+   "opps": 3.8,
+   "pipeline_cum": 152000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 3,
+   "leads": 38,
+   "lands_on": "2027-08-22",
+   "opps": 3.8,
+   "pipeline_cum": 228000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 4,
+   "leads": 38,
+   "lands_on": "2027-08-29",
+   "opps": 3.8,
+   "pipeline_cum": 304000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 5,
+   "leads": 37,
+   "lands_on": "2027-09-05",
+   "opps": 3.7,
+   "pipeline_cum": 378000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 6,
+   "leads": 37,
+   "lands_on": "2027-09-12",
+   "opps": 3.7,
+   "pipeline_cum": 452000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 7,
+   "leads": 37,
+   "lands_on": "2027-09-19",
+   "opps": 3.7,
+   "pipeline_cum": 526000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 8,
+   "leads": 37,
+   "lands_on": "2027-09-26",
+   "opps": 3.7,
+   "pipeline_cum": 600000.0,
+   "in_time": true
+  }
+ ],
+ "checks": [
+  {
+   "n": 1,
+   "name": "Target reachable on budget",
+   "by": "script",
+   "state": "pass",
+   "reason": "The plan buys 300 leads, 30 opportunities and $600K in pipeline against a $600K target.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 2,
+   "name": "Opportunities land before the due date",
+   "by": "script",
+   "state": "pass",
+   "reason": "Every week's leads become opportunities by Sep 30, 2027. The last land on Sep 26, 2027.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 3,
+   "name": "Every channel can buy at least one opportunity",
+   "by": "script",
+   "state": "pass",
+   "reason": "Every channel buys at least one opportunity in the window.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 4,
+   "name": "Sales capacity",
+   "by": "script",
+   "state": "pass",
+   "reason": "The plan sends 16.3 opportunities a month. The team can work 24.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 5,
+   "name": "Audience specific enough to target",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Names the industry, a region, a warehouse count band, the legacy WMS and three titles.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 6,
+   "name": "Offer fits the audience",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Dock-to-stock time is a problem the COO and VP Operations own. The CTA is one action.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 7,
+   "name": "One provable message",
+   "by": "claude",
+   "state": "pass",
+   "reason": "One claim, 48 hours to 6, with two pilots as proof. With a competitor's name in it, the claim is false.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 8,
+   "name": "Channels reach the named buying roles",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Search runs on legacy WMS replacement terms and LinkedIn targets the titles in the region.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 9,
+   "name": "Tracking to pipeline defined",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Names the HubSpot campaign and the first-touch credit rule.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 10,
+   "name": "Risks named",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Names thin search volume as a risk, with an owner.",
+   "fix": "",
+   "not_run": false
+  }
+ ],
+ "verdict": "Untested",
+ "strategy_lines": [
+  {
+   "id": "T1",
+   "label": "Pipeline target",
+   "text": "$600,000 in pipeline by Sep 30, 2027",
+   "covered": true
+  },
+  {
+   "id": "A1",
+   "label": "Audience",
+   "text": "Third-party logistics providers in the US Southeast with 5 to 50 warehouses, running a legacy WMS. Roles: COO, VP Operations, Director of IT.",
+   "covered": true
+  },
+  {
+   "id": "O1",
+   "label": "Offer",
+   "text": "The Dock-to-Stock Calculator. The buyer enters their receiving volumes and gets the hours a day a modern WMS gives back. CTA: Get your calculation.",
+   "covered": true
+  },
+  {
+   "id": "M1",
+   "label": "Message",
+   "text": "Orchard Lane cuts dock-to-stock time from 48 hours to 6 for 3PLs moving off a legacy WMS. Proof: Two 3PL pilots hit 6 hours within 30 days.",
+   "covered": true
+  },
+  {
+   "id": "C1",
+   "label": "Channel: Google search ads",
+   "covered": true,
+   "text": "Google search ads (paid search), $24,000 at $120 a lead"
+  },
+  {
+   "id": "C2",
+   "label": "Channel: LinkedIn ads",
+   "covered": true,
+   "text": "LinkedIn ads (paid social), $16,000 at $160 a lead (Assumption)"
+  },
+  {
+   "id": "K1",
+   "label": "Tracking",
+   "covered": true,
+   "text": "HubSpot campaign OL-D2S-27 on every lead. Opportunities credited to the first campaign touch."
+  },
+  {
+   "id": "B1",
+   "label": "Budget",
+   "text": "$40,000 total",
+   "covered": false
+  },
+  {
+   "id": "L1",
+   "label": "Launch",
+   "text": "Jul 12, 2027 for 8 weeks, to Sep 5, 2027",
+   "covered": false
+  },
+  {
+   "id": "F1",
+   "label": "Funnel",
+   "covered": false,
+   "text": "Average deal $20,000 (Assumption), 10% (Assumption) of leads become opportunities in 21 days (Assumption)"
+  }
+ ],
+ "channels": [
+  {
+   "id": "C1",
+   "name": "Google search ads",
+   "type": "paid_search",
+   "platform": "google",
+   "reach": "Legacy WMS replacement search terms",
+   "budget": 24000.0,
+   "cpl": 120.0,
+   "leads": 200,
+   "opps": 20.0,
+   "pipeline": 400000.0,
+   "weekly_spend": 3000.0,
+   "min_budget_one_opp": 1200.0,
+   "cpl_assumed": false
+  },
+  {
+   "id": "C2",
+   "name": "LinkedIn ads",
+   "type": "paid_social",
+   "platform": "linkedin",
+   "reach": "Title targeting on COO and VP Operations at 3PLs in the Southeast",
+   "budget": 16000.0,
+   "cpl": 160.0,
+   "leads": 100,
+   "opps": 10.0,
+   "pipeline": 200000.0,
+   "weekly_spend": 2000.0,
+   "min_budget_one_opp": 1600.0,
+   "cpl_assumed": true
+  }
+ ],
+ "functions": {
+  "ads": {
+   "active": true,
+   "because": "Called for by C1, C2."
+  },
+  "pr": {
+   "active": false,
+   "because": "Not in this campaign. Channels C1 to C2 include no channel that uses PR."
+  },
+  "content": {
+   "active": true,
+   "because": "Called for by O1."
+  },
+  "operations": {
+   "active": true,
+   "because": "Every campaign needs tracking and follow-up."
+  },
+  "sales": {
+   "active": true,
+   "because": "Every campaign needs tracking and follow-up."
+  },
+  "creative": {
+   "active": true,
+   "because": "Called for by C1, C2."
+  }
+ },
+ "notes": [],
+ "warnings": [
+  "Built on assumed numbers: Average deal size, Lead-to-opportunity rate, Days from lead to opportunity, Cost per lead for LinkedIn ads. The verdict can be no better than Untested."
+ ]
+}

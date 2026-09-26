@@ -1,0 +1,62 @@
+{
+ "campaign": {
+  "name": "Pillarmint spring push",
+  "id": "",
+  "objective": "pipeline"
+ },
+ "target": {
+  "pipeline": "$2M",
+  "due_date": "May 31, 2027"
+ },
+ "audience": {
+  "accounts": "B2B companies that want to grow",
+  "roles": [
+   "Sales leaders",
+   "Marketing leaders"
+  ],
+  "tag": ""
+ },
+ "offer": {
+  "offer": "A demo",
+  "cta": "Book a demo",
+  "asset": false
+ },
+ "message": {
+  "claim": "Pillarmint helps companies grow faster with AI-powered revenue insights.",
+  "proof": ""
+ },
+ "channels": [
+  {
+   "name": "LinkedIn ads",
+   "type": "paid_social",
+   "platform": "linkedin",
+   "budget": "$30,000",
+   "cost_per_lead": "$300",
+   "reach": "Targeting sales and marketing leaders"
+  },
+  {
+   "name": "Google search ads",
+   "type": "paid_search",
+   "platform": "google",
+   "budget": "$10,000",
+   "cost_per_lead": "$150",
+   "reach": ""
+  }
+ ],
+ "budget_total": "",
+ "launch": {
+  "date": "April 5, 2027",
+  "run": "8 weeks"
+ },
+ "funnel": {
+  "avg_deal": "$25,000",
+  "lead_to_opp_rate": "10%",
+  "lead_to_opp_days": "10"
+ },
+ "sales": {},
+ "revenue": {},
+ "owners": {},
+ "tracking": "",
+ "risks": [],
+ "assumptions": []
+}

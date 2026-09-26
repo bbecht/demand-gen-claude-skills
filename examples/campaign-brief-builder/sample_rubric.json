@@ -1,0 +1,8 @@
+{"checks": {
+ "5": {"state": "pass", "reason": "Names the industry, a 200 to 1,000 employee size band, the region, the ERP and an invoice volume, and three buying roles by title. A media buyer can build this list without a question.", "fix": ""},
+ "6": {"state": "pass", "reason": "The benchmark shows where the close loses days, a problem the CFO and Controller own. The CTA asks for one thing: a close review.", "fix": ""},
+ "7": {"state": "pass", "reason": "One claim: approval from 9 days to 2 and a day-4 close on NetSuite or Sage Intacct, backed by three named customers. With a competitor's name in it, the claim is no longer true.", "fix": ""},
+ "8": {"state": "pass", "reason": "Every channel says how it reaches the roles: title and size targeting, a partner's finance list, a vendor filter on finance titles, and SDRs on the account list.", "fix": ""},
+ "9": {"state": "pass", "reason": "Leads get the Salesforce campaign on creation, and opportunities within 90 days of a touch take it as primary campaign source.", "fix": ""},
+ "10": {"state": "pass", "reason": "Names the single customer speaker as a point of failure, with an owner.", "fix": ""}
+}}

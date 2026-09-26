@@ -1,0 +1,71 @@
+{
+ "campaign": {
+  "name": "Benefits Leakage",
+  "id": "CREST-BL-27",
+  "objective": "pipeline"
+ },
+ "target": {
+  "pipeline": "$800,000",
+  "due_date": "June 30, 2027"
+ },
+ "audience": {
+  "accounts": "US employers with 500 to 2,500 employees in healthcare and education, self-insured",
+  "roles": [
+   "VP HR",
+   "Benefits Director",
+   "CFO"
+  ],
+  "tag": "hr-benefits"
+ },
+ "offer": {
+  "offer": "The Benefits Leakage Report, built from the employer's own claims file, showing dollars lost to ineligible dependents.",
+  "cta": "Send your file",
+  "asset": true
+ },
+ "message": {
+  "claim": "Cresthaven finds 3% to 5% of self-insured claims spend going to ineligible dependents, and removes them before renewal.",
+  "proof": "40 audits in 2026 found an average of 4%."
+ },
+ "channels": [
+  {
+   "name": "LinkedIn ads",
+   "type": "paid_social",
+   "platform": "linkedin",
+   "budget": "$20,000",
+   "cost_per_lead": "$250",
+   "reach": "Title targeting VP HR and Benefits Director at self-insured employers of 500 to 2,500"
+  },
+  {
+   "name": "Content syndication",
+   "type": "syndication",
+   "platform": "vendor",
+   "budget": "$10,000",
+   "cost_per_lead": "$100",
+   "reach": "Vendor filter on HR and finance titles at healthcare and education employers"
+  }
+ ],
+ "budget_total": "$30,000",
+ "launch": {
+  "date": "March 15, 2027",
+  "run": "10 weeks"
+ },
+ "funnel": {
+  "avg_deal": "$40,000",
+  "lead_to_opp_rate": "10%",
+  "lead_to_opp_days": "14"
+ },
+ "sales": {
+  "reps": "2",
+  "opps_per_rep_month": "8"
+ },
+ "revenue": {},
+ "owners": {},
+ "tracking": "",
+ "risks": [
+  {
+   "risk": "The syndication vendor's healthcare list is thin.",
+   "owner": "Rosa Lind"
+  }
+ ],
+ "assumptions": []
+}

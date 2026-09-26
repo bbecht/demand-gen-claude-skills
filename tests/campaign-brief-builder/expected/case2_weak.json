@@ -1,0 +1,319 @@
+{
+ "funnel": {
+  "target": 2000000.0,
+  "avg_deal": 25000.0,
+  "rate": 0.1,
+  "budget": 40000.0,
+  "opps_needed": 80,
+  "leads_needed": 800,
+  "planned_leads": 166,
+  "planned_opps": 16.6,
+  "planned_pipeline": 415000.0,
+  "gap": 1585000.0,
+  "blended_cpl": 240.963855,
+  "cpl_ceiling": 50.0,
+  "extra_leads": 634,
+  "extra_budget": 152772,
+  "reaches_target": false
+ },
+ "timing": {
+  "launch": "2027-04-05",
+  "end": "2027-05-30",
+  "due": "2027-05-31",
+  "weeks": 8,
+  "lag_days": 10.0,
+  "weeks_in_time": 6,
+  "weeks_late": 2,
+  "pipeline_in_time": 315000.0,
+  "opps_in_time": 12.6,
+  "first_land": "2027-04-21",
+  "last_land": "2027-06-09",
+  "shift_weeks": 2,
+  "meets_target_in_time": false
+ },
+ "landings": [
+  {
+   "lead_week": 1,
+   "leads": 21,
+   "lands_on": "2027-04-21",
+   "opps": 2.1,
+   "pipeline_cum": 52500.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 2,
+   "leads": 21,
+   "lands_on": "2027-04-28",
+   "opps": 2.1,
+   "pipeline_cum": 105000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 3,
+   "leads": 21,
+   "lands_on": "2027-05-05",
+   "opps": 2.1,
+   "pipeline_cum": 157500.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 4,
+   "leads": 21,
+   "lands_on": "2027-05-12",
+   "opps": 2.1,
+   "pipeline_cum": 210000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 5,
+   "leads": 21,
+   "lands_on": "2027-05-19",
+   "opps": 2.1,
+   "pipeline_cum": 262500.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 6,
+   "leads": 21,
+   "lands_on": "2027-05-26",
+   "opps": 2.1,
+   "pipeline_cum": 315000.0,
+   "in_time": true
+  },
+  {
+   "lead_week": 7,
+   "leads": 20,
+   "lands_on": "2027-06-02",
+   "opps": 2.0,
+   "pipeline_cum": 365000.0,
+   "in_time": false
+  },
+  {
+   "lead_week": 8,
+   "leads": 20,
+   "lands_on": "2027-06-09",
+   "opps": 2.0,
+   "pipeline_cum": 415000.0,
+   "in_time": false
+  }
+ ],
+ "checks": [
+  {
+   "n": 1,
+   "name": "Target reachable on budget",
+   "by": "script",
+   "state": "fail",
+   "reason": "The plan buys $415K in pipeline against a $2M target, $1.59M short. It needs 800 leads and buys 166.",
+   "fix": "Add $153K at today's blended cost per lead of $241, bring the blended cost per lead down to $50, or cut the target to $415K.",
+   "not_run": false
+  },
+  {
+   "n": 2,
+   "name": "Opportunities land before the due date",
+   "by": "script",
+   "state": "fail",
+   "reason": "Leads from the last 2 weeks land after May 31, 2027. Only $315K of pipeline lands in time against a $2M target.",
+   "fix": "Launch 2 weeks earlier, or move the due date to Jun 9, 2027.",
+   "not_run": false
+  },
+  {
+   "n": 3,
+   "name": "Every channel can buy at least one opportunity",
+   "by": "script",
+   "state": "pass",
+   "reason": "Every channel buys at least one opportunity in the window.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "n": 4,
+   "name": "Sales capacity",
+   "by": "script",
+   "state": "flag",
+   "reason": "Not run. Sales capacity was not given. The plan sends 9 opportunities a month.",
+   "fix": "Get the number of reps who will work these opportunities, and how many new opportunities each can take a month.",
+   "not_run": true
+  },
+  {
+   "n": 5,
+   "name": "Audience specific enough to target",
+   "by": "claude",
+   "state": "fail",
+   "reason": "\"B2B companies that want to grow\" names no industry, size or region. No list can be built from it.",
+   "fix": "Name the industry or an account list, a size band, a region, and the titles that buy.",
+   "not_run": false
+  },
+  {
+   "n": 6,
+   "name": "Offer fits the audience",
+   "by": "claude",
+   "state": "flag",
+   "reason": "The offer is a sales meeting with no value stated for the buyer.",
+   "fix": "Offer something the buyer keeps, and make booking the meeting the step after it.",
+   "not_run": false
+  },
+  {
+   "n": 7,
+   "name": "One provable message",
+   "by": "claude",
+   "state": "fail",
+   "reason": "Put a competitor's name in and the sentence still reads true. It names no specific result and gives no proof.",
+   "fix": "Name one result only Pillarmint delivers, for this audience, and the customer proof behind it.",
+   "not_run": false
+  },
+  {
+   "n": 8,
+   "name": "Channels reach the named buying roles",
+   "by": "claude",
+   "state": "flag",
+   "reason": "Google search ads say nothing about how they reach the buying roles.",
+   "fix": "Name the search terms and audience settings that put the ads in front of these roles.",
+   "not_run": false
+  },
+  {
+   "n": 9,
+   "name": "Tracking to pipeline defined",
+   "by": "claude",
+   "state": "fail",
+   "reason": "The strategy says nothing about how an opportunity gets credited to this campaign.",
+   "fix": "Name the CRM campaign and the rule that credits an opportunity to it.",
+   "not_run": false
+  },
+  {
+   "n": 10,
+   "name": "Risks named",
+   "by": "claude",
+   "state": "flag",
+   "reason": "No risk is named.",
+   "fix": "Name the single point of failure, such as one channel carrying most of the budget, and give it an owner.",
+   "not_run": false
+  }
+ ],
+ "verdict": "Not ready",
+ "strategy_lines": [
+  {
+   "id": "T1",
+   "label": "Pipeline target",
+   "text": "$2,000,000 in pipeline by May 31, 2027",
+   "covered": true
+  },
+  {
+   "id": "A1",
+   "label": "Audience",
+   "text": "B2B companies that want to grow. Roles: Sales leaders, Marketing leaders.",
+   "covered": true
+  },
+  {
+   "id": "O1",
+   "label": "Offer",
+   "text": "A demo. CTA: Book a demo.",
+   "covered": true
+  },
+  {
+   "id": "M1",
+   "label": "Message",
+   "text": "Pillarmint helps companies grow faster with AI-powered revenue insights.",
+   "covered": true
+  },
+  {
+   "id": "C1",
+   "label": "Channel: LinkedIn ads",
+   "covered": true,
+   "text": "LinkedIn ads (paid social), $30,000 at $300 a lead"
+  },
+  {
+   "id": "C2",
+   "label": "Channel: Google search ads",
+   "covered": true,
+   "text": "Google search ads (paid search), $10,000 at $150 a lead"
+  },
+  {
+   "id": "K1",
+   "label": "Tracking",
+   "covered": true,
+   "text": "Not stated in the strategy."
+  },
+  {
+   "id": "B1",
+   "label": "Budget",
+   "text": "$40,000 total",
+   "covered": false
+  },
+  {
+   "id": "L1",
+   "label": "Launch",
+   "text": "Apr 5, 2027 for 8 weeks, to May 30, 2027",
+   "covered": false
+  },
+  {
+   "id": "F1",
+   "label": "Funnel",
+   "covered": false,
+   "text": "Average deal $25,000, 10% of leads become opportunities in 10 days"
+  }
+ ],
+ "channels": [
+  {
+   "id": "C1",
+   "name": "LinkedIn ads",
+   "type": "paid_social",
+   "platform": "linkedin",
+   "reach": "Targeting sales and marketing leaders",
+   "budget": 30000.0,
+   "cpl": 300.0,
+   "leads": 100,
+   "opps": 10.0,
+   "pipeline": 250000.0,
+   "weekly_spend": 3750.0,
+   "min_budget_one_opp": 3000.0,
+   "cpl_assumed": false
+  },
+  {
+   "id": "C2",
+   "name": "Google search ads",
+   "type": "paid_search",
+   "platform": "google",
+   "reach": "",
+   "budget": 10000.0,
+   "cpl": 150.0,
+   "leads": 66,
+   "opps": 6.6,
+   "pipeline": 165000.0,
+   "weekly_spend": 1250.0,
+   "min_budget_one_opp": 1500.0,
+   "cpl_assumed": false
+  }
+ ],
+ "functions": {
+  "ads": {
+   "active": true,
+   "because": "Called for by C1, C2."
+  },
+  "pr": {
+   "active": false,
+   "because": "Not in this campaign. Channels C1 to C2 include no channel that uses PR."
+  },
+  "content": {
+   "active": false,
+   "because": "Not in this campaign. Channels C1 to C2 include no channel that uses Content and the offer needs no asset built."
+  },
+  "operations": {
+   "active": true,
+   "because": "Every campaign needs tracking and follow-up."
+  },
+  "sales": {
+   "active": true,
+   "because": "Every campaign needs tracking and follow-up."
+  },
+  "creative": {
+   "active": true,
+   "because": "Called for by C1, C2."
+  }
+ },
+ "notes": [
+  "'$2M' read as $2,000,000"
+ ],
+ "warnings": [
+  "The plan rests on 16.6 expected opportunities, fewer than 20. One deal swings the result, so read counts, not rates."
+ ]
+}

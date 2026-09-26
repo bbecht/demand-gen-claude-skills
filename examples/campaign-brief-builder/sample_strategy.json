@@ -1,0 +1,96 @@
+{
+ "campaign": {
+  "name": "Close the Books Faster",
+  "id": "brasswick-q1",
+  "objective": "pipeline"
+ },
+ "target": {
+  "pipeline": "$1.2M",
+  "due_date": "2027-03-31"
+ },
+ "audience": {
+  "accounts": "US manufacturers with 200 to 1,000 employees that run NetSuite or Sage Intacct and process more than 2,000 supplier invoices a month",
+  "roles": [
+   "CFO",
+   "Controller",
+   "AP manager"
+  ],
+  "tag": "cfo-mfg"
+ },
+ "offer": {
+  "offer": "The Month-End Close Benchmark: a 20-minute read-out that shows where a manufacturer's close loses days, built from the buyer's own AP numbers.",
+  "cta": "Book a close review",
+  "asset": true
+ },
+ "message": {
+  "claim": "Brasswick cuts invoice approval from 9 days to 2 for manufacturers on NetSuite or Sage Intacct, so the books close on day 4.",
+  "proof": "Three named manufacturing customers closed on day 4 within two quarters of go-live."
+ },
+ "channels": [
+  {
+   "name": "LinkedIn ads",
+   "type": "paid_social",
+   "platform": "linkedin",
+   "budget": "$40,000",
+   "cost_per_lead": "$200",
+   "reach": "Job title and company size targeting on CFO, Controller and AP manager at the account list"
+  },
+  {
+   "name": "Webinar",
+   "type": "webinar",
+   "platform": "zoom",
+   "budget": "$15,000",
+   "cost_per_lead": "$100",
+   "reach": "Co-hosted with a NetSuite partner and promoted to the partner's finance list"
+  },
+  {
+   "name": "Content syndication",
+   "type": "syndication",
+   "platform": "netline",
+   "budget": "$20,000",
+   "cost_per_lead": "$80",
+   "reach": "Vendor delivers leads filtered to finance titles at manufacturers of 200 to 1,000 employees"
+  },
+  {
+   "name": "SDR outbound",
+   "type": "outbound",
+   "platform": "outreach",
+   "budget": "$15,000",
+   "cost_per_lead": "$150",
+   "reach": "Two SDRs call and email Controllers and AP managers on the account list"
+  }
+ ],
+ "budget_total": "$90K",
+ "launch": {
+  "date": "2027-01-11",
+  "run": "10 weeks"
+ },
+ "funnel": {
+  "avg_deal": "$30,000",
+  "lead_to_opp_rate": "8%",
+  "lead_to_opp_days": "3 weeks"
+ },
+ "sales": {
+  "reps": 3,
+  "opps_per_rep_month": 10
+ },
+ "revenue": {
+  "win_rate": "25%",
+  "sales_cycle_days": 90
+ },
+ "owners": {
+  "ads": "Priya Nand, demand gen",
+  "content": "Tom Ellery, content",
+  "operations": "Dana Ruiz, RevOps",
+  "sales": "Marcus Webb, sales director",
+  "creative": "Northfield Studio (agency)"
+ },
+ "tracking": "Every lead gets the Salesforce campaign brasswick-q1 on creation. Opportunities created within 90 days of a campaign touch take it as primary campaign source.",
+ "risks": [
+  {
+   "risk": "The webinar depends on one customer speaker. If she drops out, the webinar has no proof point.",
+   "owner": "Tom Ellery"
+  }
+ ],
+ "assumptions": []
+}

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Campaign Brief Builder</title>
+<style>
+  :root{
+    --bg:#ffffff; --surface:#ffffff; --soft:#eef2f8; --border:#bdbdbd; --ink:#000000;
+    --blue:#1d4ed8; --blue-soft:rgba(29,78,216,0.10); --amber:#d97706; --amber-soft:rgba(217,119,6,0.14);
+    --hollow:#ffffff; --btn:#000000; --btn-ink:#ffffff;
+  }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+    --bg:#000000; --surface:#0b0b0c; --soft:#1a1d24; --border:#5a5a5a; --ink:#ffffff;
+    --blue:#3b82f6; --blue-soft:rgba(59,130,246,0.16); --amber:#c77a08; --amber-soft:rgba(199,122,8,0.20);
+    --hollow:#0b0b0c; --btn:#ffffff; --btn-ink:#000000; } }
+  :root[data-theme="dark"]{
+    --bg:#000000; --surface:#0b0b0c; --soft:#1a1d24; --border:#5a5a5a; --ink:#ffffff;
+    --blue:#3b82f6; --blue-soft:rgba(59,130,246,0.16); --amber:#c77a08; --amber-soft:rgba(199,122,8,0.20);
+    --hollow:#0b0b0c; --btn:#ffffff; --btn-ink:#000000; }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  b,strong,th{font-weight:600}
+  a{color:var(--ink);text-decoration:underline}
+  .wrap{max-width:1040px;margin:0 auto;padding:32px 40px 48px}
+  h1{font-size:24px;font-weight:600;margin:0 0 4px}
+  h2{font-size:17px;margin:0 0 6px}
+  h3{font-size:15px;margin:0 0 6px}
+  .meta{font-size:13px;margin:0 0 10px}
+  .label{font-size:12px;text-transform:uppercase;letter-spacing:0.08em;font-weight:700;margin:32px 0 8px}
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+  .cap{font-size:14px;margin:0 0 12px}
+  .roles{display:flex;flex-wrap:wrap;gap:6px;margin:18px 0 4px}
+  .roles button,.tbtn,.xbtn{font:inherit;font-weight:600;padding:6px 12px;border:1px solid var(--border);background:var(--surface);color:var(--ink);cursor:pointer;border-radius:8px}
+  .roles button[aria-pressed="true"]{background:var(--blue-soft);border-color:var(--blue);box-shadow:inset 0 -3px 0 var(--blue)}
+  .xbtn{background:var(--btn);color:var(--btn-ink);border-color:var(--btn)}
+  .xbtn[disabled]{opacity:.45;cursor:not-allowed}
+  .q{font-size:19px;font-weight:600;margin:14px 0 12px}
+  .insights{display:grid;gap:8px}
+  .card{border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-size:15px}
+  .card.warn{border-left:4px solid var(--amber)}
+  .card.key{border-left:4px solid var(--blue)}
+  .card.stop{border-left:4px solid var(--ink)}
+  .stamp{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;letter-spacing:0.02em;padding:6px 14px;border-radius:999px;border:2px solid var(--ink);margin:6px 0 0}
+  .stamp.ready{background:var(--blue-soft);border-color:var(--blue)}
+  .stamp.flags{background:var(--amber-soft);border-color:var(--amber)}
+  .stamp.untested{border-style:dashed}
+  .stamp.notready{background:var(--ink);color:var(--bg)}
+  .st{display:inline-flex;align-items:center;gap:5px;white-space:nowrap;font-size:11px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:2px 9px;border-radius:999px;border:1px solid var(--ink)}
+  .st.pass{background:var(--blue-soft);border-color:var(--blue)}
+  .st.flag{background:var(--amber-soft);border-color:var(--amber)}
+  .st.flag.nr{border-style:dashed}
+  .st.fail{background:var(--ink);color:var(--bg)}
+  .by{font-size:11px;text-transform:uppercase;letter-spacing:0.06em;font-weight:700}
+  .tiles{display:grid;grid-template-columns:repeat(4,1fr);margin-top:4px}
+  .tiles > div{padding:4px 16px;border-left:1px solid var(--border)}
+  .tiles > div:first-child{border-left:0;padding-left:0}
+  .tiles .v{font-size:24px;font-weight:600}
+  .tiles .l{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;font-weight:600}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{border-bottom:1px solid var(--border);padding:7px 6px;text-align:left;vertical-align:top}
+  td.n,th.n{text-align:right;white-space:nowrap}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:0.06em}
+  tr:last-child td{border-bottom:0}
+  tr.unassigned td:first-child{box-shadow:inset 4px 0 0 var(--amber);padding-left:10px}
+  .scroll{overflow-x:auto}
+  .controls{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin:0 0 12px}
+  .controls label{font-weight:600;font-size:13px;display:flex;gap:6px;align-items:center}
+  select{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:5px 8px}
+  input[type=range]{accent-color:var(--blue);width:100%}
+  input:focus,select:focus,button:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
+  .fb{display:grid;grid-template-columns:230px 1fr;gap:10px;align-items:center;margin:8px 0}
+  .fb .nm{font-weight:600;font-size:13px}
+  .track{position:relative;height:24px;background:var(--soft);border-radius:0 4px 4px 0}
+  .bar{position:absolute;left:0;top:0;height:24px;border-radius:0 4px 4px 0}
+  .bar.solid{background:var(--blue)}
+  .bar.hollow{background:var(--hollow);box-shadow:inset 0 0 0 2px var(--ink)}
+  .bar.hatch{background:repeating-linear-gradient(45deg,var(--hollow) 0 4px,var(--ink) 4px 5px);box-shadow:inset 0 0 0 1px var(--ink)}
+  .bar-in{position:absolute;top:0;line-height:24px;font-size:12px;font-weight:700;white-space:nowrap}
+  .mark{position:absolute;top:-5px;height:34px;border-left:3px solid var(--amber)}
+  .mark::after{content:"";position:absolute;left:-7px;top:-6px;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid var(--amber)}
+  .legend{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;margin:10px 0 0;align-items:center}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .sw{display:inline-block;width:18px;height:12px;border-radius:2px;vertical-align:-1px}
+  .planner{display:grid;grid-template-columns:repeat(3,1fr);gap:14px 22px}
+  .planner label{font-size:13px;font-weight:600;display:block}
+  .planner .val{font-weight:700}
+  .wi-out{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+  .wi-out > div{border:1px solid var(--border);border-radius:8px;padding:10px 12px}
+  .wi-out .v{font-size:20px;font-weight:600}
+  .wi-out .l{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;font-weight:600}
+  .whatif-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:2px 8px;border-radius:4px;border:1px dashed var(--ink);margin-left:8px;vertical-align:2px}
+  svg{display:block;width:100%}
+  svg text{fill:var(--ink);font-family:inherit}
+  .axis line,.axis path{stroke:var(--ink)}
+  .grid line{stroke:var(--border);stroke-dasharray:2 3}
+  .sec{border-top:1px solid var(--border);padding:18px 0 6px}
+  .sec:first-child{border-top:0;padding-top:0}
+  .sec.off h3::after{content:" \00B7  Not in this campaign";font-weight:400}
+  .req-id{font-weight:700;white-space:nowrap}
+  .utm{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11px;word-break:break-all;margin-top:4px}
+  details{border:1px solid var(--border);padding:12px 16px;border-radius:12px;margin-top:10px;background:var(--surface)}
+  summary{font-weight:600;cursor:pointer}
+  .guide p{margin:0 0 10px}
+  .guide h4{margin:14px 0 4px;font-size:14px}
+  .exports{display:flex;flex-wrap:wrap;gap:8px}
+  footer{margin-top:32px;font-size:13px;font-weight:600}
+  .hide{display:none}
+  #tip{position:fixed;pointer-events:none;background:var(--surface);color:var(--ink);border:1px solid var(--ink);border-radius:8px;padding:8px 10px;font-size:12px;line-height:1.45;display:none;z-index:10;max-width:260px}
+  @media (max-width:760px){
+    .wrap{padding:20px 16px 40px}
+    .tiles,.wi-out{grid-template-columns:1fr 1fr;row-gap:12px}
+    .tiles > div:nth-child(3){border-left:0;padding-left:0}
+    .planner{grid-template-columns:1fr}
+    .fb{grid-template-columns:1fr;gap:4px}
+    .scroll table{min-width:680px}
+    .scroll table.stack{min-width:0}
+    table.stack,table.stack tbody,table.stack tr,table.stack td{display:block;width:100%}
+    table.stack tr:first-child{display:none}
+    table.stack tr{border-bottom:1px solid var(--border);padding:10px 0}
+    table.stack tr:last-child{border-bottom:0}
+    table.stack td{border:0;padding:2px 0;text-align:left}
+    table.stack td[data-l]::before{content:attr(data-l) ": ";font-weight:700}
+    .scroll svg{min-width:620px}
+  }
+  @media print{
+    .roles,.no-print,#whatif-block,.exports{display:none !important}
+    body{font-size:11px}
+    .panel,details{border:0;padding:0}
+    details{display:block}
+    details > *{display:block}
+    tr{break-inside:avoid}
+    .wrap{padding:0;max-width:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Campaign Brief Builder</h1>
+  <div class="meta" id="meta"></div>
+  <div id="stamp"></div>
+
+  <div class="roles no-print" role="group" aria-label="Choose your seat">
+    <button data-role="ceo">CEO or owner</button>
+    <button data-role="marketing">Marketing lead</button>
+    <button data-role="agency">Agency</button>
+    <button data-role="cro">VP Sales or CRO</button>
+  </div>
+  <div class="q" id="q"></div>
+  <div class="insights" id="cards"></div>
+
+  <div class="label">The ten checks</div>
+  <div class="panel">
+    <p class="cap">Checks 1 to 4 are the script's arithmetic on your own numbers. Checks 5 to 10 are Claude's calls against a written rubric. Any Fail blocks the brief.</p>
+    <div class="scroll"><table id="checks" class="stack"></table></div>
+  </div>
+
+  <div class="label">The reverse funnel</div>
+  <div class="panel">
+    <div class="tiles" id="tiles"></div>
+    <div style="margin-top:18px" id="fbars"></div>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--blue)"></i>What the plan buys, in time</span>
+      <span><i class="sw" style="background:repeating-linear-gradient(45deg,var(--hollow) 0 4px,var(--ink) 4px 5px);box-shadow:inset 0 0 0 1px var(--ink)"></i>Bought, but lands after the due date</span>
+      <span><i class="sw" style="border-left:3px solid var(--amber);border-radius:0;width:6px"></i>Needed to hit the target</span>
+    </div>
+    <h3 style="margin-top:20px">By channel</h3>
+    <div class="scroll"><table id="chans"></table></div>
+  </div>
+
+  <div id="whatif-block">
+    <div class="label">What if? <span class="whatif-tag">What-if only</span></div>
+    <div class="panel">
+      <p class="cap">Move a lever and see checks 1 and 2 again, with the same math. This never changes the approved strategy or the brief. To change those, tell Claude and the checks rerun.</p>
+      <div class="planner" id="planner"></div>
+      <div class="wi-out" id="wiout"></div>
+    </div>
+  </div>
+
+  <div class="label">Weekly pacing</div>
+  <div class="panel">
+    <p class="cap" id="pacecap"></p>
+    <div class="scroll"><svg id="pace" viewBox="0 0 900 300" role="img" aria-label="Pipeline landing by week"></svg></div>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--blue)"></i>Pipeline landing that week</span>
+      <span><svg width="26" height="12" style="display:inline;width:26px"><line x1="0" y1="6" x2="26" y2="6" stroke="currentColor" stroke-width="2"/><rect x="10" y="3" width="6" height="6" fill="currentColor"/></svg>Pipeline to date</span>
+      <span><svg width="26" height="12" style="display:inline;width:26px"><line x1="0" y1="6" x2="26" y2="6" stroke="var(--amber)" stroke-width="3" stroke-dasharray="6 4"/></svg>Target</span>
+      <span><svg width="14" height="14" style="display:inline;width:14px"><line x1="7" y1="0" x2="7" y2="14" stroke="currentColor" stroke-width="2" stroke-dasharray="3 2"/></svg>Due date</span>
+    </div>
+    <details><summary>Week by week</summary><div class="scroll"><table id="pacetab"></table></div></details>
+  </div>
+
+  <div class="label">The brief</div>
+  <div class="panel" id="brief"></div>
+
+  <div class="label no-print">Export</div>
+  <div class="panel exports no-print">
+    <button class="xbtn" id="x-md">Download the brief (Markdown)</button>
+    <button class="xbtn" id="x-csv">Download requirements (CSV)</button>
+    <button class="xbtn" id="x-print">Print or save as PDF</button>
+  </div>
+
+  <details id="readbox"><summary>What the script read</summary><div id="read"></div></details>
+  <details class="guide"><summary>How the numbers work</summary>
+    <h4>The reverse funnel</h4>
+    <p>Opportunities needed = target divided by average deal size, rounded up. Leads needed = opportunities needed divided by the share of leads that become opportunities, rounded up. Each channel buys its budget divided by its cost per lead, in whole leads.</p>
+    <h4>Timing</h4>
+    <p>Leads are spread evenly across the run weeks. Each week's leads count on the week's last day and become opportunities after your days from lead to opportunity. Check 2 asks whether that falls on or before the due date.</p>
+    <h4>Opportunities with a decimal</h4>
+    <p>They are expected values. 471 leads at 8% is 37.7 opportunities on average.</p>
+    <h4>The verdict</h4>
+    <p>Any Fail: Not ready, and the brief is blocked. An assumed number: Untested. Flags only: Ready with flags. All ten pass: Ready.</p>
+    <h4>Not a forecast</h4>
+    <p>Every number is a projection at your own rates. No benchmarks are used.</p>
+  </details>
+
+  <footer>Built by Marketing Systems Guild. Turning strangers into clients.</footer>
+</div>
+<div id="tip"></div>
+<script>
+const DATA = /*__DATA__*/null;
+let ROLE = /*__ROLE__*/"ceo";
+const MD = /*__MD__*/"";
+const CSV = /*__CSV__*/"";
+
+// ---------- formatting: identical rules to plan.py
+function fmtMoney(v){
+  if(v===null||v===undefined) return "None set";
+  const neg=v<0; v=Math.abs(v); let out;
+  if(v>=1e6){ out="$"+(Math.floor(v/1e6*100+0.5)/100).toFixed(2).replace(/0+$/,"").replace(/\.$/,"")+"M"; }
+  else if(v>=1e4){ out="$"+Math.floor(v/1000+0.5)+"K"; }
+  else { out="$"+Math.floor(v+0.5).toLocaleString("en-US"); }
+  return neg?"-"+out:out;
+}
+function fmtExact(v){ if(v===null||v===undefined) return "None set"; return "$"+(Math.round(v*100)/100).toLocaleString("en-US",{maximumFractionDigits:2}); }
+function fmtRate(r){ return Math.floor(r*100+0.5)+"%"; }
+function fmtCount(v){ const r=Math.floor(v*10+0.5)/10; return r===Math.trunc(r)?r.toLocaleString("en-US"):r.toLocaleString("en-US",{minimumFractionDigits:1,maximumFractionDigits:1}); }
+const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function pd(iso){ const [y,m,d]=iso.split("-").map(Number); return Date.UTC(y,m-1,d); }
+function fmtDate(x){ if(!x) return ""; const t=typeof x==="number"?new Date(x):new Date(pd(x)); return MON[t.getUTCMonth()]+" "+t.getUTCDate()+", "+t.getUTCFullYear(); }
+const DAY=86400000;
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const $=id=>document.getElementById(id);
+
+const F=DATA.funnel, T=DATA.timing, BR=DATA.brief||null;
+const WORD={pass:"Pass",flag:"Flag",fail:"Fail"}, SHAPE={pass:"●",flag:"▲",fail:"✕"};
+function stPill(c){ const nr=c.not_run?" nr":""; return `<span class="st ${c.state}${nr}"><span aria-hidden="true">${SHAPE[c.state]}</span>${WORD[c.state]}${c.not_run?", not run":""}</span>`; }
+function stampHtml(v){ const cls={"Ready":"ready","Ready with flags":"flags","Untested":"untested","Not ready":"notready","Pending rubric":"untested"}[v]||"untested";
+  const sh={"Ready":"●","Ready with flags":"▲","Untested":"?","Not ready":"✕","Pending rubric":"…"}[v]||"";
+  return `<span class="stamp ${cls}"><span aria-hidden="true">${sh}</span>Verdict: ${esc(v)}</span>`; }
+
+// ---------- header
+const verdict = BR ? BR.stamp : DATA.verdict;
+$("meta").innerHTML = `<b>${esc(DATA.campaign.name)}</b> &middot; CRM campaign ${esc(DATA.campaign.id)} &middot; Launch ${fmtDate(T.launch)} for ${T.weeks} weeks &middot; Due ${fmtDate(T.due)} &middot; Round ${DATA.round||1}`;
+$("stamp").innerHTML = stampHtml(verdict) + (BR?` <span class="meta">&nbsp;Approved by ${esc(BR.approval.name)}, ${esc(BR.approval.seat)}, ${esc(BR.approval.date_label)}</span>`:"");
+
+// ---------- seats
+const checks=DATA.checks, fails=checks.filter(c=>c.state==="fail"), flags=checks.filter(c=>c.state==="flag");
+const firstMove = fails[0]||flags[0]||null;
+const QS={ceo:"Can this campaign hit its number on this budget?",marketing:"Is my strategy ready to launch, and what fails first?",
+  agency:"What exactly are we on the hook to deliver, and is the target realistic?",cro:"What will sales get, when, and what do we owe the campaign?"};
+function cards(role){
+  const c=[], chk=n=>checks.find(x=>x.n===n);
+  (DATA.warnings||[]).slice(0,1).forEach(w=>c.push(["warn",esc(w)]));
+  const lead=verdict==="Not ready"?"stop":"key";
+  if(role==="ceo"){
+    c.push([lead,`<b>${esc(verdict)}.</b> The plan buys ${fmtMoney(F.planned_pipeline)} in pipeline against a ${fmtMoney(F.target)} target. ${fmtMoney(T.pipeline_in_time)} of it lands by ${fmtDate(T.due)}.`]);
+    c.push(["",firstMove?`<b>One change:</b> ${esc(firstMove.fix)}`:`<b>One move:</b> approve the strategy and build the brief.`]);
+  } else if(role==="marketing"){
+    c.push([lead,`<b>${esc(verdict)}.</b> ${fails.length} ${fails.length===1?"check fails":"checks fail"}, ${flags.length} ${flags.length===1?"flags":"flag"}.`]);
+    if(fails[0]) c.push(["",`<b>Fails first: check ${fails[0].n}, ${esc(fails[0].name)}.</b> ${esc(fails[0].reason)} <b>Fix:</b> ${esc(fails[0].fix)}`]);
+    else if(flags[0]) c.push(["",`<b>First flag: check ${flags[0].n}, ${esc(flags[0].name)}.</b> ${esc(flags[0].reason)} <b>Fix:</b> ${esc(flags[0].fix)}`]);
+  } else if(role==="agency"){
+    c.push([lead,`<b>${esc(verdict)}.</b> ` + DATA.channels.map(x=>`${esc(x.name)}: ${fmtCount(x.leads)} leads at ${x.cpl?fmtExact(x.cpl):"no cost per lead"}${x.cpl_assumed?" (Assumption)":""}`).join(". ")+"."]);
+    c.push(["",`<b>Check 1:</b> ${esc(chk(1).reason)} <b>Check 2:</b> ${esc(chk(2).reason)}`]);
+  } else {
+    c.push([lead,`<b>${fmtCount(F.planned_opps)} expected opportunities</b>, landing from ${fmtDate(T.first_land)} to ${fmtDate(T.last_land)}. ${fmtCount(T.opps_in_time)} land by ${fmtDate(T.due)}.`]);
+    c.push(["",`<b>Capacity:</b> ${esc(chk(4).reason)}`]);
+    if(BR){ const n=BR.requirements.filter(r=>r.function==="sales").length; c.push(["",`<b>Sales owes the campaign ${n} requirements</b> in the Sales enablement section of the brief.`]); }
+  }
+  return c.map(([k,h])=>`<div class="card ${k}">${h}</div>`).join("");
+}
+function setRole(r){ ROLE=r; document.querySelectorAll(".roles button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.role===r))); $("q").textContent=QS[r]; $("cards").innerHTML=cards(r); }
+document.querySelectorAll(".roles button").forEach(b=>b.addEventListener("click",()=>setRole(b.dataset.role)));
+
+// ---------- checks
+$("checks").innerHTML = `<tr><th class="n">#</th><th>Check</th><th>State</th><th>By</th><th>Reason</th><th>Fix</th></tr>` +
+  checks.map(c=>`<tr><td class="n">${c.n}</td><td><b>${esc(c.name)}</b></td><td>${stPill(c)}</td><td class="by">${c.by==="script"?"Script":"Claude"}</td><td data-l="Reason">${esc(c.reason)}</td><td data-l="Fix">${esc(c.fix)||"None needed"}</td></tr>`).join("");
+
+// ---------- funnel
+function tile(v,l){ return `<div><div class="v">${v}</div><div class="l">${l}</div></div>`; }
+$("tiles").innerHTML = tile(fmtMoney(F.target),"Pipeline target") + tile(fmtMoney(F.planned_pipeline),"Pipeline the plan buys") +
+  tile(fmtMoney(T.pipeline_in_time),"Lands by "+fmtDate(T.due)) + tile(F.cpl_ceiling?fmtMoney(F.cpl_ceiling):"None","Cost per lead ceiling");
+function fbar(name,need,got,inTime,fmt){
+  const max=Math.max(need,got,1)*1.08, pct=v=>(v/max*100).toFixed(2)+"%";
+  const hatch = inTime!==null && inTime<got ? `<div class="bar hatch" style="width:${pct(got)}"></div><div class="bar solid" style="width:${pct(inTime)}"></div>` : `<div class="bar solid" style="width:${pct(got)}"></div>`;
+  const lbl = inTime!==null && inTime<got ? `Bought ${fmt(got)}, in time ${fmt(inTime)}` : `Bought ${fmt(got)}`;
+  return `<div class="fb"><div class="nm">${name}<br><span style="font-weight:400">Needed ${fmt(need)}. ${lbl}</span></div><div class="track">${hatch}<div class="mark" style="left:${pct(need)}" title="Needed"></div></div></div>`;
+}
+$("fbars").innerHTML = fbar("Leads",F.leads_needed,F.planned_leads,null,fmtCount) +
+  fbar("Opportunities",F.opps_needed,F.planned_opps,T.opps_in_time,fmtCount) + fbar("Pipeline",F.target,F.planned_pipeline,T.pipeline_in_time,fmtMoney);
+$("chans").innerHTML = `<tr><th>ID</th><th>Channel</th><th class="n">Budget</th><th class="n">Cost per lead</th><th class="n">Leads</th><th class="n">Expected opportunities</th><th class="n">Pipeline</th></tr>` +
+  DATA.channels.map(c=>`<tr><td>${c.id}</td><td><b>${esc(c.name)}</b> <span class="by">${esc(c.type.replace("_"," "))}</span></td><td class="n">${fmtExact(c.budget)}</td><td class="n">${c.cpl?fmtExact(c.cpl):"None"}${c.cpl_assumed?" (Assumption)":""}</td><td class="n">${fmtCount(c.leads)}</td><td class="n">${fmtCount(c.opps)}</td><td class="n">${fmtMoney(c.pipeline)}</td></tr>`).join("");
+
+// ---------- what-if: the same math as plan.py
+const WI={budget:100,cpl:100,rate:Math.round(F.rate*1000)/10,lag:T.lag_days,target:F.target};
+function sim(s){
+  const rate=s.rate/100, deal=F.avg_deal, weeks=T.weeks;
+  let leads=0; DATA.channels.forEach(c=>{ const b=c.budget*s.budget/100, p=c.cpl?c.cpl*s.cpl/100:0; if(b&&p) leads+=Math.floor(b/p+1e-9); });
+  const opps=leads*rate, pipe=opps*deal;
+  const base=Math.floor(leads/weeks), extra=leads%weeks, launch=pd(T.launch), due=pd(T.due);
+  let inLeads=0, late=0;
+  for(let i=0;i<weeks;i++){ const n=base+(i<extra?1:0); const land=launch+(7*i+6+Math.ceil(s.lag))*DAY; if(land<=due) inLeads+=n; else late++; }
+  const inPipe=inLeads*rate*deal;
+  const c1=pipe+1e-9>=s.target?"pass":"fail";
+  const c2=late===0?"pass":(inPipe+1e-9>=s.target?"flag":"fail");
+  return {leads,opps,pipe,inPipe,late,c1,c2};
+}
+const SL=[["budget","Budget, % of plan",50,200,5,v=>v+"% ("+fmtMoney(F.budget*v/100)+")"],["cpl","Cost per lead, % of today",50,200,5,v=>v+"%"],
+  ["rate","Lead-to-opportunity rate",1,40,0.5,v=>v+"%"],["lag","Days from lead to opportunity",0,120,1,v=>v+" days"],
+  ["target","Pipeline target",Math.round(F.target*0.25/10000)*10000,Math.round(F.target*2/10000)*10000,10000,v=>fmtMoney(v)]];
+$("planner").innerHTML = SL.map(([k,l,mn,mx,st])=>`<div><label for="wi-${k}">${l}: <span class="val" id="wv-${k}"></span></label><input type="range" id="wi-${k}" min="${mn}" max="${mx}" step="${st}" value="${WI[k]}"></div>`).join("") +
+  `<div style="align-self:end"><button class="tbtn" id="wi-reset">Back to the plan</button></div>`;
+function drawWI(){
+  SL.forEach(([k,,,,,f])=>{ $("wv-"+k).textContent=f(WI[k]); });
+  const r=sim(WI), pill=s=>`<span class="st ${s}"><span aria-hidden="true">${SHAPE[s]}</span>${WORD[s]}</span>`;
+  $("wiout").innerHTML = `<div><div class="v">${fmtMoney(r.pipe)}</div><div class="l">Pipeline bought</div></div>`+
+    `<div><div class="v">${fmtMoney(r.inPipe)}</div><div class="l">Lands by ${fmtDate(T.due)}</div></div>`+
+    `<div><div class="v">${pill(r.c1)}</div><div class="l">Check 1, what-if</div></div>`+
+    `<div><div class="v">${pill(r.c2)}</div><div class="l">Check 2, what-if</div></div>`;
+}
+SL.forEach(([k])=>$("wi-"+k).addEventListener("input",e=>{ WI[k]=Number(e.target.value); drawWI(); }));
+$("wi-reset").addEventListener("click",()=>{ Object.assign(WI,{budget:100,cpl:100,rate:Math.round(F.rate*1000)/10,lag:T.lag_days,target:F.target}); SL.forEach(([k])=>$("wi-"+k).value=WI[k]); drawWI(); });
+
+// ---------- pacing chart
+function drawPace(){
+  const P=DATA.pacing, W=900,H=300,m={l:70,r:20,t:24,b:40}, iw=W-m.l-m.r, ih=H-m.t-m.b;
+  const raw=Math.max(F.target,F.planned_pipeline)*1.08, mag=Math.pow(10,Math.floor(Math.log10(raw/4)));
+  const step=[1,2,2.5,5,10].map(k=>k*mag).find(k=>raw/k<=5), ymax=Math.ceil(raw/step)*step, nt=Math.round(ymax/step);
+  const x=i=>m.l+i*(iw/P.length), bw=iw/P.length*0.62, y=v=>m.t+ih-v/ymax*ih;
+  let s=`<g class="grid">`; for(let i=0;i<=nt;i++){ const v=step*i; s+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y(v)}" y2="${y(v)}"/>`; } s+=`</g>`;
+  for(let i=0;i<=nt;i++){ const v=step*i; s+=`<text x="${m.l-8}" y="${y(v)+4}" text-anchor="end" font-size="11">${v?fmtMoney(v):"$0"}</text>`; }
+  P.forEach((p,i)=>{ const v=p.opps_landing*F.avg_deal; if(v>0) s+=`<rect class="bh" data-i="${i}" x="${x(i)+(iw/P.length-bw)/2}" y="${y(v)}" width="${bw}" height="${m.t+ih-y(v)}" fill="var(--blue)"/>`;
+    s+=`<text x="${x(i)+iw/P.length/2}" y="${H-m.b+16}" text-anchor="middle" font-size="11">${p.week}</text>`; });
+  s+=`<text x="${m.l+iw/2}" y="${H-6}" text-anchor="middle" font-size="11">Week from launch</text>`;
+  s+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y(F.target)}" y2="${y(F.target)}" stroke="var(--amber)" stroke-width="3" stroke-dasharray="8 5"/>`;
+  s+=`<text x="${W-m.r}" y="${y(F.target)-6}" text-anchor="end" font-size="12" font-weight="700">Target ${fmtMoney(F.target)}</text>`;
+  const dueIdx=(pd(T.due)-pd(T.launch))/DAY/7; const dx=m.l+(dueIdx+1/7)*(iw/P.length);
+  if(dx<=W-m.r){ s+=`<line x1="${dx}" x2="${dx}" y1="${m.t}" y2="${m.t+ih}" stroke="currentColor" stroke-width="2" stroke-dasharray="4 3"/><text x="${dx-6}" y="${m.t+12}" text-anchor="end" font-size="12" font-weight="700">Due ${fmtDate(T.due)}</text>`; }
+  let path=""; P.forEach((p,i)=>{ const cx=x(i)+iw/P.length/2; path+=(i?"L":"M")+cx+" "+y(p.pipeline_cum); });
+  s+=`<path d="${path}" fill="none" stroke="currentColor" stroke-width="2"/>`;
+  P.forEach((p,i)=>{ const cx=x(i)+iw/P.length/2; s+=`<rect class="pt" data-i="${i}" x="${cx-4}" y="${y(p.pipeline_cum)-4}" width="8" height="8" fill="currentColor"/>`; });
+  s+=`<g class="axis"><line x1="${m.l}" x2="${W-m.r}" y1="${m.t+ih}" y2="${m.t+ih}"/></g>`;
+  const svg=$("pace"); svg.style.color="var(--ink)"; svg.innerHTML=s;
+  svg.querySelectorAll("rect").forEach(r=>{ r.addEventListener("mousemove",e=>{ const p=P[+r.dataset.i]; const t=$("tip");
+    t.innerHTML=`<b>Week ${p.week}</b>, from ${fmtDate(p.start)}<br>Spend ${fmtMoney(p.spend)}, ${fmtCount(p.leads)} leads<br>${fmtCount(p.opps_landing)} opportunities land<br>Pipeline to date ${fmtMoney(p.pipeline_cum)}`;
+    t.style.display="block"; t.style.left=Math.min(e.clientX+14,innerWidth-270)+"px"; t.style.top=(e.clientY+14)+"px"; }); r.addEventListener("mouseleave",()=>$("tip").style.display="none"); });
+  $("pacecap").textContent=`Leads arrive evenly across ${T.weeks} weeks and become opportunities ${T.lag_days} days later. ${fmtMoney(T.pipeline_in_time)} of pipeline lands by ${fmtDate(T.due)}.`;
+  $("pacetab").innerHTML=`<tr><th class="n">Week</th><th>Starts</th><th class="n">Spend</th><th class="n">Leads</th><th class="n">Opportunities landing</th><th class="n">Pipeline to date</th></tr>`+
+    P.map(p=>`<tr><td class="n">${p.week}</td><td>${fmtDate(p.start)}${p.contains_due?" <b>(due week)</b>":""}</td><td class="n">${fmtMoney(p.spend)}</td><td class="n">${fmtCount(p.leads)}</td><td class="n">${fmtCount(p.opps_landing)}</td><td class="n">${fmtMoney(p.pipeline_cum)}</td></tr>`).join("");
+}
+
+// ---------- brief
+function drawBrief(){
+  const el=$("brief");
+  if(!BR){
+    el.innerHTML = verdict==="Not ready"
+      ? `<div class="card stop"><b>Blocked.</b> The verdict is Not ready. A Fail blocks the brief and cannot be overridden. Fix ${fails.map(c=>"check "+c.n).join(", ")} and rerun.</div>`
+      : `<div class="card key"><b>Not built yet.</b> The brief builds once the strategy is approved.</div>`;
+    return;
+  }
+  const owners=[...new Set(BR.requirements.map(r=>r.owner))].sort();
+  const byId=Object.fromEntries(BR.requirements.map(r=>[r.id,r]));
+  let h=`<div class="controls no-print"><label>Owner <select id="ownf"><option value="">Everyone</option>${owners.map(o=>`<option>${esc(o)}</option>`).join("")}</select></label></div>`;
+  if(BR.unassigned.length) h+=`<div class="card warn" style="margin-bottom:10px"><b>Unassigned:</b> ${BR.unassigned.join(", ")}. Name an owner for each.</div>`;
+  if(BR.dependency_conflicts.length) h+=`<div class="card warn" style="margin-bottom:10px"><b>Dependency conflicts:</b> ${BR.dependency_conflicts.map(esc).join(" ")}</div>`;
+  h+=`<div id="secs"></div>`;
+  const m=BR.measurement;
+  h+=`<div class="sec"><h3>Measurement</h3><p style="margin:0 0 4px"><b>Primary KPI:</b> ${esc(m.primary)}.</p><p style="margin:0 0 4px"><b>Leading indicators:</b> ${m.leading.map(esc).join(", ")}.</p>${m.revenue?`<p style="margin:0 0 4px"><b>Closed revenue:</b> ${esc(m.revenue)}</p>`:""}<p style="margin:0"><b>Not KPIs:</b> clicks, impressions and MQL counts. Ads diagnostics only.</p></div>`;
+  h+=`<div class="sec"><h3>Risks</h3>${BR.risks.length?`<div class="scroll"><table><tr><th>From</th><th>Risk</th><th>Fix</th><th>Owner</th></tr>${BR.risks.map(r=>`<tr class="${r.owner==="Unassigned"?"unassigned":""}"><td>${esc(r.source)}</td><td>${esc(r.risk)}</td><td>${esc(r.fix)||"None given"}</td><td>${esc(r.owner)}</td></tr>`).join("")}</table></div>`:"None named."}</div>`;
+  h+=`<div class="sec"><h3>Lead times</h3><div class="scroll"><table><tr><th>Function</th><th class="n">Days before launch</th><th>Source</th></tr>${BR.lead_times.map(x=>`<tr><td>${esc(x.name)}</td><td class="n">${x.days}</td><td>${esc(x.source)}</td></tr>`).join("")}</table></div></div>`;
+  const rc=BR.reconciliation;
+  h+=`<div class="sec"><h3>Budget check</h3><p style="margin:0">Channels ${fmtExact(rc.channels_total)}, total ${fmtExact(rc.budget_total)}, requirements ${fmtExact(rc.requirements_total)}. <b>${rc.ok?"They reconcile.":"They do not reconcile."}</b></p></div>`;
+  el.innerHTML=h;
+  const draw=()=>{ const o=$("ownf").value;
+    $("secs").innerHTML=BR.sections.map(s=>{
+      if(!s.active) return `<div class="sec off"><h3>${esc(s.name)}</h3><p style="margin:0">${esc(s.because)}</p></div>`;
+      const rs=s.requirements.map(i=>byId[i]).filter(r=>!o||r.owner===o);
+      if(!rs.length) return `<div class="sec"><h3>${esc(s.name)}</h3><p style="margin:0">Nothing for this owner.</p></div>`;
+      return `<div class="sec"><h3>${esc(s.name)}</h3><div class="scroll"><table><tr><th>ID</th><th>Requirement</th><th>Traces to</th><th>Owner</th><th>Due</th><th>Budget</th><th>Depends on</th><th>Acceptance</th></tr>`+
+        rs.map(r=>`<tr class="${r.owner==="Unassigned"?"unassigned":""}"><td class="req-id">${r.id}</td><td>${esc(r.requirement)}${r.utm?`<div class="utm">${esc(r.utm.query)}</div>`:""}</td><td>${esc(r.trace_label)}</td><td>${esc(r.owner)}</td><td>${esc(r.due_label)}</td><td>${esc(r.budget_label)}</td><td>${r.depends_on_ids.join(", ")||"None"}</td><td>${esc(r.acceptance)}</td></tr>`).join("")+`</table></div></div>`;
+    }).join(""); };
+  $("ownf").addEventListener("change",draw); draw();
+}
+
+// ---------- what the script read
+function drawRead(){
+  let h="";
+  if((DATA.changes||[]).length) h+=`<h4>What changed since the last round</h4><div class="scroll"><table><tr><th>What</th><th>From</th><th>To</th></tr>${DATA.changes.map(c=>`<tr><td>${esc(c.what)}</td><td>${esc(c.from)}</td><td>${esc(c.to)}</td></tr>`).join("")}</table></div>`;
+  if((DATA.assumptions||[]).length) h+=`<h4>Assumptions</h4><p>${DATA.assumptions.map(a=>esc(a.label)+" "+esc(a.value)).join("; ")}. Each is labeled Assumption. The verdict can be no better than Untested.</p>`;
+  if((DATA.notes||[]).length) h+=`<h4>How your words were read</h4><p>${DATA.notes.map(esc).join(". ")}.</p>`;
+  if((DATA.warnings||[]).length) h+=`<h4>Warnings</h4><p>${DATA.warnings.map(esc).join(" ")}</p>`;
+  h+=`<h4>The strategy lines</h4><div class="scroll"><table><tr><th>Line</th><th>What</th><th>As stated</th></tr>${DATA.strategy_lines.map(l=>`<tr><td>${l.id}</td><td>${esc(l.label)}</td><td>${esc(l.text)}</td></tr>`).join("")}</table></div>`;
+  $("read").innerHTML=h;
+  if((DATA.changes||[]).length) $("readbox").open=true;
+}
+
+// ---------- exports
+function dl(name,text,type){ const b=new Blob([text],{type}); const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download=name; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();},500); }
+const base=(DATA.campaign.id||"campaign").replace(/[^a-z0-9-]+/gi,"-").toLowerCase();
+$("x-md").addEventListener("click",()=>dl(base+"-brief.md",MD,"text/markdown"));
+if(CSV) $("x-csv").addEventListener("click",()=>dl(base+"-requirements.csv",CSV,"text/csv")); else { $("x-csv").disabled=true; $("x-csv").title="The requirements exist once the brief is built."; }
+$("x-print").addEventListener("click",()=>window.print());
+
+setRole(ROLE); drawWI(); drawPace(); drawBrief(); drawRead();
+</script>
+</body>
+</html>

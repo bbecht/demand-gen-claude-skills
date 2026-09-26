@@ -1,0 +1,576 @@
+{
+ "approval": {
+  "name": "Ana Ferris",
+  "seat": "VP Marketing",
+  "date": "2026-12-14",
+  "date_label": "Dec 14, 2026"
+ },
+ "stamp": "Ready with flags",
+ "sections": [
+  {
+   "function": "ads",
+   "name": "Ads",
+   "active": true,
+   "because": "Called for by C1, C3.",
+   "requirements": [
+    "ADS-01",
+    "ADS-02",
+    "ADS-03"
+   ]
+  },
+  {
+   "function": "pr",
+   "name": "PR",
+   "active": false,
+   "because": "Not in this campaign. Channels C1 to C4 include no channel that uses PR.",
+   "requirements": []
+  },
+  {
+   "function": "content",
+   "name": "Content",
+   "active": true,
+   "because": "Called for by O1, C2, C3.",
+   "requirements": [
+    "CON-01",
+    "CON-02",
+    "CON-03",
+    "CON-04"
+   ]
+  },
+  {
+   "function": "operations",
+   "name": "Operations",
+   "active": true,
+   "because": "Every campaign needs tracking and follow-up.",
+   "requirements": [
+    "OPS-01",
+    "OPS-02",
+    "OPS-03",
+    "OPS-04",
+    "OPS-05"
+   ]
+  },
+  {
+   "function": "sales",
+   "name": "Sales enablement",
+   "active": true,
+   "because": "Every campaign needs tracking and follow-up.",
+   "requirements": [
+    "SAL-01",
+    "SAL-02",
+    "SAL-03",
+    "SAL-04"
+   ]
+  },
+  {
+   "function": "creative",
+   "name": "Creative",
+   "active": true,
+   "because": "Called for by C1, C2.",
+   "requirements": [
+    "CRE-01",
+    "CRE-02",
+    "CRE-03"
+   ]
+  }
+ ],
+ "requirements": [
+  {
+   "id": "ADS-01",
+   "function": "ads",
+   "requirement": "Build the LinkedIn campaigns: CFO, Controller and AP manager titles at the account list, 200 to 1,000 employees. Manual bidding with a cost cap. LinkedIn Audience Network off. A Lead Gen Form that offers the Month-End Close Benchmark.",
+   "traces_to": "C1",
+   "trace_label": "C1: Channel: LinkedIn ads",
+   "owner": "Priya Nand, demand gen",
+   "due": "2027-01-04",
+   "due_label": "Jan 4, 2027",
+   "budget": 40000.0,
+   "budget_label": "$40,000, the C1 budget",
+   "depends_on_ids": [
+    "CRE-01",
+    "OPS-02"
+   ],
+   "acceptance": "Campaigns sit in draft with titles, company size and the account list applied, Audience Network off, and a test form submission reaches Salesforce.",
+   "channel": "C1",
+   "utm": {
+    "source": "linkedin",
+    "medium": "paid_social",
+    "campaign": "brasswick-q1_pipeline_cfo-mfg_202701",
+    "content": "ads-01",
+    "query": "?utm_source=linkedin&utm_medium=paid_social&utm_campaign=brasswick-q1_pipeline_cfo-mfg_202701&utm_content=ads-01"
+   },
+   "auto": false,
+   "when": "pre-launch",
+   "prevents": null
+  },
+  {
+   "id": "ADS-02",
+   "function": "ads",
+   "requirement": "Stop rule: pause any ad set whose cost per lead runs above $180 for two straight weeks. $180 is the most a lead can cost for the budget to reach the target.",
+   "traces_to": "T1",
+   "trace_label": "T1: Pipeline target",
+   "owner": "Priya Nand, demand gen",
+   "due": null,
+   "due_label": "Ongoing, Jan 11, 2027 to Mar 21, 2027",
+   "budget": null,
+   "budget_label": "No separate budget",
+   "depends_on_ids": [],
+   "acceptance": "Every Monday the cost per lead of each ad set is compared to $180, and the ones above it for two weeks are paused.",
+   "channel": "C1",
+   "utm": {
+    "source": "linkedin",
+    "medium": "paid_social",
+    "campaign": "brasswick-q1_pipeline_cfo-mfg_202701",
+    "content": "ads-02",
+    "query": "?utm_source=linkedin&utm_medium=paid_social&utm_campaign=brasswick-q1_pipeline_cfo-mfg_202701&utm_content=ads-02"
+   },
+   "auto": false,
+   "when": "ongoing",
+   "prevents": null
+  },
+  {
+   "id": "ADS-03",
+   "function": "ads",
+   "requirement": "Brief the syndication vendor: finance titles at US manufacturers of 200 to 1,000 employees, delivered weekly, with the benchmark PDF as the asset.",
+   "traces_to": "C3",
+   "trace_label": "C3: Channel: Content syndication",
+   "owner": "Priya Nand, demand gen",
+   "due": "2027-01-04",
+   "due_label": "Jan 4, 2027",
+   "budget": 20000.0,
+   "budget_label": "$20,000, the C3 budget",
+   "depends_on_ids": [
+    "CON-01"
+   ],
+   "acceptance": "The signed insertion order names the titles, the size band, the region, weekly delivery and the benchmark PDF.",
+   "channel": "C3",
+   "utm": {
+    "source": "netline",
+    "medium": "syndication",
+    "campaign": "brasswick-q1_pipeline_cfo-mfg_202701",
+    "content": "ads-03",
+    "query": "?utm_source=netline&utm_medium=syndication&utm_campaign=brasswick-q1_pipeline_cfo-mfg_202701&utm_content=ads-03"
+   },
+   "auto": false,
+   "when": "pre-launch",
+   "prevents": null
+  },
+  {
+   "id": "CON-01",
+   "function": "content",
+   "requirement": "Build the Month-End Close Benchmark: the 20-minute read-out from the buyer's own AP numbers, and a gated PDF version for syndication.",
+   "traces_to": "O1",
+   "trace_label": "O1: Offer",
+   "owner": "Tom Ellery, content",
+   "due": "2026-12-21",
+   "due_label": "Dec 21, 2026",
+   "budget": null,
+   "budget_label": "No separate budget",
+   "depends_on_ids": [],
+   "acceptance": "The read-out runs end to end on a test account's AP numbers, and the PDF is approved.",
+   "channel": null,
+   "utm": null,
+   "auto": false,
+   "when": "pre-launch",
+   "prevents": null
+  },
+  {
+   "id": "CON-02",
+   "function": "content",
+   "requirement": "Produce the webinar with the NetSuite partner: one customer speaker who closed on day 4, and the benchmark as the follow-up offer.",
+   "traces_to": "C2",
+   "trace_label": "C2: Channel: Webinar",
+   "owner": "Tom Ellery, content",
+   "due": "2026-12-21",
+   "due_label": "Dec 21, 2026",
+   "budget": 15000.0,
+   "budget_label": "$15,000, the C2 budget",
+   "depends_on_ids": [],
+   "acceptance": "The speaker is confirmed in writing, the run of show is approved, and the registration page is live.",
+   "channel": "C2",
+   "utm": {
+    "source": "zoom",
+    "medium": "webinar",
+    "campaign": "brasswick-q1_pipeline_cfo-mfg_202701",
+    "content": "con-02",
+    "query": "?utm_source=zoom&utm_medium=webinar&utm_campaign=brasswick-q1_pipeline_cfo-mfg_202701&utm_content=con-02"
+   },
+   "auto": false,
+   "when": "pre-launch",
+   "prevents": null
+  },
+  {
+   "id": "CON-03",
+   "function": "content",
+   "requirement": "Write one proof piece per named manufacturing customer, each showing the close moving to day 4.",
+   "traces_to": "M1",
+   "trace_label": "M1: Message",
+   "owner": "Tom Ellery, content",
+   "due": "2026-12-21",
+   "due_label": "Dec 21, 2026",
+   "budget": null,
+   "budget_label": "No separate budget",
+   "depends_on_ids": [],
+   "acceptance": "Each customer has approved its piece in writing.",
+   "channel": null,
+   "utm": null,
+   "auto": false,
+   "when": "pre-launch",
+   "prevents": null
+  },
+  {
+   "id": "CON-04",
+   "function": "content",
+   "requirement": "Line up a second customer speaker for the webinar, from the three named manufacturing customers, briefed on the same run of show.",
+   "traces_to": "C2",
+   "trace_label": "C2: Channel: Webinar",
+   "owner": "Tom Ellery, content",
+   "due": "2026-12-21",
+   "due_label": "Dec 21, 2026",
+   "budget": null,
+   "budget_label": "No separate budget",
+   "depends_on_ids": [],
+   "acceptance": "A second speaker has confirmed in writing and has the run of show.",
+   "channel": "C2",
+   "utm": {
+    "source": "zoom",
+    "medium": "webinar",
+    "campaign": "brasswick-q1_pipeline_cfo-mfg_202701",
+    "content": "con-04",
+    "query": "?utm_source=zoom&utm_medium=webinar&utm_campaign=brasswick-q1_pipeline_cfo-mfg_202701&utm_content=con-04"
+   },
+   "auto": false,
+   "when": "pre-launch",
+   "prevents": "R1"
+  },
+  {
+   "id": "OPS-01",
+   "function": "operations",
+   "requirement": "Set up CRM campaign brasswick-q1, or confirm it exists. Every opportunity from this campaign carries it as its campaign source, under the credit rule in line K1. Every link uses the UTMs in this brief.",
+   "traces_to": "K1",
+   "trace_label": "K1: Tracking",
+   "owner": "Dana Ruiz, RevOps",
+   "due": "2027-01-01",
+   "due_label": "Jan 1, 2027",
+   "budget": null,
+   "budget_label": "No separate budget",
+   "depends_on_ids": [],
+   "acceptance": "A test lead from each channel creates a record that shows campaign brasswick-q1 and its UTMs in the CRM.",
+   "channel": null,
+   "utm": null,
+   "auto": true,
+   "when": "pre-launch",
+   "prevents": null
+  },
+  {
+   "id": "OPS-02",
+   "function": "operations",
+   "requirement": "Forms on the benchmark page and the LinkedIn Lead Gen Form push every lead to Salesforce with the campaign and its UTMs.",
+   "traces_to": "K1",
+   "trace_label": "K1: Tracking",
+   "owner": "Dana Ruiz, RevOps",
+   "due": "2027-01-01",
+   "due_label": "Jan 1, 2027",
+   "budget": null,
+   "budget_label": "No separate budget",
+   "depends_on_ids": [
+    "CON-01"
+   ],
+   "acceptance": "A test submission from each form shows the campaign and all four UTMs on the Salesforce lead.",
+   "channel": null,
+   "utm": null,
+   "auto": false,
+   "when": "pre-launch",
+   "prevents": null
+  },
+  {
+   "id": "OPS-03",
+   "function": "operations",
+   "requirement": "Route benchmark leads from accounts on the list to the account's SDR. Leads from off-list accounts go to a review queue.",
+   "traces_to": "A1",
+   "trace_label": "A1: Audience",
+   "owner": "Dana Ruiz, RevOps",
+   "due": "2027-01-01",
+   "due_label": "Jan 1, 2027",
+   "budget": null,
+   "budget_label": "No separate budget",
+   "depends_on_ids": [],
+   "acceptance": "A test lead from a listed account lands with its SDR, and one from an unlisted account lands in the review queue.",
+   "channel": null,
+   "utm": null,
+   "auto": false,
+   "when": "pre-launch",
+   "prevents": null
+  },
+  {
+   "id": "OPS-04",
+   "function": "operations",
+   "requirement": "MQL definition: a lead from a target account, in a named buying role, who books a close review or attends the webinar.",
+   "traces_to": "O1",
+   "trace_label": "O1: Offer",
+   "owner": "Dana Ruiz, RevOps",
+   "due": "2027-01-01",
+   "due_label": "Jan 1, 2027",
+   "budget": null,
+   "budget_label": "No separate budget",
+   "depends_on_ids": [],
+   "acceptance": "The definition is live in Salesforce and sales has signed off on it.",
+   "channel": null,
+   "utm": null,
+   "auto": false,
+   "when": "pre-launch",
+   "prevents": null
+  },
+  {
+   "id": "OPS-05",
+   "function": "operations",
+   "requirement": "Dashboard: pipeline and opportunities against the $1.2M target by week, with leads and spend by channel against the weekly pacing in this brief.",
+   "traces_to": "T1",
+   "trace_label": "T1: Pipeline target",
+   "owner": "Dana Ruiz, RevOps",
+   "due": "2027-01-01",
+   "due_label": "Jan 1, 2027",
+   "budget": null,
+   "budget_label": "No separate budget",
+   "depends_on_ids": [],
+   "acceptance": "The dashboard shows a test week against the weekly targets, and the sales director can open it.",
+   "channel": null,
+   "utm": null,
+   "auto": false,
+   "when": "pre-launch",
+   "prevents": null
+  },
+  {
+   "id": "SAL-01",
+   "function": "sales",
+   "requirement": "Follow-up SLA: an SDR calls every benchmark lead and every close review request within one business day.",
+   "traces_to": "O1",
+   "trace_label": "O1: Offer",
+   "owner": "Marcus Webb, sales director",
+   "due": null,
+   "due_label": "Ongoing, Jan 11, 2027 to Mar 21, 2027",
+   "budget": null,
+   "budget_label": "No separate budget",
+   "depends_on_ids": [],
+   "acceptance": "Salesforce shows a logged call within one business day on every campaign lead.",
+   "channel": null,
+   "utm": null,
+   "auto": false,
+   "when": "ongoing",
+   "prevents": null
+  },
+  {
+   "id": "SAL-02",
+   "function": "sales",
+   "requirement": "SDR outbound: sequences to Controllers and AP managers on the account list that open with the benchmark.",
+   "traces_to": "C4",
+   "trace_label": "C4: Channel: SDR outbound",
+   "owner": "Marcus Webb, sales director",
+   "due": "2027-01-06",
+   "due_label": "Jan 6, 2027",
+   "budget": 15000.0,
+   "budget_label": "$15,000, the C4 budget",
+   "depends_on_ids": [],
+   "acceptance": "Sequences are loaded in Outreach for every contact on the list and approved by the sales director.",
+   "channel": "C4",
+   "utm": {
+    "source": "outreach",
+    "medium": "outbound",
+    "campaign": "brasswick-q1_pipeline_cfo-mfg_202701",
+    "content": "sal-02",
+    "query": "?utm_source=outreach&utm_medium=outbound&utm_campaign=brasswick-q1_pipeline_cfo-mfg_202701&utm_content=sal-02"
+   },
+   "auto": false,
+   "when": "pre-launch",
+   "prevents": null
+  },
+  {
+   "id": "SAL-03",
+   "function": "sales",
+   "requirement": "Talk track and objection sheet: the day-4 close claim, the customer proof pieces, and answers on NetSuite and Sage Intacct integration.",
+   "traces_to": "M1",
+   "trace_label": "M1: Message",
+   "owner": "Marcus Webb, sales director",
+   "due": "2027-01-06",
+   "due_label": "Jan 6, 2027",
+   "budget": null,
+   "budget_label": "No separate budget",
+   "depends_on_ids": [
+    "CON-03"
+   ],
+   "acceptance": "Every SDR and AE has run the talk track once in a role play with the sales director.",
+   "channel": null,
+   "utm": null,
+   "auto": false,
+   "when": "pre-launch",
+   "prevents": null
+  },
+  {
+   "id": "SAL-04",
+   "function": "sales",
+   "requirement": "Capacity: the three AEs keep room for the opportunity flow in the pacing table through the run.",
+   "traces_to": "T1",
+   "trace_label": "T1: Pipeline target",
+   "owner": "Marcus Webb, sales director",
+   "due": null,
+   "due_label": "Ongoing, Jan 11, 2027 to Mar 21, 2027",
+   "budget": null,
+   "budget_label": "No separate budget",
+   "depends_on_ids": [],
+   "acceptance": "Each week, every new campaign opportunity has an AE owner within one business day.",
+   "channel": null,
+   "utm": null,
+   "auto": false,
+   "when": "ongoing",
+   "prevents": null
+  },
+  {
+   "id": "CRE-01",
+   "function": "creative",
+   "requirement": "LinkedIn concepts on the day-4 close claim: single image and document ad formats, with two copy variants per concept.",
+   "traces_to": "M1",
+   "trace_label": "M1: Message",
+   "owner": "Northfield Studio (agency)",
+   "due": "2026-12-21",
+   "due_label": "Dec 21, 2026",
+   "budget": null,
+   "budget_label": "No separate budget",
+   "depends_on_ids": [
+    "CON-03"
+   ],
+   "acceptance": "Final files in every LinkedIn size, approved against the core message.",
+   "channel": "C1",
+   "utm": {
+    "source": "linkedin",
+    "medium": "paid_social",
+    "campaign": "brasswick-q1_pipeline_cfo-mfg_202701",
+    "content": "cre-01",
+    "query": "?utm_source=linkedin&utm_medium=paid_social&utm_campaign=brasswick-q1_pipeline_cfo-mfg_202701&utm_content=cre-01"
+   },
+   "auto": false,
+   "when": "pre-launch",
+   "prevents": null
+  },
+  {
+   "id": "CRE-02",
+   "function": "creative",
+   "requirement": "Webinar promo kit: registration page art, email headers and social tiles.",
+   "traces_to": "C2",
+   "trace_label": "C2: Channel: Webinar",
+   "owner": "Northfield Studio (agency)",
+   "due": "2026-12-21",
+   "due_label": "Dec 21, 2026",
+   "budget": null,
+   "budget_label": "No separate budget",
+   "depends_on_ids": [],
+   "acceptance": "The kit is delivered and live on the registration page.",
+   "channel": "C2",
+   "utm": {
+    "source": "zoom",
+    "medium": "webinar",
+    "campaign": "brasswick-q1_pipeline_cfo-mfg_202701",
+    "content": "cre-02",
+    "query": "?utm_source=zoom&utm_medium=webinar&utm_campaign=brasswick-q1_pipeline_cfo-mfg_202701&utm_content=cre-02"
+   },
+   "auto": false,
+   "when": "pre-launch",
+   "prevents": null
+  },
+  {
+   "id": "CRE-03",
+   "function": "creative",
+   "requirement": "Test plan: run the LinkedIn concepts against each other for the first two weeks, then move budget to the concept with the lowest cost per opportunity.",
+   "traces_to": "C1",
+   "trace_label": "C1: Channel: LinkedIn ads",
+   "owner": "Northfield Studio (agency)",
+   "due": null,
+   "due_label": "Ongoing, Jan 11, 2027 to Mar 21, 2027",
+   "budget": null,
+   "budget_label": "No separate budget",
+   "depends_on_ids": [],
+   "acceptance": "After two weeks, the winning concept holds the largest share of LinkedIn spend.",
+   "channel": "C1",
+   "utm": {
+    "source": "linkedin",
+    "medium": "paid_social",
+    "campaign": "brasswick-q1_pipeline_cfo-mfg_202701",
+    "content": "cre-03",
+    "query": "?utm_source=linkedin&utm_medium=paid_social&utm_campaign=brasswick-q1_pipeline_cfo-mfg_202701&utm_content=cre-03"
+   },
+   "auto": false,
+   "when": "ongoing",
+   "prevents": null
+  }
+ ],
+ "unassigned": [],
+ "dependency_conflicts": [],
+ "lead_times": [
+  {
+   "function": "creative",
+   "name": "Creative",
+   "days": 21,
+   "source": "As shipped"
+  },
+  {
+   "function": "content",
+   "name": "Content",
+   "days": 21,
+   "source": "As shipped"
+  },
+  {
+   "function": "pr",
+   "name": "PR",
+   "days": 14,
+   "source": "As shipped"
+  },
+  {
+   "function": "operations",
+   "name": "Operations",
+   "days": 10,
+   "source": "As shipped"
+  },
+  {
+   "function": "ads",
+   "name": "Ads",
+   "days": 7,
+   "source": "As shipped"
+  },
+  {
+   "function": "sales",
+   "name": "Sales enablement",
+   "days": 5,
+   "source": "As shipped"
+  }
+ ],
+ "reconciliation": {
+  "channels_total": 90000.0,
+  "budget_total": 90000.0,
+  "requirements_total": 90000.0,
+  "ok": true
+ },
+ "risks": [
+  {
+   "source": "Check 2: Opportunities land before the due date",
+   "risk": "Leads from the last 2 weeks land after Mar 31, 2027. The pipeline that lands in time, $1.34M, still meets the target.",
+   "fix": "Launch 2 weeks earlier, or move the due date to Apr 11, 2027.",
+   "owner": "Priya Nand, demand gen"
+  },
+  {
+   "source": "Named in the strategy (R1)",
+   "risk": "The webinar depends on one customer speaker. If she drops out, the webinar has no proof point.",
+   "fix": "See CON-04",
+   "owner": "Tom Ellery"
+  }
+ ],
+ "measurement": {
+  "primary": "$1.2M in pipeline and 40 opportunities by Mar 31, 2027",
+  "leading": [
+   "70 leads a week",
+   "5.6 opportunities a week once leads convert",
+   "$9,000 spend a week"
+  ],
+  "revenue": "$420K closed revenue at a 25% win rate, the last of it by Jul 10, 2027. A projection, not a forecast.",
+  "crm_campaign": "brasswick-q1",
+  "diagnostics_only": "Clicks, impressions and MQL counts are Ads diagnostics, never KPIs."
+ }
+}

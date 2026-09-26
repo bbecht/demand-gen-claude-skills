@@ -1,0 +1,34 @@
+{
+ "checks": {
+  "5": {
+   "state": "pass",
+   "reason": "Names bank type, an asset band, two regions, the core systems and three titles. A media buyer can build the list without a question.",
+   "fix": ""
+  },
+  "6": {
+   "state": "pass",
+   "reason": "Exam readiness is a problem the CISO and Chief Risk Officer own. The CTA is one action.",
+   "fix": ""
+  },
+  "7": {
+   "state": "pass",
+   "reason": "One claim tied to the FFIEC handbook, proven by 14 banks with zero detection findings. With a competitor's name in it, the claim is false.",
+   "fix": ""
+  },
+  "8": {
+   "state": "pass",
+   "reason": "Every channel names how it reaches the roles: title targeting, association invitations, a house list of bank security leaders, and trade press these roles read.",
+   "fix": ""
+  },
+  "9": {
+   "state": "pass",
+   "reason": "Names the Salesforce campaign and the first-touch rule inside 60 days.",
+   "fix": ""
+  },
+  "10": {
+   "state": "pass",
+   "reason": "Names the association partners as a point of failure, with an owner.",
+   "fix": ""
+  }
+ }
+}

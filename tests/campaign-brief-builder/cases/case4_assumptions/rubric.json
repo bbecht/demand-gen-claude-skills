@@ -1,0 +1,34 @@
+{
+ "checks": {
+  "5": {
+   "state": "pass",
+   "reason": "Names the industry, a region, a warehouse count band, the legacy WMS and three titles.",
+   "fix": ""
+  },
+  "6": {
+   "state": "pass",
+   "reason": "Dock-to-stock time is a problem the COO and VP Operations own. The CTA is one action.",
+   "fix": ""
+  },
+  "7": {
+   "state": "pass",
+   "reason": "One claim, 48 hours to 6, with two pilots as proof. With a competitor's name in it, the claim is false.",
+   "fix": ""
+  },
+  "8": {
+   "state": "pass",
+   "reason": "Search runs on legacy WMS replacement terms and LinkedIn targets the titles in the region.",
+   "fix": ""
+  },
+  "9": {
+   "state": "pass",
+   "reason": "Names the HubSpot campaign and the first-touch credit rule.",
+   "fix": ""
+  },
+  "10": {
+   "state": "pass",
+   "reason": "Names thin search volume as a risk, with an owner.",
+   "fix": ""
+  }
+ }
+}

@@ -1,0 +1,34 @@
+{
+ "checks": {
+  "5": {
+   "state": "flag",
+   "reason": "Names the industry, a size band and three roles, but no region.",
+   "fix": "Add the region or countries, so the list can be built without a question."
+  },
+  "6": {
+   "state": "pass",
+   "reason": "A freight spend audit answers a cost problem the logistics roles own. The CTA is one action.",
+   "fix": ""
+  },
+  "7": {
+   "state": "flag",
+   "reason": "One specific claim that fails with a competitor's name in it, but no proof point.",
+   "fix": "Add the customer or data behind the 12% figure."
+  },
+  "8": {
+   "state": "pass",
+   "reason": "Every channel says how it reaches the roles: title targeting, the partner's shipper list, booth traffic from F&B ops, and named directors.",
+   "fix": ""
+  },
+  "9": {
+   "state": "flag",
+   "reason": "Names UTMs, but not how an opportunity gets credited to the campaign.",
+   "fix": "Name the CRM campaign and the rule that credits an opportunity to it."
+  },
+  "10": {
+   "state": "flag",
+   "reason": "No risk is named.",
+   "fix": "Name the single point of failure, such as the trade show carrying the event budget, and give it an owner."
+  }
+ }
+}

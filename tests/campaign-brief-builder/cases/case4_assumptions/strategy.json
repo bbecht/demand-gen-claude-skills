@@ -1,0 +1,76 @@
+{
+ "campaign": {
+  "name": "Dock-to-Stock launch",
+  "id": "OL-D2S-27",
+  "objective": "pipeline"
+ },
+ "target": {
+  "pipeline": "$600,000",
+  "due_date": "September 30, 2027"
+ },
+ "audience": {
+  "accounts": "Third-party logistics providers in the US Southeast with 5 to 50 warehouses, running a legacy WMS",
+  "roles": [
+   "COO",
+   "VP Operations",
+   "Director of IT"
+  ],
+  "tag": "3pl-ops"
+ },
+ "offer": {
+  "offer": "The Dock-to-Stock Calculator. The buyer enters their receiving volumes and gets the hours a day a modern WMS gives back.",
+  "cta": "Get your calculation",
+  "asset": true
+ },
+ "message": {
+  "claim": "Orchard Lane cuts dock-to-stock time from 48 hours to 6 for 3PLs moving off a legacy WMS.",
+  "proof": "Two 3PL pilots hit 6 hours within 30 days."
+ },
+ "channels": [
+  {
+   "name": "Google search ads",
+   "type": "paid_search",
+   "platform": "google",
+   "budget": "$24,000",
+   "cost_per_lead": "$120",
+   "reach": "Legacy WMS replacement search terms"
+  },
+  {
+   "name": "LinkedIn ads",
+   "type": "paid_social",
+   "platform": "linkedin",
+   "budget": "$16,000",
+   "cost_per_lead": "$160",
+   "reach": "Title targeting on COO and VP Operations at 3PLs in the Southeast"
+  }
+ ],
+ "budget_total": "$40,000",
+ "launch": {
+  "date": "July 12, 2027",
+  "run": "8 weeks"
+ },
+ "funnel": {
+  "avg_deal": "$20,000",
+  "lead_to_opp_rate": "10%",
+  "lead_to_opp_days": "21 days"
+ },
+ "sales": {
+  "reps": "2",
+  "opps_per_rep_month": "12"
+ },
+ "revenue": {},
+ "owners": {},
+ "tracking": "HubSpot campaign OL-D2S-27 on every lead. Opportunities credited to the first campaign touch.",
+ "risks": [
+  {
+   "risk": "Search volume on legacy WMS terms is small.",
+   "owner": "Nia Brooks"
+  }
+ ],
+ "assumptions": [
+  "funnel.avg_deal",
+  "funnel.lead_to_opp_rate",
+  "funnel.lead_to_opp_days",
+  "channels.LinkedIn ads.cost_per_lead"
+ ]
+}
