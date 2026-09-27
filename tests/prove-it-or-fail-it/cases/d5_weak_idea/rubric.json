@@ -1,0 +1,24 @@
+{
+ "checks": {
+  "one_change": {
+   "state": "fail",
+   "reason": "The test changes three things at once: the blog design, a popup and ad creative. A result cannot say which one worked.",
+   "fix": "Test one change. Start with the one you expect to move demos most."
+  },
+  "right_metric": {
+   "state": "fail",
+   "reason": "Click-through rate is a click, not a step toward pipeline.",
+   "fix": "Measure the first number that leads to pipeline, such as newsletter sign-ups that become demo requests, or demo requests from the blog."
+  },
+  "clean_split": {
+   "state": "pass",
+   "reason": "The site tool assigns visitors at random.",
+   "fix": ""
+  },
+  "measurable": {
+   "state": "pass",
+   "reason": "Blog clicks are tracked today.",
+   "fix": ""
+  }
+ }
+}

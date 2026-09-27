@@ -1,0 +1,9 @@
+{
+ "change": "The demo request form drops from nine fields to four: name, work email, company and role.",
+ "who_sees_it": "Every visitor to the demo page. Half see the four-field form, half see the current nine-field form.",
+ "split": "The page tool assigns each visitor to a form at random, 50/50, and keeps them on it for the whole test.",
+ "metric_definition": "One demo request is one submitted form from a unique visitor. Duplicate submissions from the same email count once.",
+ "counted_in": "The page tool's form report, by form version, matched to demo requests in the CRM.",
+ "setup": ["Marketing ops builds the four-field version and the 50/50 split in the page tool.", "RevOps adds the form version to every demo request in the CRM.", "Demand gen checks both versions submit a test request before launch."],
+ "risks": ["Sales asks for the missing fields on the first call, which slows follow-up. The sales director agrees to that before launch.", "A campaign sends new traffic to the page mid-test. Both versions still get it at random, so the split holds."]
+}

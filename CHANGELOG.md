@@ -1,5 +1,23 @@
 # Changelog
 
+## Prove It or Fail It
+
+### 1.0.0 (September 2026)
+
+- Turns one growth idea into a 30-day test with a success number, a kill number and a day-15 harm line, locked before launch
+- Sizes the test from the user's own numbers: the smallest lift 30 days can detect, the lift that pays back the budget, and for before-and-after tests the business's own swing over 12 weeks. The largest sets the success number
+- Rates and counts, split tests and before-and-after tests. One standard for every test: 95% sure, sized to catch a real lift 8 times in 10
+- Too small to read when 30 days cannot see the lift the user expects, with three fixes at the user's own numbers: the volume, the days, or a bolder idea
+- Six checks, each Pass, Flag or Fail with the fix. Two are arithmetic: readable in 30 days, pays back. Four are Claude's calls against a written rubric: one change, the right metric, a clean split, measurable today
+- A sealed test card holding the numbers, the dates and the four agreed actions. Any edit breaks the seal, and the read refuses and names what changed
+- Reads at day 15 (Stop early or Keep running), day 30 (Scale, Kill or Extend) and once at the end of an Extend (Scale or Kill, unproven or disproven). Every read quotes the action the team agreed to
+- Reads the user's own words: "about 3.1%", "$6K", "9,000 visitors", "50/50", and asks for anything blank or unreadable, one question at a time
+- A linter that fails any number or date Claude writes that the script or the idea did not produce, em-dashes, hedges and forecast language
+- Readouts for four seats: CEO or owner, marketing lead, RevOps, agency
+- Interactive tool with the locked lines, the result against them, the test card, the six checks, a volume planner and exports to Markdown and PDF
+- Plain-language method guide, rubric, idea template and prerequisites
+- Synthetic MIT sample test with its design and day-30 read
+
 ## Campaign Brief Builder
 
 ### 1.0.0 (September 2026)

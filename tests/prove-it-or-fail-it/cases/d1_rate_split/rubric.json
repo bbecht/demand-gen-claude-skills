@@ -1,0 +1,24 @@
+{
+ "checks": {
+  "one_change": {
+   "state": "pass",
+   "reason": "One change: logos above the call to action.",
+   "fix": ""
+  },
+  "right_metric": {
+   "state": "pass",
+   "reason": "Trial starts are the first number logos can move, and trials lead to pipeline.",
+   "fix": ""
+  },
+  "clean_split": {
+   "state": "pass",
+   "reason": "The site tool assigns visitors at random.",
+   "fix": ""
+  },
+  "measurable": {
+   "state": "pass",
+   "reason": "Trial starts by page version are tracked today.",
+   "fix": ""
+  }
+ }
+}

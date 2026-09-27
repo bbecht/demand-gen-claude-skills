@@ -1,0 +1,73 @@
+{
+ "tool": "prove-it-or-fail-it",
+ "version": "1.0.0",
+ "body": {
+  "idea": "Cut the demo request form from nine fields to four.",
+  "metric": {
+   "name": "Demo form conversion",
+   "type": "rate",
+   "unit": "demo request"
+  },
+  "design": "split",
+  "test_share": 0.5,
+  "launch": "2027-02-01",
+  "baseline": 0.031,
+  "planned": {
+   "test": 4500.0,
+   "control": 4500.0,
+   "test_units": 139.5,
+   "control_units": 139.5,
+   "test_day15": 2250.0,
+   "control_day15": 2250.0
+  },
+  "sizing": {
+   "detectable": 0.330212584,
+   "payback": 0.107526882,
+   "swing": null,
+   "success": 0.330212584,
+   "driver": "detectable",
+   "se30": 0.117866336,
+   "se15": 0.166688171,
+   "z95": 1.959963985,
+   "z80": 0.841621234,
+   "history_totals": null
+  },
+  "lines": {
+   "baseline": 0.031,
+   "success": 0.04123659,
+   "kill": 0.034075163,
+   "harm": 0.020872213,
+   "success_lift": 0.330212584,
+   "kill_lift": 0.099198811,
+   "harm_lift": -0.326702811
+  },
+  "dates": {
+   "launch": "2027-02-01",
+   "checkpoint": "2027-02-15",
+   "day30": "2027-03-02",
+   "extend_end": "2027-04-01"
+  },
+  "actions": {
+   "scale": "Roll the four-field form out to every demo page and move the $6K test budget into paid search for the demo page.",
+   "kill": "Keep the nine-field form and put the $6K into the webinar program.",
+   "extend": "Run 30 more days on the same split, with $3K more for the page tool.",
+   "stop": "Marketing ops switches every visitor back to the nine-field form the same day."
+  },
+  "extend_days": 30
+ },
+ "fields": {
+  "idea": "da8a117c3df8",
+  "metric": "6696aa6c97fc",
+  "design": "cc987419aec2",
+  "test_share": "d2cbad71ff33",
+  "launch": "5793e6dd10d1",
+  "baseline": "8d6950541bdd",
+  "planned": "48edaa1bbcaa",
+  "sizing": "796c028b2068",
+  "lines": "c794816694f2",
+  "dates": "32f7ddb162fa",
+  "actions": "7ece7cfdc1c0",
+  "extend_days": "624b60c58c9d"
+ },
+ "seal": "d50f634de49d0cd6"
+}

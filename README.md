@@ -13,6 +13,7 @@ Each skill does one job with your own data and gives a straight answer. Nothing 
 | [Customer Segmentation](docs/customer-segmentation.md) | Which accounts are worth the effort, and how exposed is our revenue? | October 2026 | [customer-segmentation.zip](../../releases/tag/customer-segmentation-v1.0.0) |
 | [Pipeline Leak Finder](docs/pipeline-leak-finder.md) | Which stage kills our deals, and which fix is worth the most? | September 2026 | [pipeline-leak-finder.zip](../../releases/tag/pipeline-leak-finder-v1.0.0) |
 | [Campaign Brief Builder](docs/campaign-brief-builder.md) | Can this campaign hit its number, and what does every team owe it? | September 2026 | [campaign-brief-builder.zip](../../releases/tag/campaign-brief-builder-v1.0.0) |
+| [Prove It or Fail It](docs/prove-it-or-fail-it.md) | Will this idea work, and how will we know in 30 days? | September 2026 | [prove-it-or-fail-it.zip](../../releases/tag/prove-it-or-fail-it-v1.0.0) |
 
 ## How do I install a skill?
 
@@ -39,6 +40,7 @@ python tests/revenue-by-channel/test_analyze.py   # regression tests, standard l
 python tests/customer-segmentation/test_segment.py  # regression tests, needs numpy, pandas, scikit-learn
 python tests/pipeline-leak-finder/test_analyze.py   # regression tests, standard library only
 python tests/campaign-brief-builder/test_plan.py    # regression tests, standard library only
+python tests/prove-it-or-fail-it/test_plan.py      # regression tests, standard library only
 python tools/build_zips.py                        # builds dist/<skill>.zip and checks each SKILL.md
 ```
 

@@ -1,0 +1,20 @@
+{
+ "idea": "Cut the demo request form from nine fields to four.",
+ "metric": {"name": "Demo form conversion", "type": "rate", "unit": "demo request"},
+ "baseline": "3.1%",
+ "volume_30d": "9,000 visitors",
+ "design": "split",
+ "test_share": "50%",
+ "budget": "$6K",
+ "expected_lift": "35%",
+ "value_per_unit": "$400",
+ "launch": "2027-02-01",
+ "extend_days": "30",
+ "actions": {
+  "scale": "Roll the four-field form out to every demo page and move the $6K test budget into paid search for the demo page.",
+  "kill": "Keep the nine-field form and put the $6K into the webinar program.",
+  "extend": "Run 30 more days on the same split, with $3K more for the page tool.",
+  "stop": "Marketing ops switches every visitor back to the nine-field form the same day."
+ },
+ "owners": {"marketing": "Lena Park, demand gen", "revops": "Omar Reyes, marketing ops"}
+}

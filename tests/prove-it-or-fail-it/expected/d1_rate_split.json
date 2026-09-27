@@ -1,0 +1,170 @@
+{
+ "verdict": "Ready",
+ "sizing": {
+  "detectable": 0.194099518,
+  "payback": 0.05,
+  "swing": null,
+  "success": 0.194099518,
+  "driver": "detectable",
+  "se30": 0.069282032,
+  "se15": 0.09797959,
+  "z95": 1.959963985,
+  "z80": 0.841621234,
+  "history_totals": null
+ },
+ "lines": {
+  "baseline": 0.04,
+  "success": 0.047763981,
+  "kill": 0.042332369,
+  "harm": 0.032318541,
+  "success_lift": 0.194099518,
+  "kill_lift": 0.058309229,
+  "harm_lift": -0.192036467
+ },
+ "dates": {
+  "launch": "2027-03-01",
+  "checkpoint": "2027-03-15",
+  "day30": "2027-03-30",
+  "extend_end": "2027-04-29"
+ },
+ "planned": {
+  "test": 10000.0,
+  "control": 10000.0,
+  "test_units": 400.0,
+  "control_units": 400.0,
+  "test_day15": 5000.0,
+  "control_day15": 5000.0
+ },
+ "too_small": null,
+ "checks": [
+  {
+   "key": "readable",
+   "name": "Readable in 30 days",
+   "by": "script",
+   "state": "pass",
+   "reason": "30 days can detect a lift of 19.4%. You expect 25%.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "key": "pays_back",
+   "name": "Pays back at the expected lift",
+   "by": "script",
+   "state": "pass",
+   "reason": "The budget pays back at a lift of 5%. You expect 25%.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "key": "one_change",
+   "name": "One change",
+   "by": "claude",
+   "state": "pass",
+   "reason": "One change: logos above the call to action.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "key": "right_metric",
+   "name": "Right metric",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Trial starts are the first number logos can move, and trials lead to pipeline.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "key": "clean_split",
+   "name": "Clean split",
+   "by": "claude",
+   "state": "pass",
+   "reason": "The site tool assigns visitors at random.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "key": "measurable",
+   "name": "Measurable today",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Trial starts by page version are tracked today.",
+   "fix": "",
+   "not_run": false
+  }
+ ],
+ "notes": [],
+ "warnings": [],
+ "card": {
+  "tool": "prove-it-or-fail-it",
+  "version": "1.0.0",
+  "body": {
+   "idea": "Add customer logos above the pricing page call to action.",
+   "metric": {
+    "name": "Pricing page trial starts",
+    "type": "rate",
+    "unit": "trial start"
+   },
+   "design": "split",
+   "test_share": 0.5,
+   "launch": "2027-03-01",
+   "baseline": 0.04,
+   "planned": {
+    "test": 10000.0,
+    "control": 10000.0,
+    "test_units": 400.0,
+    "control_units": 400.0,
+    "test_day15": 5000.0,
+    "control_day15": 5000.0
+   },
+   "sizing": {
+    "detectable": 0.194099518,
+    "payback": 0.05,
+    "swing": null,
+    "success": 0.194099518,
+    "driver": "detectable",
+    "se30": 0.069282032,
+    "se15": 0.09797959,
+    "z95": 1.959963985,
+    "z80": 0.841621234,
+    "history_totals": null
+   },
+   "lines": {
+    "baseline": 0.04,
+    "success": 0.047763981,
+    "kill": 0.042332369,
+    "harm": 0.032318541,
+    "success_lift": 0.194099518,
+    "kill_lift": 0.058309229,
+    "harm_lift": -0.192036467
+   },
+   "dates": {
+    "launch": "2027-03-01",
+    "checkpoint": "2027-03-15",
+    "day30": "2027-03-30",
+    "extend_end": "2027-04-29"
+   },
+   "actions": {
+    "scale": "Roll it out to everyone and move the test budget into the channel that feeds it.",
+    "kill": "Stop it and put the budget into the webinar program.",
+    "extend": "Run 30 more days on the same design, with half the budget again.",
+    "stop": "Marketing ops turns it off the same day."
+   },
+   "extend_days": 30
+  },
+  "fields": {
+   "idea": "ed301e2f9d55",
+   "metric": "ece01823d82e",
+   "design": "cc987419aec2",
+   "test_share": "d2cbad71ff33",
+   "launch": "e9fc3ec7f363",
+   "baseline": "a888fe9e2469",
+   "planned": "1d30a19db41e",
+   "sizing": "580fa1f7cf4f",
+   "lines": "e219780d4a64",
+   "dates": "143bc350c7c5",
+   "actions": "9548e8c21b90",
+   "extend_days": "624b60c58c9d"
+  },
+  "seal": "37b0bcd6c94d44cc"
+ }
+}

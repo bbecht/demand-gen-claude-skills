@@ -1,0 +1,21 @@
+{
+ "idea": "Rewrite the homepage headline around cost savings.",
+ "metric": {
+  "name": "Homepage demo requests",
+  "type": "rate",
+  "unit": "demo request"
+ },
+ "baseline": "2%",
+ "volume_30d": "3,000",
+ "design": "split",
+ "budget": "$1,500",
+ "expected_lift": "20%",
+ "value_per_unit": "$400",
+ "launch": "2027-03-01",
+ "actions": {
+  "scale": "Roll it out to everyone and move the test budget into the channel that feeds it.",
+  "kill": "Stop it and put the budget into the webinar program.",
+  "extend": "Run 30 more days on the same design, with half the budget again.",
+  "stop": "Marketing ops turns it off the same day."
+ }
+}

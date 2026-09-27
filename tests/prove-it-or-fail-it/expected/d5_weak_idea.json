@@ -1,0 +1,98 @@
+{
+ "verdict": "Not ready",
+ "sizing": {
+  "detectable": 0.110889938,
+  "payback": null,
+  "swing": null,
+  "success": 0.110889938,
+  "driver": "detectable",
+  "se30": 0.03958114,
+  "se15": 0.055976185,
+  "z95": 1.959963985,
+  "z80": 0.841621234,
+  "history_totals": null
+ },
+ "lines": {
+  "baseline": 0.06,
+  "success": 0.066653396,
+  "kill": 0.06199874,
+  "harm": 0.053417322,
+  "success_lift": 0.110889938,
+  "kill_lift": 0.033312328,
+  "harm_lift": -0.109711307
+ },
+ "dates": {
+  "launch": "2027-03-01",
+  "checkpoint": "2027-03-15",
+  "day30": "2027-03-30",
+  "extend_end": "2027-04-29"
+ },
+ "planned": {
+  "test": 20000.0,
+  "control": 20000.0,
+  "test_units": 1200.0,
+  "control_units": 1200.0,
+  "test_day15": 10000.0,
+  "control_day15": 10000.0
+ },
+ "too_small": null,
+ "checks": [
+  {
+   "key": "readable",
+   "name": "Readable in 30 days",
+   "by": "script",
+   "state": "pass",
+   "reason": "30 days can detect a lift of 11.1%. You expect 20%.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "key": "pays_back",
+   "name": "Pays back at the expected lift",
+   "by": "script",
+   "state": "flag",
+   "reason": "Not run. No value was given for one click, so the success number is not tied to money.",
+   "fix": "Give the value of one click to test payback.",
+   "not_run": true
+  },
+  {
+   "key": "one_change",
+   "name": "One change",
+   "by": "claude",
+   "state": "fail",
+   "reason": "The test changes three things at once: the blog design, a popup and ad creative. A result cannot say which one worked.",
+   "fix": "Test one change. Start with the one you expect to move demos most.",
+   "not_run": false
+  },
+  {
+   "key": "right_metric",
+   "name": "Right metric",
+   "by": "claude",
+   "state": "fail",
+   "reason": "Click-through rate is a click, not a step toward pipeline.",
+   "fix": "Measure the first number that leads to pipeline, such as newsletter sign-ups that become demo requests, or demo requests from the blog.",
+   "not_run": false
+  },
+  {
+   "key": "clean_split",
+   "name": "Clean split",
+   "by": "claude",
+   "state": "pass",
+   "reason": "The site tool assigns visitors at random.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "key": "measurable",
+   "name": "Measurable today",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Blog clicks are tracked today.",
+   "fix": "",
+   "not_run": false
+  }
+ ],
+ "notes": [],
+ "warnings": [],
+ "card": null
+}

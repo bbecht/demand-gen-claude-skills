@@ -1,0 +1,170 @@
+{
+ "verdict": "Ready with flags",
+ "sizing": {
+  "detectable": 0.280277168,
+  "payback": null,
+  "swing": null,
+  "success": 0.280277168,
+  "driver": "detectable",
+  "se30": 0.08819171,
+  "se15": 0.124721913,
+  "z95": 1.959963985,
+  "z80": 0.841621234,
+  "history_totals": null
+ },
+ "lines": {
+  "baseline": 120.0,
+  "success": 153.633260181,
+  "kill": 129.245766546,
+  "harm": 93.976174317,
+  "success_lift": 0.280277168,
+  "kill_lift": 0.077048055,
+  "harm_lift": -0.216865214
+ },
+ "dates": {
+  "launch": "2027-03-01",
+  "checkpoint": "2027-03-15",
+  "day30": "2027-03-30",
+  "extend_end": "2027-04-29"
+ },
+ "planned": {
+  "test": 257.142857143,
+  "control": 257.142857143,
+  "test_units": 257.142857143,
+  "control_units": 257.142857143,
+  "test_day15": 128.571428571,
+  "control_day15": 128.571428571
+ },
+ "too_small": null,
+ "checks": [
+  {
+   "key": "readable",
+   "name": "Readable in 30 days",
+   "by": "script",
+   "state": "pass",
+   "reason": "30 days can detect a lift of 28%. You expect 30%.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "key": "pays_back",
+   "name": "Pays back at the expected lift",
+   "by": "script",
+   "state": "flag",
+   "reason": "Not run. No value was given for one demo, so the success number is not tied to money.",
+   "fix": "Give the value of one demo to test payback.",
+   "not_run": true
+  },
+  {
+   "key": "one_change",
+   "name": "One change",
+   "by": "claude",
+   "state": "pass",
+   "reason": "One change: call timing.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "key": "right_metric",
+   "name": "Right metric",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Demos booked are the first number faster calls can move.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "key": "clean_split",
+   "name": "Clean split",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Attendees are split by the last digit of their record ID, a fixed rule.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "key": "measurable",
+   "name": "Measurable today",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Demos booked are tracked by SDR team today.",
+   "fix": "",
+   "not_run": false
+  }
+ ],
+ "notes": [],
+ "warnings": [],
+ "card": {
+  "tool": "prove-it-or-fail-it",
+  "version": "1.0.0",
+  "body": {
+   "idea": "SDRs call webinar attendees within one hour instead of the next day.",
+   "metric": {
+    "name": "Demos booked",
+    "type": "count",
+    "unit": "demo"
+   },
+   "design": "split",
+   "test_share": 0.5,
+   "launch": "2027-03-01",
+   "baseline": 120.0,
+   "planned": {
+    "test": 257.142857143,
+    "control": 257.142857143,
+    "test_units": 257.142857143,
+    "control_units": 257.142857143,
+    "test_day15": 128.571428571,
+    "control_day15": 128.571428571
+   },
+   "sizing": {
+    "detectable": 0.280277168,
+    "payback": null,
+    "swing": null,
+    "success": 0.280277168,
+    "driver": "detectable",
+    "se30": 0.08819171,
+    "se15": 0.124721913,
+    "z95": 1.959963985,
+    "z80": 0.841621234,
+    "history_totals": null
+   },
+   "lines": {
+    "baseline": 120.0,
+    "success": 153.633260181,
+    "kill": 129.245766546,
+    "harm": 93.976174317,
+    "success_lift": 0.280277168,
+    "kill_lift": 0.077048055,
+    "harm_lift": -0.216865214
+   },
+   "dates": {
+    "launch": "2027-03-01",
+    "checkpoint": "2027-03-15",
+    "day30": "2027-03-30",
+    "extend_end": "2027-04-29"
+   },
+   "actions": {
+    "scale": "Roll it out to everyone and move the test budget into the channel that feeds it.",
+    "kill": "Stop it and put the budget into the webinar program.",
+    "extend": "Run 30 more days on the same design, with half the budget again.",
+    "stop": "Marketing ops turns it off the same day."
+   },
+   "extend_days": 30
+  },
+  "fields": {
+   "idea": "119dba22832b",
+   "metric": "d20cc2352a29",
+   "design": "cc987419aec2",
+   "test_share": "d2cbad71ff33",
+   "launch": "e9fc3ec7f363",
+   "baseline": "184999fc4112",
+   "planned": "9721750e2cc4",
+   "sizing": "b68b8f5d8077",
+   "lines": "9156acd4d23f",
+   "dates": "143bc350c7c5",
+   "actions": "9548e8c21b90",
+   "extend_days": "624b60c58c9d"
+  },
+  "seal": "427b703520a39172"
+ }
+}

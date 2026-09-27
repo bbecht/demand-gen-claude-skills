@@ -1,0 +1,21 @@
+{
+ "idea": "Add customer logos above the pricing page call to action.",
+ "metric": {
+  "name": "Pricing page trial starts",
+  "type": "rate",
+  "unit": "trial start"
+ },
+ "baseline": "4%",
+ "volume_30d": "20,000 visitors",
+ "design": "split",
+ "budget": "$5,000",
+ "expected_lift": "25%",
+ "value_per_unit": "$250",
+ "launch": "March 1, 2027",
+ "actions": {
+  "scale": "Roll it out to everyone and move the test budget into the channel that feeds it.",
+  "kill": "Stop it and put the budget into the webinar program.",
+  "extend": "Run 30 more days on the same design, with half the budget again.",
+  "stop": "Marketing ops turns it off the same day."
+ }
+}

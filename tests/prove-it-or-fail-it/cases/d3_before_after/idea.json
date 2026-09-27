@@ -1,0 +1,70 @@
+{
+ "idea": "Add a live chat widget to every product page.",
+ "metric": {
+  "name": "Demos booked",
+  "type": "count",
+  "unit": "demo"
+ },
+ "baseline": "about 55 a week",
+ "design": "before and after",
+ "budget": "$3,000",
+ "expected_lift": "40%",
+ "value_per_unit": "$300",
+ "launch": "2027-04-05",
+ "history": [
+  {
+   "week": "W1",
+   "count": 50
+  },
+  {
+   "week": "W2",
+   "count": 48
+  },
+  {
+   "week": "W3",
+   "count": 52
+  },
+  {
+   "week": "W4",
+   "count": 47
+  },
+  {
+   "week": "W5",
+   "count": 51
+  },
+  {
+   "week": "W6",
+   "count": 49
+  },
+  {
+   "week": "W7",
+   "count": 72
+  },
+  {
+   "week": "W8",
+   "count": 75
+  },
+  {
+   "week": "W9",
+   "count": 70
+  },
+  {
+   "week": "W10",
+   "count": 78
+  },
+  {
+   "week": "W11",
+   "count": 50
+  },
+  {
+   "week": "W12",
+   "count": 48
+  }
+ ],
+ "actions": {
+  "scale": "Roll it out to everyone and move the test budget into the channel that feeds it.",
+  "kill": "Stop it and put the budget into the webinar program.",
+  "extend": "Run 30 more days on the same design, with half the budget again.",
+  "stop": "Marketing ops turns it off the same day."
+ }
+}

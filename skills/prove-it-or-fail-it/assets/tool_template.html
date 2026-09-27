@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prove It or Fail It</title>
+<style>
+  :root{
+    --bg:#ffffff; --surface:#ffffff; --soft:#eef2f8; --border:#bdbdbd; --ink:#000000;
+    --blue:#1d4ed8; --blue-soft:rgba(29,78,216,0.10); --amber:#d97706; --amber-soft:rgba(217,119,6,0.14);
+    --hollow:#ffffff; --btn:#000000; --btn-ink:#ffffff;
+  }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+    --bg:#000000; --surface:#0b0b0c; --soft:#1a1d24; --border:#5a5a5a; --ink:#ffffff;
+    --blue:#3b82f6; --blue-soft:rgba(59,130,246,0.16); --amber:#c77a08; --amber-soft:rgba(199,122,8,0.20);
+    --hollow:#0b0b0c; --btn:#ffffff; --btn-ink:#000000; } }
+  :root[data-theme="dark"]{
+    --bg:#000000; --surface:#0b0b0c; --soft:#1a1d24; --border:#5a5a5a; --ink:#ffffff;
+    --blue:#3b82f6; --blue-soft:rgba(59,130,246,0.16); --amber:#c77a08; --amber-soft:rgba(199,122,8,0.20);
+    --hollow:#0b0b0c; --btn:#ffffff; --btn-ink:#000000; }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  b,strong,th{font-weight:600}
+  .wrap{max-width:1000px;margin:0 auto;padding:32px 40px 48px}
+  h1{font-size:24px;font-weight:600;margin:0 0 4px}
+  h3{font-size:15px;margin:0 0 6px}
+  .meta{font-size:13px;margin:0 0 10px}
+  .label{font-size:12px;text-transform:uppercase;letter-spacing:0.08em;font-weight:700;margin:32px 0 8px}
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+  .cap{font-size:14px;margin:0 0 12px}
+  .roles{display:flex;flex-wrap:wrap;gap:6px;margin:18px 0 4px}
+  .roles button,.tbtn,.xbtn{font:inherit;font-weight:600;padding:6px 12px;border:1px solid var(--border);background:var(--surface);color:var(--ink);cursor:pointer;border-radius:8px}
+  .roles button[aria-pressed="true"]{background:var(--blue-soft);border-color:var(--blue);box-shadow:inset 0 -3px 0 var(--blue)}
+  .xbtn{background:var(--btn);color:var(--btn-ink);border-color:var(--btn)}
+  .q{font-size:19px;font-weight:600;margin:14px 0 12px}
+  .insights{display:grid;gap:8px}
+  .card{border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-size:15px}
+  .card.warn{border-left:4px solid var(--amber)}
+  .card.key{border-left:4px solid var(--blue)}
+  .card.stop{border-left:4px solid var(--ink)}
+  .stamp{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;padding:6px 14px;border-radius:999px;border:2px solid var(--ink);margin:6px 0 0}
+  .stamp.good{background:var(--blue-soft);border-color:var(--blue)}
+  .stamp.mid{background:var(--amber-soft);border-color:var(--amber)}
+  .stamp.open{border-style:dashed}
+  .stamp.bad{background:var(--ink);color:var(--bg)}
+  .st{display:inline-flex;align-items:center;gap:5px;white-space:nowrap;font-size:11px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:2px 9px;border-radius:999px;border:1px solid var(--ink)}
+  .st.pass{background:var(--blue-soft);border-color:var(--blue)}
+  .st.flag{background:var(--amber-soft);border-color:var(--amber)}
+  .st.flag.nr{border-style:dashed}
+  .st.fail{background:var(--ink);color:var(--bg)}
+  .by{font-size:11px;text-transform:uppercase;letter-spacing:0.06em;font-weight:700}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{border-bottom:1px solid var(--border);padding:7px 6px;text-align:left;vertical-align:top}
+  td.n,th.n{text-align:right;white-space:nowrap}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:0.06em}
+  tr:last-child td{border-bottom:0}
+  .scroll{overflow-x:auto}
+  .seal{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-weight:700}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  svg{display:block;width:100%}
+  svg text{fill:var(--ink);font-family:inherit}
+  .legend{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;margin:10px 0 0;align-items:center}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .planner{display:grid;grid-template-columns:1fr 1fr;gap:14px 22px}
+  .planner label{font-size:13px;font-weight:600;display:block}
+  input[type=range]{accent-color:var(--blue);width:100%}
+  input:focus,button:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
+  .wi-out{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+  .wi-out > div{border:1px solid var(--border);border-radius:8px;padding:10px 12px}
+  .wi-out .v{font-size:20px;font-weight:600}
+  .wi-out .l{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;font-weight:600}
+  .whatif-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:2px 8px;border-radius:4px;border:1px dashed var(--ink);margin-left:8px;vertical-align:2px}
+  details{border:1px solid var(--border);padding:12px 16px;border-radius:12px;margin-top:10px;background:var(--surface)}
+  summary{font-weight:600;cursor:pointer}
+  .guide p{margin:0 0 10px}
+  .guide h4{margin:14px 0 4px;font-size:14px}
+  .exports{display:flex;flex-wrap:wrap;gap:8px}
+  footer{margin-top:32px;font-size:13px;font-weight:600}
+  ul.plain{margin:4px 0 0;padding-left:20px}
+  @media (max-width:760px){
+    .wrap{padding:20px 16px 40px}
+    .grid2,.planner{grid-template-columns:1fr}
+    .wi-out{grid-template-columns:1fr}
+    table.stack,table.stack tbody,table.stack tr,table.stack td{display:block;width:100%}
+    table.stack tr:first-child{display:none}
+    table.stack tr{border-bottom:1px solid var(--border);padding:10px 0}
+    table.stack tr:last-child{border-bottom:0}
+    table.stack td{border:0;padding:2px 0}
+    table.stack td[data-l]::before{content:attr(data-l) ": ";font-weight:700}
+  }
+  @media print{ .roles,.no-print,#planner-block,.exports{display:none !important} .panel{border:0;padding:0} .wrap{padding:0} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Prove It or Fail It</h1>
+  <div class="meta" id="meta"></div>
+  <div id="stamp"></div>
+  <div class="roles no-print" role="group" aria-label="Choose your seat">
+    <button data-role="ceo">CEO or owner</button>
+    <button data-role="marketing">Marketing lead</button>
+    <button data-role="revops">RevOps</button>
+    <button data-role="agency">Agency</button>
+  </div>
+  <div class="q" id="q"></div>
+  <div class="insights" id="cards"></div>
+
+  <div class="label">The lines</div>
+  <div class="panel">
+    <p class="cap" id="linecap"></p>
+    <div class="scroll"><svg id="lines" viewBox="0 0 900 210" role="img" aria-label="Success, kill and harm lines"></svg></div>
+    <div class="legend" id="legend"></div>
+  </div>
+
+  <div class="label">The test card</div>
+  <div class="panel">
+    <div class="grid2">
+      <div><h3>The numbers</h3><table id="cardtab"></table></div>
+      <div><h3>What happens on each verdict</h3><table id="acttab"></table></div>
+    </div>
+    <p class="cap" style="margin-top:14px" id="sealline"></p>
+  </div>
+
+  <div id="checks-block">
+    <div class="label">The six checks</div>
+    <div class="panel"><div class="scroll"><table id="checks" class="stack"></table></div></div>
+  </div>
+
+  <div id="planner-block">
+    <div class="label">Volume planner <span class="whatif-tag">What-if only</span></div>
+    <div class="panel">
+      <p class="cap">Move the volume or the days and see the smallest lift the test can detect. This never changes the sealed card.</p>
+      <div class="planner" id="planner"></div>
+      <div class="wi-out" id="wiout"></div>
+    </div>
+  </div>
+
+  <div id="plan-block">
+    <div class="label">The plan</div>
+    <div class="panel" id="plan"></div>
+  </div>
+
+  <div class="label no-print">Export</div>
+  <div class="panel exports no-print">
+    <button class="xbtn" id="x-md">Download the plan (Markdown)</button>
+    <button class="xbtn" id="x-print">Print or save as PDF</button>
+  </div>
+
+  <details class="guide"><summary>How the numbers work</summary>
+    <h4>The standard</h4><p>95% sure, for every test. A Scale call is a fluke about 1 time in 20. The test is sized to catch a real lift of the success size 8 times in 10.</p>
+    <h4>The success number</h4><p>The largest of: the smallest lift 30 days can detect, the lift that pays back the budget, and for before and after, the business's own swing over the last 12 weeks.</p>
+    <h4>The kill number</h4><p>At day 30, a result at or below it means even the top of the range is under the success number.</p>
+    <h4>The harm line</h4><p>At day 15, a result at or below it means the whole range is under zero. The idea is doing harm. A slow start never stops a test.</p>
+    <h4>The seal</h4><p>Every number and agreed action is sealed at design. An edited card cannot be read.</p>
+  </details>
+  <footer>Built by Marketing Systems Guild. Turning strangers into clients.</footer>
+</div>
+<script>
+const DATA = /*__DATA__*/null;
+let ROLE = /*__ROLE__*/"ceo";
+const MD = /*__MD__*/"";
+
+// ---------- formatting: identical rules to verdict.py
+function fmtPct(x,signed){ const v=Math.floor(Math.abs(x)*1000+0.5)/10; const s=v===Math.trunc(v)?String(v):v.toFixed(1);
+  const sign=signed?(x>0?"+":x<0?"-":""):(x<0&&v?"-":""); return sign+s+"%"; }
+function fmtCount(v){ const r=Math.floor(v*10+0.5)/10; return r===Math.trunc(r)?r.toLocaleString("en-US"):r.toLocaleString("en-US",{minimumFractionDigits:1,maximumFractionDigits:1}); }
+function fmtMoney(v){ if(v===null||v===undefined) return "None set"; if(v>=1e6) return "$"+(Math.floor(v/1e6*100+0.5)/100).toFixed(2).replace(/0+$/,"").replace(/\.$/,"")+"M";
+  if(v>=1e4) return "$"+Math.floor(v/1000+0.5)+"K"; return "$"+Math.floor(v+0.5).toLocaleString("en-US"); }
+const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function fmtDate(iso){ if(!iso) return ""; const [y,m,d]=iso.split("-").map(Number); return MON[m-1]+" "+d+", "+y; }
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const $=id=>document.getElementById(id);
+
+const READ = DATA.mode==="read";
+const B = READ ? DATA.card.body : DATA;
+const M = B.metric, L = B.lines, D = B.dates;
+const val = v => M.type==="rate" ? fmtPct(v) : fmtCount(v)+" a week";
+const verdict = DATA.verdict;
+const SEALED = READ || !!DATA.card;
+const WORD={pass:"Pass",flag:"Flag",fail:"Fail"}, SHAPE={pass:"●",flag:"▲",fail:"✕"};
+function stPill(c){ return `<span class="st ${c.state}${c.not_run?" nr":""}"><span aria-hidden="true">${SHAPE[c.state]}</span>${WORD[c.state]}${c.not_run?", not run":""}</span>`; }
+const STAMP={"Ready":["good","●"],"Scale":["good","●"],"Ready with flags":["mid","▲"],"Extend":["mid","▲"],"Keep running":["open","…"],
+  "Pending rubric":["open","…"],"Not ready":["bad","✕"],"Too small to read":["bad","✕"],"Kill":["bad","✕"],"Stop early":["bad","✕"]};
+
+// ---------- header
+$("meta").innerHTML = `<b>${esc(B.idea)}</b> &middot; ${esc(M.name)} &middot; `+(B.design==="split"?`Split, ${fmtPct(B.test_share)} see the change`:"Before and after, no control")+
+  ` &middot; Launch ${fmtDate(D.launch)}`+(READ?` &middot; Day ${DATA.day} read`:"");
+const [sc,sh]=STAMP[verdict]||["open","?"];
+$("stamp").innerHTML=`<span class="stamp ${sc}"><span aria-hidden="true">${sh}</span>${READ?"Verdict":"Design"}: ${esc(verdict)}</span>`;
+
+// ---------- seats
+const QS_READ={ceo:"Did it work, and what do we do now?",marketing:"What does the result say, and what runs next?",
+  revops:"Is the result clean enough to trust?",agency:"Did we win?"};
+const QS={ceo:"Is this idea worth 30 days and this budget, and when do I get an answer?",marketing:"How do I run it so the answer is clean?",
+  revops:"Can we measure it, and what do I set up?",agency:"What are we testing, and what counts as a win?"};
+const checks=READ?[]:DATA.checks, fails=checks.filter(c=>c.state==="fail"), flags=checks.filter(c=>c.state==="flag");
+const chk=k=>checks.find(c=>c.key===k);
+function cards(role){
+  const c=[];
+  const lead=["Kill","Stop early","Not ready","Too small to read"].includes(verdict)?"stop":"key";
+  if(READ){
+    if(DATA.no_control) c.push(["warn","<b>No control.</b> This verdict cannot rule out what else changed in the test period."]);
+    c.push([lead,`<b>${esc(verdict)}.</b> ${esc(DATA.reason)}`+(DATA.detail?" "+esc(DATA.detail):"")]);
+    if(DATA.action) c.push(["",`<b>Agreed action:</b> ${esc(DATA.action)}`]);
+    if(DATA.compare) c.push(["",`<b>How it was judged:</b> ${esc(DATA.compare)} ${esc(DATA.rule||"")}`]);
+    else c.push(["",`<b>Next read:</b> day 30, ${fmtDate(D.day30)}.`]);
+    return c.map(([k,h])=>`<div class="card ${k}">${h}</div>`).join("");
+  }
+  (DATA.warnings||[]).slice(0,1).forEach(w=>c.push(["warn",esc(w)]));
+  const S=DATA.sizing;
+  if(DATA.too_small){ c.push(["stop",`<b>Too small to read.</b> ${esc(chk("readable").reason)}`]); c.push(["",`<b>Fixes:</b> ${DATA.too_small.fixes.map(esc).join(". ")}.`]); }
+  if(!SEALED && !DATA.too_small){
+    const f=fails[0]; c.push([lead,`<b>${esc(verdict)}.</b> No card is sealed.`+(f?` ${esc(f.name)}: ${esc(f.reason)} <b>Fix:</b> ${esc(f.fix)}`:"")]);
+  }
+  if(!SEALED){ return c.map(([k,h])=>`<div class="card ${k}">${h}</div>`).join(""); }
+  if(role==="ceo"){
+    c.push([lead,`<b>${esc(verdict)}.</b> Scale at ${val(L.success)} (${fmtPct(L.success_lift,true)}), kill at ${val(L.kill)} or below. The verdict lands ${fmtDate(D.day30)}.`]);
+    c.push(["",`The success number is set by the ${({detectable:"smallest lift 30 days can detect",payback:"lift that pays back the budget",swing:"business's own swing"})[S.driver]}.`+
+      (S.payback===null?" No value per unit was given, so it is not tied to money.":"")]);
+  } else if(role==="marketing"){
+    c.push([lead,`<b>${esc(verdict)}.</b> ${fails.length} ${fails.length===1?"check fails":"checks fail"}, ${flags.length} ${flags.length===1?"flags":"flag"}.`]);
+    const f=fails[0]||flags[0]; if(f) c.push(["",`<b>${esc(f.name)}:</b> ${esc(f.reason)} <b>Fix:</b> ${esc(f.fix)}`]);
+  } else if(role==="revops"){
+    const m=chk("measurable"); if(m) c.push([m.state==="pass"?"key":"warn",`<b>Measurable today: ${WORD[m.state]}.</b> ${esc(m.reason)}`]);
+    const p=DATA.plan||{}; if(p.metric_definition) c.push(["",`<b>What counts:</b> ${esc(p.metric_definition)}`+(p.counted_in?` <b>Counted in:</b> ${esc(p.counted_in)}`:"")]);
+    c.push(["",`<b>Reads:</b> day 15 on ${fmtDate(D.checkpoint)}, day 30 on ${fmtDate(D.day30)}.`]);
+  } else {
+    const p=DATA.plan||{}; c.push([lead,`<b>${esc(verdict)}.</b> ${esc(p.change||B.idea)}`]);
+    c.push(["",`<b>Win at</b> ${val(L.success)}. <b>Kill at</b> ${val(L.kill)} or below. <b>Budget:</b> ${fmtMoney(DATA.inputs.budget)}.`]);
+  }
+  return c.map(([k,h])=>`<div class="card ${k}">${h}</div>`).join("");
+}
+function setRole(r){ ROLE=r; document.querySelectorAll(".roles button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.role===r))); $("q").textContent=(READ?QS_READ:QS)[r]; $("cards").innerHTML=cards(r); }
+document.querySelectorAll(".roles button").forEach(b=>b.addEventListener("click",()=>setRole(b.dataset.role)));
+
+// ---------- the lines chart, on the lift axis
+function drawLines(){
+  const W=900,H=210,m={l:30,r:30,t:34,b:44};
+  const pts=[L.harm_lift,0,L.kill_lift,L.success_lift]; if(!READ) pts.push(DATA.inputs.expected_lift);
+  if(READ) pts.push(DATA.observed.low,DATA.observed.high);
+  let lo=Math.min(...pts), hi=Math.max(...pts); const pad=(hi-lo)*0.12; lo-=pad; hi+=pad;
+  const x=v=>m.l+(v-lo)/(hi-lo)*(W-m.l-m.r), y0=100;
+  let s=`<line x1="${m.l}" x2="${W-m.r}" y1="${y0}" y2="${y0}" stroke="currentColor" stroke-width="1"/>`;
+  const step=[0.05,0.1,0.2,0.25,0.5,1].find(k=>(hi-lo)/k<=10);
+  for(let i=Math.ceil(lo/step);i*step<=hi+1e-9;i++){ const t=Math.round(i*step*1e6)/1e6; s+=`<line x1="${x(t)}" x2="${x(t)}" y1="${y0-4}" y2="${y0+4}" stroke="currentColor"/><text x="${x(t)}" y="${y0+82}" text-anchor="middle" font-size="11">${fmtPct(t,true)}</text>`; }
+  s+=`<text x="${m.l}" y="${H-6}" font-size="11">Lift over the baseline</text>`;
+  const mark=(v,color,dash,label,sub,up)=>`<line x1="${x(v)}" x2="${x(v)}" y1="${up?y0-32:y0-14}" y2="${up?y0+8:y0+32}" stroke="${color}" stroke-width="3" ${dash?'stroke-dasharray="6 4"':""}/>`+
+    `<text x="${x(v)}" y="${up?y0-52:y0+48}" text-anchor="middle" font-size="12" font-weight="700">${label}</text><text x="${x(v)}" y="${up?y0-38:y0+62}" text-anchor="middle" font-size="11">${sub}</text>`;
+  s+=mark(0,"currentColor",false,"Baseline",val(L.baseline),false);
+  s+=mark(L.harm_lift,"currentColor",true,"Harm, day 15",val(L.harm),true);
+  s+=mark(L.kill_lift,"var(--amber)",false,"Kill",val(L.kill),true);
+  s+=mark(L.success_lift,"var(--blue)",false,"Scale",val(L.success),true);
+  if(!READ){ const e=DATA.inputs.expected_lift, xe=x(e);
+    s+=`<polygon points="${xe},${y0-9} ${xe+9},${y0} ${xe},${y0+9} ${xe-9},${y0}" fill="var(--hollow)" stroke="currentColor" stroke-width="2"/><text x="${xe}" y="${y0+48}" text-anchor="middle" font-size="12" font-weight="700">You expect</text><text x="${xe}" y="${y0+62}" text-anchor="middle" font-size="11">${fmtPct(e,true)}</text>`; }
+  else { const o=DATA.observed;
+    s+=`<line x1="${x(o.low)}" x2="${x(o.high)}" y1="${y0}" y2="${y0}" stroke="currentColor" stroke-width="6" stroke-linecap="butt" opacity="0.35"/>`+
+      `<line x1="${x(o.low)}" x2="${x(o.low)}" y1="${y0-8}" y2="${y0+8}" stroke="currentColor" stroke-width="2"/><line x1="${x(o.high)}" x2="${x(o.high)}" y1="${y0-8}" y2="${y0+8}" stroke="currentColor" stroke-width="2"/>`+
+      `<rect x="${x(o.lift)-7}" y="${y0-7}" width="14" height="14" fill="currentColor"/><text x="${x(o.lift)}" y="${y0+48}" text-anchor="middle" font-size="12" font-weight="700">Result ${fmtPct(o.lift,true)}</text>`+
+      `<text x="${x(o.lift)}" y="${y0+62}" text-anchor="middle" font-size="11">range ${fmtPct(o.low,true)} to ${fmtPct(o.high,true)}</text>`; }
+  const svg=$("lines"); svg.style.color="var(--ink)"; svg.innerHTML=s;
+  $("linecap").textContent = READ ? `The day-${DATA.day} result against the lines locked on ${fmtDate(D.launch)}.` :
+    (SEALED?"Locked before launch. Scale":"Not locked: no card is sealed. At this design, scale")+` at ${fmtPct(L.success_lift,true)} or more, kill at ${fmtPct(L.kill_lift,true)} or less at day 30. Stop early only below ${fmtPct(L.harm_lift,true)} at day 15.`;
+  $("legend").innerHTML = `<span><svg width="22" height="14" style="width:22px"><line x1="11" y1="0" x2="11" y2="14" stroke="var(--blue)" stroke-width="3"/></svg>Scale line</span>`+
+    `<span><svg width="22" height="14" style="width:22px"><line x1="11" y1="0" x2="11" y2="14" stroke="var(--amber)" stroke-width="3"/></svg>Kill line</span>`+
+    `<span><svg width="22" height="14" style="width:22px;color:var(--ink)"><line x1="11" y1="0" x2="11" y2="14" stroke="currentColor" stroke-width="3" stroke-dasharray="4 3"/></svg>Harm line, day 15</span>`+
+    (READ?`<span><svg width="22" height="14" style="width:22px;color:var(--ink)"><rect x="5" y="1" width="12" height="12" fill="currentColor"/></svg>Result and its range</span>`:
+      `<span><svg width="22" height="14" style="width:22px;color:var(--ink)"><polygon points="11,1 19,7 11,13 3,7" fill="var(--hollow)" stroke="currentColor" stroke-width="2"/></svg>The lift you expect</span>`);
+}
+
+// ---------- the card
+function drawCard(){
+  const rows=[["Baseline",val(L.baseline)],["Success number",`${val(L.success)} (${fmtPct(L.success_lift,true)})`],["Kill number, day 30",`${val(L.kill)} (${fmtPct(L.kill_lift,true)})`],
+    ["Harm line, day 15",`${val(L.harm)} (${fmtPct(L.harm_lift,true)})`],["Day-15 check",fmtDate(D.checkpoint)],["Day-30 verdict",fmtDate(D.day30)],["Extend ends",fmtDate(D.extend_end)]];
+  $("cardtab").innerHTML=rows.map(r=>`<tr><td>${r[0]}</td><td class="n"><b>${r[1]}</b></td></tr>`).join("");
+  const A=B.actions||{}, names={scale:"Scale",kill:"Kill",extend:"Extend",stop:"Stop early"};
+  $("acttab").innerHTML=Object.keys(names).map(k=>`<tr><td><b>${names[k]}</b></td><td>${esc(A[k]||"Not given")}</td></tr>`).join("");
+  const seal = READ ? DATA.seal : (DATA.card?DATA.card.seal:null);
+  $("sealline").innerHTML = seal ? `Sealed. Seal <span class="seal">${seal}</span>. Keep the card file: every read needs it, and any edit voids the verdict.` :
+    `<b>Not sealed.</b> The card is sealed only when the design verdict is Ready or Ready with flags.`;
+}
+
+// ---------- checks
+function drawChecks(){
+  if(READ){ $("checks-block").style.display="none"; return; }
+  $("checks").innerHTML=`<tr><th>Check</th><th>State</th><th>By</th><th>Reason</th><th>Fix</th></tr>`+
+    checks.map(c=>`<tr><td><b>${esc(c.name)}</b></td><td>${stPill(c)}</td><td class="by">${c.by==="script"?"Script":"Claude"}</td><td data-l="Reason">${esc(c.reason)}</td><td data-l="Fix">${esc(c.fix)||"None needed"}</td></tr>`).join("");
+}
+
+// ---------- volume planner: the same math as verdict.py
+const ZA=1.959963984540054, ZB=0.8416212335729143;
+function detect(scale,days){
+  const f=scale*days/30, kind=M.type, share=B.test_share, base=B.baseline, P=DATA.planned;
+  let t,c;
+  if(B.design==="split"){ t=P.test*f; c=P.control*f; } else { t=P.test*f; c=P.control; }
+  if(kind==="rate") return (ZA+ZB)*Math.sqrt(base*(1-base)*(1/t+1/c))/base;
+  return Math.exp((ZA+ZB)*Math.sqrt(1/t+1/c))-1;
+}
+const WI={scale:100,days:30};
+function drawPlanner(){
+  if(READ){ $("planner-block").style.display="none"; return; }
+  $("planner").innerHTML=`<div><label for="wi-scale">Volume, % of plan: <span id="wv-scale"></span></label><input type="range" id="wi-scale" min="25" max="400" step="5" value="100"></div>`+
+    `<div><label for="wi-days">Days: <span id="wv-days"></span></label><input type="range" id="wi-days" min="15" max="90" step="1" value="30"></div>`;
+  const draw=()=>{ $("wv-scale").textContent=WI.scale+"%"; $("wv-days").textContent=WI.days;
+    const d=detect(WI.scale/100,WI.days), e=DATA.inputs.expected_lift, sw=DATA.sizing.swing, ok=Math.max(d,sw||0)<=e+1e-12;
+    $("wiout").innerHTML=`<div><div class="v">${fmtPct(d,true)}</div><div class="l">Smallest lift it can detect</div></div><div><div class="v">${fmtPct(e,true)}</div><div class="l">The lift you expect</div></div>`+
+      `<div><div class="v"><span class="st ${ok?"pass":"fail"}"><span aria-hidden="true">${ok?"●":"✕"}</span>${ok?"Readable":"Too small"}</span></div><div class="l">What-if</div></div>`; };
+  ["scale","days"].forEach(k=>$("wi-"+k).addEventListener("input",e=>{ WI[k]=Number(e.target.value); draw(); })); draw();
+}
+
+// ---------- plan
+function drawPlan(){
+  const p=READ?null:DATA.plan; if(!p){ $("plan-block").style.display="none"; return; }
+  const row=(k,l)=>p[k]?`<p style="margin:0 0 6px"><b>${l}:</b> ${esc(p[k])}</p>`:"";
+  $("plan").innerHTML=row("change","The change")+row("who_sees_it","Who sees it")+row("split","How people are assigned")+row("metric_definition","What counts")+row("counted_in","Where it is counted")+
+    (p.setup?`<h3 style="margin-top:12px">Setup</h3><ol class="plain">${p.setup.map(x=>`<li>${esc(x)}</li>`).join("")}</ol>`:"")+
+    (p.risks?`<h3 style="margin-top:12px">Risks</h3><ul class="plain">${p.risks.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:"");
+}
+
+function dl(name,text,type){ const b=new Blob([text],{type}); const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download=name; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();},500); }
+$("x-md").addEventListener("click",()=>dl(READ?`day-${DATA.day}-read.md`:"test-plan.md",MD,"text/markdown"));
+$("x-print").addEventListener("click",()=>window.print());
+setRole(ROLE); drawLines(); drawCard(); drawChecks(); drawPlanner(); drawPlan();
+</script>
+</body>
+</html>

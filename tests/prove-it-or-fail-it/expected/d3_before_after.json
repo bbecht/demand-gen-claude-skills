@@ -1,0 +1,181 @@
+{
+ "verdict": "Ready",
+ "sizing": {
+  "detectable": 0.231099838,
+  "payback": 0.04057971,
+  "swing": 0.282608696,
+  "success": 0.282608696,
+  "driver": "swing",
+  "se30": 0.074210824,
+  "se15": 0.097801929,
+  "z95": 1.959963985,
+  "z80": 0.841621234,
+  "history_totals": {
+   "count": 690.0,
+   "days": 84
+  }
+ },
+ "lines": {
+  "baseline": 57.5,
+  "success": 73.75,
+  "kill": 63.766658085,
+  "harm": 47.469940949,
+  "success_lift": 0.282608696,
+  "kill_lift": 0.108985358,
+  "harm_lift": -0.17443581
+ },
+ "dates": {
+  "launch": "2027-04-05",
+  "checkpoint": "2027-04-19",
+  "day30": "2027-05-04",
+  "extend_end": "2027-06-03"
+ },
+ "planned": {
+  "test": 246.428571429,
+  "control": 690.0,
+  "test_units": 246.428571429,
+  "control_units": 690.0,
+  "test_day15": 123.214285714,
+  "control_day15": 690.0
+ },
+ "too_small": null,
+ "checks": [
+  {
+   "key": "readable",
+   "name": "Readable in 30 days",
+   "by": "script",
+   "state": "pass",
+   "reason": "30 days can detect a lift of 23.1%. You expect 40%. The business's own swing is 28.3%.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "key": "pays_back",
+   "name": "Pays back at the expected lift",
+   "by": "script",
+   "state": "pass",
+   "reason": "The budget pays back at a lift of 4.1%. You expect 40%.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "key": "one_change",
+   "name": "One change",
+   "by": "claude",
+   "state": "pass",
+   "reason": "One change: the chat widget.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "key": "right_metric",
+   "name": "Right metric",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Demos booked are the first number chat can move.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "key": "clean_split",
+   "name": "Clean split",
+   "by": "claude",
+   "state": "pass",
+   "reason": "No split: every visitor sees chat. The design is before and after, so the verdict carries the No control label.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "key": "measurable",
+   "name": "Measurable today",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Demos booked are tracked weekly today.",
+   "fix": "",
+   "not_run": false
+  }
+ ],
+ "notes": [
+  "'about 55 a week' read as 55 a week",
+  "The 12-week history averages 57.5 a week, not the stated 55 a week. The test uses the history."
+ ],
+ "warnings": [
+  "No control. A before-and-after verdict cannot rule out what else changed in those 30 days."
+ ],
+ "card": {
+  "tool": "prove-it-or-fail-it",
+  "version": "1.0.0",
+  "body": {
+   "idea": "Add a live chat widget to every product page.",
+   "metric": {
+    "name": "Demos booked",
+    "type": "count",
+    "unit": "demo"
+   },
+   "design": "before_after",
+   "test_share": null,
+   "launch": "2027-04-05",
+   "baseline": 57.5,
+   "planned": {
+    "test": 246.428571429,
+    "control": 690.0,
+    "test_units": 246.428571429,
+    "control_units": 690.0,
+    "test_day15": 123.214285714,
+    "control_day15": 690.0
+   },
+   "sizing": {
+    "detectable": 0.231099838,
+    "payback": 0.04057971,
+    "swing": 0.282608696,
+    "success": 0.282608696,
+    "driver": "swing",
+    "se30": 0.074210824,
+    "se15": 0.097801929,
+    "z95": 1.959963985,
+    "z80": 0.841621234,
+    "history_totals": {
+     "count": 690.0,
+     "days": 84
+    }
+   },
+   "lines": {
+    "baseline": 57.5,
+    "success": 73.75,
+    "kill": 63.766658085,
+    "harm": 47.469940949,
+    "success_lift": 0.282608696,
+    "kill_lift": 0.108985358,
+    "harm_lift": -0.17443581
+   },
+   "dates": {
+    "launch": "2027-04-05",
+    "checkpoint": "2027-04-19",
+    "day30": "2027-05-04",
+    "extend_end": "2027-06-03"
+   },
+   "actions": {
+    "scale": "Roll it out to everyone and move the test budget into the channel that feeds it.",
+    "kill": "Stop it and put the budget into the webinar program.",
+    "extend": "Run 30 more days on the same design, with half the budget again.",
+    "stop": "Marketing ops turns it off the same day."
+   },
+   "extend_days": 30
+  },
+  "fields": {
+   "idea": "1878207bc848",
+   "metric": "d20cc2352a29",
+   "design": "45f4b9948f67",
+   "test_share": "74234e98afe7",
+   "launch": "240fb11421ce",
+   "baseline": "eb7ab55927c0",
+   "planned": "93f1d9112127",
+   "sizing": "29c71250ca15",
+   "lines": "8c5e3b54ce9e",
+   "dates": "bfc8c61b5b88",
+   "actions": "9548e8c21b90",
+   "extend_days": "624b60c58c9d"
+  },
+  "seal": "e91e963430ae2f24"
+ }
+}

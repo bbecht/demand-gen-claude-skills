@@ -1,0 +1,11 @@
+{
+ "day": 60,
+ "test": {
+  "conversions": 340,
+  "volume": 9000
+ },
+ "control": {
+  "conversions": 290,
+  "volume": 9000
+ }
+}

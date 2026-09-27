@@ -1,0 +1,172 @@
+{
+ "verdict": "Ready",
+ "sizing": {
+  "detectable": 0.330212584,
+  "payback": 0.107526882,
+  "swing": null,
+  "success": 0.330212584,
+  "driver": "detectable",
+  "se30": 0.117866336,
+  "se15": 0.166688171,
+  "z95": 1.959963985,
+  "z80": 0.841621234,
+  "history_totals": null
+ },
+ "lines": {
+  "baseline": 0.031,
+  "success": 0.04123659,
+  "kill": 0.034075163,
+  "harm": 0.020872213,
+  "success_lift": 0.330212584,
+  "kill_lift": 0.099198811,
+  "harm_lift": -0.326702811
+ },
+ "dates": {
+  "launch": "2027-02-01",
+  "checkpoint": "2027-02-15",
+  "day30": "2027-03-02",
+  "extend_end": "2027-04-01"
+ },
+ "planned": {
+  "test": 4500.0,
+  "control": 4500.0,
+  "test_units": 139.5,
+  "control_units": 139.5,
+  "test_day15": 2250.0,
+  "control_day15": 2250.0
+ },
+ "too_small": null,
+ "checks": [
+  {
+   "key": "readable",
+   "name": "Readable in 30 days",
+   "by": "script",
+   "state": "pass",
+   "reason": "30 days can detect a lift of 33%. You expect 35%.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "key": "pays_back",
+   "name": "Pays back at the expected lift",
+   "by": "script",
+   "state": "pass",
+   "reason": "The budget pays back at a lift of 10.8%. You expect 35%.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "key": "one_change",
+   "name": "One change",
+   "by": "claude",
+   "state": "pass",
+   "reason": "The test changes one thing: the number of form fields. The page, offer and traffic stay the same.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "key": "right_metric",
+   "name": "Right metric",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Demo form conversion is the first number fewer fields can move, and a demo request leads to pipeline.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "key": "clean_split",
+   "name": "Clean split",
+   "by": "claude",
+   "state": "pass",
+   "reason": "The page tool assigns each visitor to a form at random, 50/50.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "key": "measurable",
+   "name": "Measurable today",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Form submissions and page visitors are tracked today, by form version.",
+   "fix": "",
+   "not_run": false
+  }
+ ],
+ "notes": [
+  "'$6K' read as $6,000"
+ ],
+ "warnings": [],
+ "card": {
+  "tool": "prove-it-or-fail-it",
+  "version": "1.0.0",
+  "body": {
+   "idea": "Cut the demo request form from nine fields to four.",
+   "metric": {
+    "name": "Demo form conversion",
+    "type": "rate",
+    "unit": "demo request"
+   },
+   "design": "split",
+   "test_share": 0.5,
+   "launch": "2027-02-01",
+   "baseline": 0.031,
+   "planned": {
+    "test": 4500.0,
+    "control": 4500.0,
+    "test_units": 139.5,
+    "control_units": 139.5,
+    "test_day15": 2250.0,
+    "control_day15": 2250.0
+   },
+   "sizing": {
+    "detectable": 0.330212584,
+    "payback": 0.107526882,
+    "swing": null,
+    "success": 0.330212584,
+    "driver": "detectable",
+    "se30": 0.117866336,
+    "se15": 0.166688171,
+    "z95": 1.959963985,
+    "z80": 0.841621234,
+    "history_totals": null
+   },
+   "lines": {
+    "baseline": 0.031,
+    "success": 0.04123659,
+    "kill": 0.034075163,
+    "harm": 0.020872213,
+    "success_lift": 0.330212584,
+    "kill_lift": 0.099198811,
+    "harm_lift": -0.326702811
+   },
+   "dates": {
+    "launch": "2027-02-01",
+    "checkpoint": "2027-02-15",
+    "day30": "2027-03-02",
+    "extend_end": "2027-04-01"
+   },
+   "actions": {
+    "scale": "Roll the four-field form out to every demo page and move the $6K test budget into paid search for the demo page.",
+    "kill": "Keep the nine-field form and put the $6K into the webinar program.",
+    "extend": "Run 30 more days on the same split, with $3K more for the page tool.",
+    "stop": "Marketing ops switches every visitor back to the nine-field form the same day."
+   },
+   "extend_days": 30
+  },
+  "fields": {
+   "idea": "da8a117c3df8",
+   "metric": "6696aa6c97fc",
+   "design": "cc987419aec2",
+   "test_share": "d2cbad71ff33",
+   "launch": "5793e6dd10d1",
+   "baseline": "8d6950541bdd",
+   "planned": "48edaa1bbcaa",
+   "sizing": "796c028b2068",
+   "lines": "c794816694f2",
+   "dates": "32f7ddb162fa",
+   "actions": "7ece7cfdc1c0",
+   "extend_days": "624b60c58c9d"
+  },
+  "seal": "d50f634de49d0cd6"
+ }
+}

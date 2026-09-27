@@ -1,0 +1,87 @@
+{
+ "_note": "Written by hand before the build runs, from the spec's rules and the planted inputs. Read cases name the card they read.",
+ "d1_rate_split": {
+  "verdict": "Ready",
+  "checks": {
+   "readable": "pass",
+   "pays_back": "pass",
+   "one_change": "pass",
+   "right_metric": "pass",
+   "clean_split": "pass",
+   "measurable": "pass"
+  }
+ },
+ "d2_count_split": {
+  "verdict": "Ready with flags",
+  "checks": {
+   "readable": "pass",
+   "pays_back": "flag",
+   "one_change": "pass",
+   "right_metric": "pass",
+   "clean_split": "pass",
+   "measurable": "pass"
+  }
+ },
+ "d3_before_after": {
+  "verdict": "Ready",
+  "driver": "swing",
+  "checks": {
+   "readable": "pass",
+   "pays_back": "pass",
+   "one_change": "pass",
+   "right_metric": "pass",
+   "clean_split": "pass",
+   "measurable": "pass"
+  }
+ },
+ "d4_too_small": {
+  "verdict": "Too small to read",
+  "checks": {
+   "readable": "fail",
+   "pays_back": "pass",
+   "one_change": "pass",
+   "right_metric": "pass",
+   "clean_split": "pass",
+   "measurable": "pass"
+  }
+ },
+ "d5_weak_idea": {
+  "verdict": "Not ready",
+  "checks": {
+   "readable": "pass",
+   "pays_back": "flag",
+   "one_change": "fail",
+   "right_metric": "fail",
+   "clean_split": "pass",
+   "measurable": "pass"
+  }
+ },
+ "r1_scale": {
+  "card": "d1_rate_split",
+  "verdict": "Scale"
+ },
+ "r2_kill": {
+  "card": "d3_before_after",
+  "verdict": "Kill",
+  "detail": "Disproven"
+ },
+ "r3_extend": {
+  "card": "sample",
+  "verdict": "Extend"
+ },
+ "r4_stop_early": {
+  "card": "sample",
+  "verdict": "Stop early"
+ },
+ "r5_day60": {
+  "card": "sample",
+  "previous": "r3_extend",
+  "verdict": "Kill",
+  "detail": "Unproven"
+ },
+ "r6_tampered": {
+  "card": "sample",
+  "tamper": "lines.success_lift",
+  "stop": "seal"
+ }
+}

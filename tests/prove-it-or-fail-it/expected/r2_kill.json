@@ -1,0 +1,20 @@
+{
+ "verdict": "Kill",
+ "detail": "Disproven. Even the top of the range sits below the success number.",
+ "action": "Stop it and put the budget into the webinar program.",
+ "observed": {
+  "lift": -0.168115942,
+  "low": -0.288205843,
+  "high": -0.027765149,
+  "test_value": 47.833333333,
+  "control_value": 57.5
+ },
+ "reason": "The lift is -16.8%, with a range of -28.8% to -2.8%. The success number was +28.3%.",
+ "rule": "Day 30 scales when the whole range is above zero and the lift is at least +28.3%. It kills when the top of the range is under +28.3%. Anything else extends.",
+ "compare": "The verdict compares the test period with the 12 weeks before, as a lift. No control group rules out other changes.",
+ "small_sample": false,
+ "no_control": true,
+ "seal": "e91e963430ae2f24",
+ "stop": null,
+ "problems": null
+}

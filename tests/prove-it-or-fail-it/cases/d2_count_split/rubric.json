@@ -1,0 +1,24 @@
+{
+ "checks": {
+  "one_change": {
+   "state": "pass",
+   "reason": "One change: call timing.",
+   "fix": ""
+  },
+  "right_metric": {
+   "state": "pass",
+   "reason": "Demos booked are the first number faster calls can move.",
+   "fix": ""
+  },
+  "clean_split": {
+   "state": "pass",
+   "reason": "Attendees are split by the last digit of their record ID, a fixed rule.",
+   "fix": ""
+  },
+  "measurable": {
+   "state": "pass",
+   "reason": "Demos booked are tracked by SDR team today.",
+   "fix": ""
+  }
+ }
+}

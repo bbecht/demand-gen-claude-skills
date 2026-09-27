@@ -1,0 +1,110 @@
+{
+ "verdict": "Too small to read",
+ "sizing": {
+  "detectable": 0.716095996,
+  "payback": 0.125,
+  "swing": null,
+  "success": 0.716095996,
+  "driver": "detectable",
+  "se30": 0.25560386,
+  "se15": 0.361478446,
+  "z95": 1.959963985,
+  "z80": 0.841621234,
+  "history_totals": null
+ },
+ "lines": {
+  "baseline": 0.02,
+  "success": 0.03432192,
+  "kill": 0.024302433,
+  "harm": 0.005830305,
+  "success_lift": 0.716095996,
+  "kill_lift": 0.215121636,
+  "harm_lift": -0.708484735
+ },
+ "dates": {
+  "launch": "2027-03-01",
+  "checkpoint": "2027-03-15",
+  "day30": "2027-03-30",
+  "extend_end": "2027-04-29"
+ },
+ "planned": {
+  "test": 1500.0,
+  "control": 1500.0,
+  "test_units": 30.0,
+  "control_units": 30.0,
+  "test_day15": 750.0,
+  "control_day15": 750.0
+ },
+ "too_small": {
+  "detectable": 0.716095996,
+  "expected": 0.2,
+  "swing": null,
+  "multiple": 12.819836899,
+  "volume_needed": 38459.510697926,
+  "days_needed": 385,
+  "fixes": [
+   "Send 38,460 people through the test in 30 days",
+   "Run it for 385 days at today's volume",
+   "Aim for a bolder idea, one you expect to lift the metric at least 71.6%"
+  ]
+ },
+ "checks": [
+  {
+   "key": "readable",
+   "name": "Readable in 30 days",
+   "by": "script",
+   "state": "fail",
+   "reason": "30 days can only detect a lift of 71.6%. You expect 20%.",
+   "fix": "Send 38,460 people through the test in 30 days. Run it for 385 days at today's volume. Aim for a bolder idea, one you expect to lift the metric at least 71.6%.",
+   "not_run": false
+  },
+  {
+   "key": "pays_back",
+   "name": "Pays back at the expected lift",
+   "by": "script",
+   "state": "pass",
+   "reason": "The budget pays back at a lift of 12.5%. You expect 20%.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "key": "one_change",
+   "name": "One change",
+   "by": "claude",
+   "state": "pass",
+   "reason": "One change: the headline.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "key": "right_metric",
+   "name": "Right metric",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Demo requests are the first number the headline can move.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "key": "clean_split",
+   "name": "Clean split",
+   "by": "claude",
+   "state": "pass",
+   "reason": "The site tool assigns visitors at random.",
+   "fix": "",
+   "not_run": false
+  },
+  {
+   "key": "measurable",
+   "name": "Measurable today",
+   "by": "claude",
+   "state": "pass",
+   "reason": "Homepage demo requests are tracked today.",
+   "fix": "",
+   "not_run": false
+  }
+ ],
+ "notes": [],
+ "warnings": [],
+ "card": null
+}

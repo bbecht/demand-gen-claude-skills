@@ -1,0 +1,20 @@
+{
+ "verdict": "Scale",
+ "detail": null,
+ "action": "Roll it out to everyone and move the test budget into the channel that feeds it.",
+ "observed": {
+  "lift": 0.225,
+  "low": 0.082145144,
+  "high": 0.367854856,
+  "test_value": 0.049,
+  "control_value": 0.04
+ },
+ "reason": "The lift is +22.5%, with a range of +8.2% to +36.8%. The lift is real and at or above the success number of +19.4%.",
+ "rule": "Day 30 scales when the whole range is above zero and the lift is at least +19.4%. It kills when the top of the range is under +19.4%. Anything else extends.",
+ "compare": "The verdict compares the test group with the control group over the same days, as a lift. It does not compare either group with the baseline or with the success number as a value.",
+ "small_sample": false,
+ "no_control": false,
+ "seal": "37b0bcd6c94d44cc",
+ "stop": null,
+ "problems": null
+}

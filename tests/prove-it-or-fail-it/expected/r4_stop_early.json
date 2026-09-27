@@ -1,0 +1,20 @@
+{
+ "verdict": "Stop early",
+ "detail": null,
+ "action": "Marketing ops switches every visitor back to the nine-field form the same day.",
+ "observed": {
+  "lift": -0.444444444,
+  "low": -0.728627865,
+  "high": -0.160261024,
+  "test_value": 0.017777778,
+  "control_value": 0.032
+ },
+ "reason": "The lift is -44.4%, with a range of -72.9% to -16%. The whole range is below zero. The idea is doing harm.",
+ "rule": "Day 15 stops the test only when the whole range is below zero. A slow start never stops it.",
+ "compare": "The verdict compares the test group with the control group over the same days, as a lift. It does not compare either group with the baseline or with the success number as a value.",
+ "small_sample": false,
+ "no_control": false,
+ "seal": "d50f634de49d0cd6",
+ "stop": null,
+ "problems": null
+}

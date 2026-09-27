@@ -1,0 +1,24 @@
+{
+ "checks": {
+  "one_change": {
+   "state": "pass",
+   "reason": "One change: the headline.",
+   "fix": ""
+  },
+  "right_metric": {
+   "state": "pass",
+   "reason": "Demo requests are the first number the headline can move.",
+   "fix": ""
+  },
+  "clean_split": {
+   "state": "pass",
+   "reason": "The site tool assigns visitors at random.",
+   "fix": ""
+  },
+  "measurable": {
+   "state": "pass",
+   "reason": "Homepage demo requests are tracked today.",
+   "fix": ""
+  }
+ }
+}

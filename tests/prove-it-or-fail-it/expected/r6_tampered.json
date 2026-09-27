@@ -1,0 +1,16 @@
+{
+ "verdict": null,
+ "detail": null,
+ "action": null,
+ "observed": null,
+ "reason": null,
+ "rule": null,
+ "compare": null,
+ "small_sample": null,
+ "no_control": null,
+ "seal": null,
+ "stop": "seal",
+ "problems": [
+  "The card was edited after it was sealed. Changed: lines. The numbers agreed before launch are the only ones a verdict can use."
+ ]
+}

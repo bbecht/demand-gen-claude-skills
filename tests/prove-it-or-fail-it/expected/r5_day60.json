@@ -1,0 +1,20 @@
+{
+ "verdict": "Kill",
+ "detail": "Unproven, not disproven. The lift is above zero but under the success number, and the final read has no more time. The day-30 kill number no longer applies: the final read scales only at the success number. The idea can come back as a bolder version.",
+ "action": "Keep the nine-field form and put the $6K into the webinar program.",
+ "observed": {
+  "lift": 0.172413793,
+  "low": 0.005791,
+  "high": 0.339036586,
+  "test_value": 0.037777778,
+  "control_value": 0.032222222
+ },
+ "reason": "The lift is +17.2%, with a range of +0.6% to +33.9%. The success number was +33%.",
+ "rule": "The final read scales when the whole range is above zero and the lift is at least +33%. Anything else is Kill. There is no second Extend.",
+ "compare": "The verdict compares the test group with the control group over the same days, as a lift. It does not compare either group with the baseline or with the success number as a value.",
+ "small_sample": false,
+ "no_control": false,
+ "seal": "d50f634de49d0cd6",
+ "stop": null,
+ "problems": null
+}

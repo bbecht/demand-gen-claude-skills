@@ -1,0 +1,6 @@
+{"checks": {
+ "one_change": {"state": "pass", "reason": "The test changes one thing: the number of form fields. The page, offer and traffic stay the same.", "fix": ""},
+ "right_metric": {"state": "pass", "reason": "Demo form conversion is the first number fewer fields can move, and a demo request leads to pipeline.", "fix": ""},
+ "clean_split": {"state": "pass", "reason": "The page tool assigns each visitor to a form at random, 50/50.", "fix": ""},
+ "measurable": {"state": "pass", "reason": "Form submissions and page visitors are tracked today, by form version.", "fix": ""}
+}}
