@@ -8,9 +8,9 @@ Each skill does one job with your own data and gives a straight answer. Nothing 
 
 | Skill | The question it answers | Released | Download |
 |---|---|---|---|
-| [Revenue by Channel](docs/revenue-by-channel.md) | Which channels actually turn into closed revenue, and where should the next dollar go? | October 2026 | [revenue-by-channel.zip](../../releases/tag/revenue-by-channel-v1.1.1) |
-| [Archie](docs/archie.md) | Is this new account worth working, and where did it come from? | October 2026 | [archie.zip](../../releases/tag/archie-v1.0.1) |
-| [Customer Segmentation](docs/customer-segmentation.md) | Which accounts are worth the effort, and how exposed is our revenue? | October 2026 | [customer-segmentation.zip](../../releases/tag/customer-segmentation-v1.0.0) |
+| [Revenue by Channel](docs/revenue-by-channel.md) | Which channels actually turn into closed revenue, and where should the next dollar go? | September 2026 | [revenue-by-channel.zip](../../releases/tag/revenue-by-channel-v1.1.1) |
+| [Archie](docs/archie.md) | Is this new account worth working, and where did it come from? | September 2026 | [archie.zip](../../releases/tag/archie-v1.0.1) |
+| [Customer Segmentation](docs/customer-segmentation.md) | Which accounts are worth the effort, and how exposed is our revenue? | September 2026 | [customer-segmentation.zip](../../releases/tag/customer-segmentation-v1.0.0) |
 | [Pipeline Leak Finder](docs/pipeline-leak-finder.md) | Which stage kills our deals, and which fix is worth the most? | September 2026 | [pipeline-leak-finder.zip](../../releases/tag/pipeline-leak-finder-v1.0.0) |
 | [Campaign Brief Builder](docs/campaign-brief-builder.md) | Can this campaign hit its number, and what does every team owe it? | September 2026 | [campaign-brief-builder.zip](../../releases/tag/campaign-brief-builder-v1.0.0) |
 | [Prove It or Fail It](docs/prove-it-or-fail-it.md) | Will this idea work, and how will we know in 30 days? | September 2026 | [prove-it-or-fail-it.zip](../../releases/tag/prove-it-or-fail-it-v1.0.0) |

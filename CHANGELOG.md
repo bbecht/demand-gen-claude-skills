@@ -57,7 +57,7 @@
 
 ## Customer Segmentation
 
-### 1.0.0 (October 2026)
+### 1.0.0 (September 2026)
 
 - Logistic regression and random forest on account firmographics, trained on won and lost deals
 - Grouped cross-validation by account: every account with history is scored by models that never saw it
@@ -78,7 +78,7 @@
 
 - The ICP now comes from a Notion page or doc you name at run time. Claude.ai cannot edit an installed skill, so the old copy-to-icp.md step only worked in Claude Code
 
-### 1.0.0 (October 2026)
+### 1.0.0 (September 2026)
 
 - Binary In or Out ICP gate on every new account, from an Apollo run or new inbound
 - Evaluates each account once and never revisits it
@@ -99,7 +99,7 @@
 - Solver result reads "2 fewer opportunities, worth more each" instead of "-2 new opportunities" when a shift trades volume for value
 - Solver demo GIF added to the guide
 
-### 1.0.0 (October 2026)
+### 1.0.0 (September 2026)
 
 - Revenue, win rate and sales cycle by source from any CRM deal export
 - Readouts for four seats: CEO or owner, VP Sales or CRO, RevOps, marketing lead
