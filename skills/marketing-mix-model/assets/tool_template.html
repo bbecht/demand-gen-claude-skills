@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marketing Mix Model</title>
+<style>
+  :root{
+    --bg:#ffffff; --surface:#ffffff; --soft:#eef2f8; --border:#bdbdbd; --ink:#000000;
+    --blue:#1d4ed8; --blue-soft:rgba(29,78,216,0.12); --amber:#d97706; --amber-soft:rgba(217,119,6,0.14);
+    --hollow:#ffffff; --btn:#000000; --btn-ink:#ffffff;
+  }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+    --bg:#000000; --surface:#0b0b0c; --soft:#1a1d24; --border:#5a5a5a; --ink:#ffffff;
+    --blue:#3b82f6; --blue-soft:rgba(59,130,246,0.18); --amber:#c77a08; --amber-soft:rgba(199,122,8,0.22);
+    --hollow:#0b0b0c; --btn:#ffffff; --btn-ink:#000000; } }
+  :root[data-theme="dark"]{
+    --bg:#000000; --surface:#0b0b0c; --soft:#1a1d24; --border:#5a5a5a; --ink:#ffffff;
+    --blue:#3b82f6; --blue-soft:rgba(59,130,246,0.18); --amber:#c77a08; --amber-soft:rgba(199,122,8,0.22);
+    --hollow:#0b0b0c; --btn:#ffffff; --btn-ink:#000000; }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  b,strong,th{font-weight:600}
+  a{color:var(--ink);text-decoration:underline}
+  .wrap{max-width:1000px;margin:0 auto;padding:32px 40px 48px}
+  h1{font-size:24px;font-weight:600;margin:0 0 4px}
+  .label{font-size:12px;text-transform:uppercase;letter-spacing:0.08em;font-weight:700;margin:32px 0 8px}
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+  .cap{font-size:14px;margin:0 0 12px}
+  .roles{display:flex;flex-wrap:wrap;gap:6px;margin:18px 0 4px}
+  .roles button,.tbtn{font:inherit;font-weight:600;padding:6px 12px;border:1px solid var(--border);background:var(--surface);color:var(--ink);cursor:pointer;border-radius:8px}
+  .roles button[aria-pressed="true"]{background:var(--blue-soft);border-color:var(--blue);box-shadow:inset 0 -3px 0 var(--blue)}
+  .q{font-size:19px;font-weight:600;margin:0 0 12px}
+  .insights{display:grid;gap:8px}
+  .card{border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-size:15px}
+  .card.warn{border-left:4px solid var(--amber)}
+  .card.key{border-left:4px solid var(--blue)}
+  .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:1px 8px;border-radius:999px;margin-right:6px;border:1px solid var(--ink)}
+  .tiles{display:grid;grid-template-columns:repeat(4,1fr);margin-top:14px}
+  .tiles > div{padding:4px 16px;border-left:1px solid var(--border)}
+  .tiles > div:first-child{border-left:0;padding-left:0}
+  .tiles .v{font-size:24px;font-weight:600}
+  .tiles .l{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;font-weight:600}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{border-bottom:1px solid var(--border);padding:7px 6px;text-align:right;vertical-align:middle}
+  th:first-child,td:first-child{text-align:left}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:0.06em}
+  tr:last-child td{border-bottom:0}
+  .scroll{overflow-x:auto}
+  .controls{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin:0 0 12px}
+  .controls label{font-weight:600;font-size:13px;display:flex;gap:6px;align-items:center}
+  select{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:5px 8px}
+  input[type=range]{accent-color:var(--blue);width:220px}
+  input:focus,select:focus,button:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
+  svg text{fill:var(--ink);font-family:inherit}
+  .axis line,.axis path{stroke:var(--ink)}
+  .grid line{stroke:var(--border);stroke-dasharray:2 3}
+  .legend{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;margin:10px 0 0;align-items:center}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .sw{display:inline-block;width:18px;height:12px;border-radius:2px;vertical-align:-1px}
+  .sw.line{height:3px;border-radius:0}
+  .sw.dash{height:0;border-top:2px dashed var(--ink);border-radius:0}
+  #tip{position:fixed;pointer-events:none;background:var(--surface);color:var(--ink);border:1px solid var(--ink);border-radius:8px;padding:8px 10px;font-size:12px;line-height:1.45;display:none;z-index:10;max-width:280px;box-shadow:0 4px 14px rgba(0,0,0,0.18)}
+  .pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;padding:2px 8px;border-radius:999px;border:1px solid var(--ink);white-space:nowrap}
+  .pill.Grow{background:var(--blue);border-color:var(--blue);color:#fff}
+  .pill.Hold{background:var(--blue-soft);border-color:var(--blue)}
+  .pill.Trim{background:var(--amber-soft);border-color:var(--amber)}
+  .pill.Cut{background:var(--amber);border-color:var(--amber);color:#000}
+  .pill.Clear{border-style:solid}
+  .pill.Close{border-style:dashed}
+  .pill.Test{border:2px solid var(--amber)}
+  .bar-row{display:grid;grid-template-columns:190px 1fr 92px;gap:10px;align-items:center;margin:6px 0;font-size:13px}
+  .bar-row .num{text-align:right;font-weight:600}
+  .track{position:relative;height:18px}
+  .zero{position:absolute;top:-3px;bottom:-3px;width:0;border-left:1px solid var(--ink)}
+  .bar{position:absolute;top:0;height:18px}
+  .bar.media{background:var(--blue)}
+  .bar.base{background:var(--hollow);box-shadow:inset 0 0 0 2px var(--ink)}
+  .bar.neg{background:repeating-linear-gradient(45deg,var(--amber) 0 4px,var(--hollow) 4px 7px);box-shadow:inset 0 0 0 1px var(--amber)}
+  .flags{display:grid;gap:8px;margin:12px 0 0}
+  details{border:1px solid var(--border);padding:12px 16px;border-radius:12px;margin-top:10px;background:var(--surface)}
+  details.inner{border:0;padding:8px 0 0;margin:0}
+  summary{font-weight:600;cursor:pointer}
+  .guide p{margin:0 0 10px}
+  .guide h4{margin:14px 0 4px;font-size:14px}
+  .test{border:1px solid var(--border);border-left:4px solid var(--amber);border-radius:8px;padding:12px 14px;margin:0 0 8px}
+  .test h3{margin:0 0 4px;font-size:15px}
+  .test ul{margin:4px 0 0;padding-left:18px}
+  footer{margin-top:32px;font-size:13px;font-weight:600}
+  .hide{display:none}
+  .demo{display:inline-block;margin-left:8px;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:2px 8px;border:2px solid var(--amber);border-radius:999px;vertical-align:4px}
+  svg.chart{display:block;width:100%;min-width:640px}
+  @media (max-width:760px){
+    .wrap{padding:20px 16px 40px}
+    .tiles{grid-template-columns:1fr 1fr;row-gap:12px}
+    .tiles > div:nth-child(3){border-left:0;padding-left:0}
+    .bar-row{grid-template-columns:110px 1fr 70px}
+    input[type=range]{width:160px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Marketing Mix Model <span id="demoBadge" class="demo hide">Sample data</span></h1>
+  <div id="meta"></div>
+
+  <div class="roles" role="group" aria-label="Choose your seat">
+    <button data-role="ceo">CEO or owner</button>
+    <button data-role="cfo">CFO or finance</button>
+    <button data-role="marketing">Marketing lead</button>
+    <button data-role="analyst">Analyst</button>
+  </div>
+
+  <div class="label">Your question</div>
+  <div class="panel">
+    <div class="q" id="question"></div>
+    <div class="insights" id="insights"></div>
+    <div class="tiles" id="tiles"></div>
+  </div>
+
+  <div class="label needs-model">What each channel returns</div>
+  <div class="panel needs-model">
+    <p class="cap" id="roiCap"></p>
+    <div class="scroll"><svg id="roiChart" class="chart" viewBox="0 0 900 300" role="img" aria-label="Sales per dollar for each channel, with its range and the break-even line"></svg></div>
+    <div class="legend"><span><svg width="18" height="12"><circle cx="9" cy="6" r="5" fill="var(--blue)"/></svg>Sales per $1, last 52 weeks</span><span><svg width="26" height="12"><line x1="1" x2="25" y1="6" y2="6" stroke="var(--ink)" stroke-width="2"/></svg>90% range across refits</span><span><i class="sw dash"></i>Break-even</span></div>
+    <div class="scroll" style="margin-top:14px"><table id="chTable"></table></div>
+    <details class="inner"><summary>What do Grow, Hold, Trim and Cut mean?</summary>
+      <p class="cap" style="margin-top:8px" id="verdictHelp"></p></details>
+  </div>
+
+  <div class="label needs-model">Which channels to test next</div>
+  <div class="panel needs-model">
+    <p class="cap">A mix model reads history. Where history cannot settle a channel, a test can. These are the channels where the model's answer moved when the data was resampled.</p>
+    <div id="tests"></div>
+  </div>
+
+  <div class="label needs-model">Response curves</div>
+  <div class="panel needs-model">
+    <p class="cap">What a year of spend at each level would have driven, with today's weekly timing kept. The curve bends as the channel saturates. Above the dashed line, the channel's gross profit covers its spend.</p>
+    <div class="controls"><label>Channel <select id="curveSel"></select></label></div>
+    <div class="scroll"><svg id="curve" class="chart" viewBox="0 0 900 340" role="img" aria-label="Response curve"></svg></div>
+    <div class="legend"><span><i class="sw line" style="background:var(--blue)"></i>Model</span><span><i class="sw" style="background:var(--blue-soft)"></i>90% range</span><span><i class="sw dash"></i>Break-even</span><span><svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="var(--hollow)" stroke="var(--ink)" stroke-width="2"/></svg>Today</span><span><i class="sw" style="background:var(--soft)"></i>Range the model has seen: half to double today</span></div>
+    <p class="cap" style="margin-top:10px" id="curveNote"></p>
+  </div>
+
+  <div class="label needs-model">Budget plan</div>
+  <div class="panel needs-model">
+    <p class="cap" id="planCap"></p>
+    <div class="tiles" id="planTiles" style="margin:0 0 14px"></div>
+    <div class="scroll"><table id="planTable"></table></div>
+    <details class="inner" open><summary>What each budget level buys</summary>
+      <p class="cap" style="margin-top:8px">Sales driven by media at each total budget. Today's mix scaled up or down, against the best split the model allows. Drag the slider to see the split.</p>
+      <div class="controls"><label>Total budget <input type="range" id="lvl" min="0" step="1"> <span id="lvlV"></span></label></div>
+      <div class="scroll"><svg id="frontier" class="chart" viewBox="0 0 900 300" role="img" aria-label="Sales driven by media at each budget level"></svg></div>
+      <div class="legend"><span><i class="sw line" style="background:var(--blue)"></i>Best split</span><span><i class="sw line" style="background:var(--ink)"></i>Today's mix, scaled</span></div>
+      <div class="scroll" style="margin-top:10px"><table id="lvlTable"></table></div>
+      <p class="cap" style="margin-top:10px" id="lvlNote"></p>
+    </details>
+  </div>
+
+  <div class="label needs-model">Where sales came from</div>
+  <div class="panel needs-model">
+    <p class="cap" id="decCap"></p>
+    <div id="decomp"></div>
+    <div class="legend"><span><i class="sw" style="background:var(--blue)"></i>Media channel</span><span><i class="sw" style="background:var(--hollow);box-shadow:inset 0 0 0 2px var(--ink)"></i>Everything else</span><span><i class="sw" style="background:repeating-linear-gradient(45deg,var(--amber) 0 4px,var(--hollow) 4px 7px);box-shadow:inset 0 0 0 1px var(--amber)"></i>Pulled sales down</span></div>
+    <details class="inner" id="outWrap"><summary>Economy, price, competition and promotions</summary><div class="scroll"><table id="outTable"></table></div></details>
+    <details class="inner" id="holWrap"><summary>Holidays and events</summary><div class="scroll"><table id="holTable"></table></div></details>
+  </div>
+
+  <div class="label">Can the model be trusted?</div>
+  <div class="panel">
+    <p class="cap">Black is what happened. Blue is what the model says should have happened. The shaded weeks at the end were held back from the fit, so the miss there shows how well it forecasts.</p>
+    <div class="scroll"><svg id="fit" class="chart" viewBox="0 0 900 300" role="img" aria-label="Actual and modelled weekly sales"></svg></div>
+    <div class="tiles" id="healthTiles"></div>
+    <div class="flags" id="healthFlags"></div>
+    <details class="inner"><summary>Carry-over and saturation by channel</summary><div class="scroll"><table id="carryTable"></table></div></details>
+    <details class="inner"><summary>Data checks</summary><div class="scroll"><table id="dqTable"></table></div></details>
+  </div>
+
+  <div id="truthWrap" class="hide">
+    <div class="label">Truth check (sample data only)</div>
+    <div class="panel">
+      <p class="cap">The sample data was built with known answers planted in it. This is how close the model got. Real data has no answer key, which is why the test list above matters.</p>
+      <div class="scroll"><table id="truthTable"></table></div>
+    </div>
+  </div>
+
+  <details class="guide">
+    <summary>How does the model work?</summary>
+    <h4>What is a marketing mix model?</h4>
+    <p>A regression on weekly history. It splits each week's sales into a base you would get anyway, seasons, holidays, events, outside forces like the economy and price, and the part each media channel drove.</p>
+    <h4>How does it handle ads that keep working?</h4>
+    <p>Carry-over. Part of each week's spend keeps working in the weeks after. TV and video carry over for weeks. Search mostly works the week it runs. The model finds each channel's rate from the data.</p>
+    <h4>Why do the curves bend?</h4>
+    <p>Saturation. The first dollars reach the easiest buyers. Each extra dollar reaches fewer new ones. Past the steep part of the curve, the next dollar returns less than the average. Budget moves follow the next dollar.</p>
+    <h4>Where do the ranges come from?</h4>
+    <p>The model refits itself many times on resampled versions of its own misses, carry-over and saturation included. A channel whose answer holds across the refits gets a clear verdict. One whose answer moves goes on the test list.</p>
+    <h4>When should I not trust this?</h4>
+    <p>When the held-back weeks miss by more than 10%. When two channels always run together. When spend chases demand, like search bids that rise in peak season. When something that moves sales is missing from the file. A mix model finds patterns in history. A lift test proves cause.</p>
+    <p><a href="https://github.com/bbecht/demand-gen-claude-skills/blob/main/skills/marketing-mix-model/references/method-guide.md" target="_blank" rel="noopener">Read the full plain-language guide</a></p>
+  </details>
+
+  <footer>Built by Marketing Systems Guild. Turning strangers into clients.</footer>
+</div>
+<div id="tip" role="tooltip"></div>
+
+<script>
+const DATA = /*__DATA__*/null;
+const START_ROLE = /*__ROLE__*/"ceo";
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const pct = (x, d=0) => x == null ? "n/a" : (x*100).toFixed(d) + "%";
+const money = x => { if (x == null) return "n/a"; const a = Math.abs(x), s = x < 0 ? "-" : "";
+  if (a >= 1e9) return s + "$" + (a/1e9).toFixed(2).replace(/\.?0+$/,"") + "B";
+  if (a >= 1e6) return s + "$" + (a/1e6).toFixed(a >= 1e7 ? 1 : 2).replace(/\.?0+$/,"") + "M";
+  if (a >= 1e3) return s + "$" + Math.round(a/1e3) + "K"; return s + "$" + Math.round(a); };
+const x2 = v => v == null ? "n/a" : "$" + (+v).toFixed(2);
+const num = x => (x||0).toLocaleString("en-US");
+const cap1 = s => s ? s[0].toUpperCase() + s.slice(1) : s;
+function list(xs){ return xs.length<=1 ? (xs[0]||"") : xs.slice(0,-1).join(", ") + " and " + xs[xs.length-1]; }
+const META = DATA.meta, MH = DATA.model_health, HD = DATA.headline, CH = DATA.channels, PLAN = DATA.plan, BE = META.break_even_roi, MARGIN = META.margin;
+const pill = v => `<span class="pill ${esc(v)}">${esc(v)}</span>`;
+const cert = c => `<span class="pill ${c==="Clear"?"Clear":c==="Close call"?"Close":c==="Not run"?"":"Test"}">${esc(c)}</span>`;
+
+// ---------- header ----------
+(function(){
+  if (DATA.demo) $("#demoBadge").classList.remove("hide");
+  $("#meta").innerHTML = `${num(META.weeks)} weeks, ${esc(META.start)} to ${esc(META.end)}. ${META.channels.length} channels. ` +
+    `Results cover the last ${META.window_weeks} weeks. Gross margin ${pct(MARGIN)}, so break-even is ${x2(BE)} of sales per $1. ` +
+    `Model check: <b>${esc(MH.verdict)}</b>.` + (META.calibration.length ? ` Anchored to lift tests on ${esc(list(META.calibration.map(c=>c.channel)))}.` : "");
+})();
+
+// ---------- role readouts ----------
+const QUESTIONS = {
+  ceo: "Is our marketing paying for itself, and where should the next dollar go?",
+  cfo: "What does marketing actually return, and how sure are we?",
+  marketing: "Which channels can I defend, and what mix should I run?",
+  analyst: "Can I trust this model?"
+};
+function card(kind, tag, html){ return `<div class="card ${kind}"><span class="tag">${esc(tag)}</span>${html}</div>`; }
+function tiles(el, items){ $(el).innerHTML = items.map(([l,v]) => `<div><div class="v">${v}</div><div class="l">${esc(l)}</div></div>`).join(""); }
+const CHR = CH.filter(c => c.certainty !== "Not run");
+const clear = CHR.filter(c => c.certainty === "Clear");
+const grows = CH.filter(c => c.verdict === "Grow" && c.certainty !== "Test first").sort((a,b)=>b.mroi-a.mroi);
+const cuts = CH.filter(c => (c.verdict === "Cut" || c.verdict === "Trim") && c.certainty !== "Test first").sort((a,b)=>a.mroi-b.mroi);
+const TESTS = DATA.test_next || [];
+function moves(){ if (!PLAN.rows) return [];
+  return PLAN.rows.filter(r => !r.held && Math.abs(r.change) >= 0.05 * r.current_spend).sort((a,b)=>Math.abs(b.change)-Math.abs(a.change)); }
+function moveText(n){ return moves().slice(0,n).map(r => `${r.change > 0 ? "add" : "take"} ${money(Math.abs(r.change))} ${r.change > 0 ? "to" : "from"} ${r.channel}`); }
+const profitPer = HD.blended_roi * MARGIN;
+function budgetCard(){
+  const lv = PLAN.profit_best_level; if (lv == null) return "";
+  if (Math.abs(lv - 1) < 1e-9) return card("key","Budget size", `Today's total budget, ${money(PLAN.budget)}, is the most profitable level the model tested, with the best split.`);
+  if (PLAN.profit_at_edge) return card("warn","Budget size", `With the best split, gross profit after media cost is still rising at ${money(PLAN.profit_best_budget)}, the ${PLAN.profit_at_edge === "low" ? "lowest" : "highest"} level the model tested (${Math.round(lv*100)}% of today). ` +
+    `${PLAN.profit_at_edge === "low" ? "Spending less looks better still, but the model has not seen it. Cut in steps and measure." : "Spending more looks better still, but the model has not seen it. Add in steps and measure."}`);
+  const more = lv > 1;
+  return card(more ? "key" : "warn", "Budget size", `With the best split, gross profit after media cost peaks near ${money(PLAN.profit_best_budget)}, ${Math.round(Math.abs(lv-1)*100)}% ${more ? "above" : "below"} today. ` +
+    `${more ? "Extra spend still pays for itself up to there." : "Past that point each extra dollar brings back less than it costs."} The model tested ${Math.round(FR[0].level*100)}% to ${Math.round(FR[FR.length-1].level*100)}% of today.`);
+}
+
+function renderRole(role){
+  document.querySelectorAll(".roles button").forEach(b => b.setAttribute("aria-pressed", b.dataset.role===role));
+  $("#question").textContent = QUESTIONS[role];
+  const out = [];
+  if (MH.verdict === "not usable"){
+    out.push(card("warn","Stop", "The model does not fit this history well enough to move budget on. " + esc(MH.reasons.join(" ")) + " See Can the model be trusted for what to fix."));
+    $("#insights").innerHTML = out.join("");
+    tiles("#tiles", [["Verdict", MH.verdict], ["Fit (R²)", MH.r2_train.toFixed(2)], ["Held-back miss", MH.mape_holdout == null ? "n/a" : MH.mape_holdout.toFixed(1) + "%"], ["Weeks", num(META.weeks)]]);
+    return;
+  }
+  if (MH.verdict === "directional") out.push(card("warn","Directional", esc(MH.reasons.join(" ")) + " Use the direction of each verdict, not the exact dollars."));
+  const payLine = `Media drove ${money(HD.media)} of ${money(HD.sales)} in sales (${pct(HD.media_share)}) on ${money(HD.spend)} of spend. Each $1 returned ${x2(HD.blended_roi)} in sales, ${x2(profitPer)} in gross profit.`;
+  if (role === "ceo"){
+    out.push(card(profitPer >= 1 ? "key" : "warn", profitPer >= 1 ? "Pays" : "Does not pay", payLine + (profitPer >= 1 ? " Marketing as a whole pays for itself." : " Marketing as a whole does not cover its cost at this margin.")));
+    if (PLAN.rows && PLAN.gain > 0) out.push(card("key","Next dollar", `${grows.length ? `${esc(grows[0].channel)} returns the most on the next dollar (${x2(grows[0].mroi)}). ` : ""}Same budget, better split: ${esc(list(moveText(3)))}. Worth about ${money(PLAN.gain)} more in sales a year.`));
+    else out.push(card("warn","Next dollar", esc(PLAN.reason || "No move clears the bar. Hold the mix and test.")));
+    if (TESTS.length) out.push(card("", "Test", TESTS[0].certainty === "Test first" ? `Test ${esc(TESTS[0].channel)} before moving its budget. The model cannot settle it from history.`
+      : `${esc(TESTS[0].channel)} is a close call: the direction is clear, the size is not. A test would pin it down.`));
+    out.push(budgetCard());
+    tiles("#tiles", [["Media-driven sales", money(HD.media)], ["Spend", money(HD.spend)], ["Sales per $1", x2(HD.blended_roi)], ["Gain from better split", PLAN.rows ? money(PLAN.gain) : "n/a"]]);
+  } else if (role === "cfo"){
+    out.push(card(profitPer >= 1 ? "key" : "warn","Return", payLine));
+    out.push(card(clear.length === CHR.length ? "key" : "warn", "How sure", `${clear.length} of ${CHR.length} channels get the same verdict in at least 80% of the model's refits.` + (TESTS.length ? ` Not settled: ${esc(list(TESTS.map(t=>t.channel)))}.` : "")));
+    const losing = CHR.filter(c => c.roi < BE);
+    out.push(card(losing.length ? "warn" : "", "Losing money", losing.length ? `${esc(list(losing.map(c => `${c.channel} (${x2(c.roi)} per $1, range ${x2(c.roi_lo)} to ${x2(c.roi_hi)})`)))} return${losing.length===1?"s":""} less than break-even (${x2(BE)}) as ${losing.length===1?"it runs":"they run"} today.` : `Every channel returns at least break-even (${x2(BE)} per $1) as it runs today.`));
+    out.push(budgetCard());
+    out.push(card("", "Held-back test", MH.mape_holdout == null ? "No weeks were held back." : `On the last ${MH.n_holdout} weeks, which the model never saw, it missed weekly sales by ${MH.mape_holdout.toFixed(1)}% on average.`));
+    tiles("#tiles", [["Profit per $1", x2(profitPer)], ["Channels settled", `${clear.length} of ${CHR.length}`], ["Held-back miss", MH.mape_holdout == null ? "n/a" : MH.mape_holdout.toFixed(1) + "%"], ["Media share of sales", pct(HD.media_share)]]);
+  } else if (role === "marketing"){
+    const defend = CH.filter(c => (c.verdict === "Grow" || c.verdict === "Hold") && c.certainty !== "Test first");
+    out.push(card("key","Defend", defend.length ? `${esc(list(defend.map(c => `${c.channel} (${x2(c.roi)} per $1)`)))}. The next dollar into ${defend.length===1?"it":"them"} still earns its keep.` : "No channel has a verdict strong enough to defend on this data alone."));
+    if (cuts.length) out.push(card("warn","At risk", `${esc(list(cuts.map(c => `${c.channel} (next $1 returns ${x2(c.mroi)})`)))}. Finance will find these. Move first.`));
+    if (!PLAN.rows) { out.push(card("warn", "The mix", esc(PLAN.reason || ""))); out.push(budgetCard()); }
+    if (PLAN.rows && moves().length) out.push(card("", "The mix", `${esc(cap1(list(moveText(4))))}. Same budget, about ${money(PLAN.gain)} more in sales a year.` + (PLAN.held.length ? ` ${esc(list(PLAN.held))} stay${PLAN.held.length===1?"s":""} put until tested.` : "")));
+    tiles("#tiles", [["Best next $1", grows.length ? `${x2(grows[0].mroi)}` : "n/a"], ["Worst next $1", cuts.length ? x2(cuts[0].mroi) : "n/a"], ["Gain from better split", PLAN.rows ? money(PLAN.gain) : "n/a"], ["Channels to test", TESTS.length]]);
+  } else {
+    out.push(card(MH.verdict === "usable" ? "key" : "warn", MH.verdict, `Explains ${pct(MH.r2_train)} of weekly swings in the weeks it learned from. Missed the ${MH.n_holdout} held-back weeks by ${MH.mape_holdout == null ? "n/a" : MH.mape_holdout.toFixed(1) + "%"} on average.`));
+    const issues = (DATA.warnings||[]).concat((MH.vif_flags||[]).filter(v=>v.rating==="Fail").slice(0,2).map(v=>`${v.column} overlaps heavily with other drivers (VIF ${v.vif}).`));
+    out.push(card(issues.length ? "warn" : "", "Watch", issues.length ? esc(issues[0]) + (issues.length > 1 ? ` Plus ${issues.length-1} more under Can the model be trusted.` : "") : "No data or overlap problems flagged."));
+    out.push(card("", "Ranges", `Every range comes from ${esc(META.effort === "Quick" ? "20" : META.effort === "Thorough" ? "100" : "40")} full refits on resampled misses, curves included. ${clear.length} of ${CHR.length} channels hold one verdict in 80% of them.`));
+    tiles("#tiles", [["Fit (R²)", MH.r2_train.toFixed(2)], ["Held-back miss", MH.mape_holdout == null ? "n/a" : MH.mape_holdout.toFixed(1) + "%"], ["Durbin-Watson", MH.durbin_watson.toFixed(2)], ["Weeks", num(META.weeks)]]);
+  }
+  $("#insights").innerHTML = out.join("");
+}
+document.querySelectorAll(".roles button").forEach(b => b.onclick = () => renderRole(b.dataset.role));
+
+// ---------- channel ROI chart and table ----------
+function drawROI(){
+  $("#roiCap").textContent = `Each dot is a channel's sales per $1 over the last 52 weeks. The line is the range across the model's refits. Right of the dashed line, a channel covers its own cost at a ${pct(MARGIN)} gross margin.`;
+  const RC = CH.filter(c => c.spend > 0 && c.roi != null);
+  const W = 900, rowH = 38, M = {l:150, r:30, t:16, b:40}, H = M.t + M.b + rowH * RC.length;
+  $("#roiChart").setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const xMax = Math.max(BE * 1.3, ...RC.map(c => c.roi_hi || 0)) * 1.08;
+  const xS = v => M.l + (v / xMax) * (W - M.l - M.r);
+  let g = `<g class="grid">`;
+  const step = xMax > 8 ? 2 : xMax > 4 ? 1 : 0.5;
+  for (let v = 0; v <= xMax + 1e-9; v += step) g += `<line x1="${xS(v)}" x2="${xS(v)}" y1="${M.t}" y2="${H-M.b}"/>`;
+  g += `</g><g class="axis">`;
+  for (let v = 0; v <= xMax + 1e-9; v += step) g += `<text x="${xS(v)}" y="${H-M.b+18}" text-anchor="middle" font-size="12">$${v % 1 ? v.toFixed(1) : v}</text>`;
+  g += `<text x="${(M.l+W-M.r)/2}" y="${H-6}" text-anchor="middle" font-size="13" font-weight="600">Sales per $1 of spend</text></g>`;
+  g += `<line x1="${xS(BE)}" x2="${xS(BE)}" y1="${M.t-6}" y2="${H-M.b}" stroke="var(--ink)" stroke-width="2" stroke-dasharray="6 4"/>`;
+  g += `<text x="${xS(BE)+6}" y="${M.t+4}" font-size="12" font-weight="700">Break-even ${x2(BE)}</text>`;
+  RC.forEach((c, i) => {
+    const y = M.t + rowH * i + rowH / 2 + 6;
+    g += `<text x="${M.l-10}" y="${y+4}" text-anchor="end" font-size="13" font-weight="600">${esc(c.channel)}</text>`;
+    g += `<line x1="${xS(c.roi_lo)}" x2="${xS(c.roi_hi)}" y1="${y}" y2="${y}" stroke="var(--ink)" stroke-width="2"/>`;
+    g += `<line x1="${xS(c.roi_lo)}" x2="${xS(c.roi_lo)}" y1="${y-6}" y2="${y+6}" stroke="var(--ink)" stroke-width="2"/><line x1="${xS(c.roi_hi)}" x2="${xS(c.roi_hi)}" y1="${y-6}" y2="${y+6}" stroke="var(--ink)" stroke-width="2"/>`;
+    const below = c.roi < BE;
+    g += `<circle cx="${xS(c.roi)}" cy="${y}" r="7" fill="${below ? "var(--amber)" : "var(--blue)"}" stroke="var(--hollow)" stroke-width="2"/>`;
+    g += `<text x="${xS(c.roi_hi)+10}" y="${y+4}" font-size="12">${x2(c.roi)}</text>`;
+  });
+  $("#roiChart").innerHTML = g;
+  $("#chTable").innerHTML = `<tr><th>Channel</th><th>Spend</th><th>Sales driven</th><th>Sales per $1</th><th>Next $1 returns</th><th>Share of spend</th><th>Share of media sales</th><th style="text-align:center">Verdict</th><th style="text-align:center">Certainty</th></tr>` +
+    CH.map(c => `<tr><td><b>${esc(c.channel)}</b>${c.calibrated ? " (lift test)" : ""}</td><td>${money(c.spend)}</td><td>${money(c.contribution)}<br><span style="font-size:12px">${money(c.contribution_lo)} to ${money(c.contribution_hi)}</span></td>` +
+      `<td>${x2(c.roi)}</td><td>${x2(c.mroi)}</td><td>${pct(c.spend_share)}</td><td>${pct(c.effect_share)}</td><td style="text-align:center">${pill(c.verdict)}</td><td style="text-align:center">${cert(c.certainty)}</td></tr>`).join("");
+  $("#verdictHelp").innerHTML = `Gross profit is sales times your ${pct(MARGIN)} margin. Every verdict starts from the next $1. ` +
+    `<b>Grow</b>: the next $1 brings back at least $1.20 in gross profit. <b>Hold</b>: $0.80 to $1.20. <b>Trim</b>: under $0.80, but some spend level from 0.1x to 2x today still covers the channel's cost. <b>Cut</b>: under $0.80, and no level from 0.1x to 2x today covers its cost. A Grow channel can sit under break-even (${x2(BE)} per $1) on the slow start of an S-curve. ` +
+    `<b>Clear</b>: 80% or more of the refits agree. <b>Close call</b>: the verdict holds in at least half the refits and the direction in 80%, or a lift test anchors the channel. <b>Test first</b>: anything less, or spend that moves with another channel. The budget plan holds Test first channels where they are, never grows a Cut or Trim channel, and never shrinks a Grow channel.`;
+}
+
+// ---------- tests ----------
+function drawTests(){
+  $("#tests").innerHTML = TESTS.length ? TESTS.map(t => `<div class="test"><h3>${t.rank}. ${esc(t.channel)} ${cert(t.certainty)}</h3>` +
+    `<div>${money(t.spend)} a year, ${pct(t.spend_share)} of spend. Current read: ${pill(t.verdict)}</div><ul>${t.reasons.map(r=>`<li>${esc(r)}</li>`).join("")}</ul></div>`).join("") +
+    `<p class="cap" style="margin-top:10px">To settle one: run a geo holdout or a spend change in a few matched markets, then feed the result back with the lift test option. The Prove It or Fail It skill in the same collection designs the 30-day test.</p>`
+    : `<p class="cap">Every channel holds one verdict in at least 80% of the refits. No test is needed to act on this read.</p>`;
+}
+
+// ---------- response curve ----------
+function drawCurve(){
+  const name = $("#curveSel").value, C = DATA.curves[name], ch = CH.find(c=>c.channel===name);
+  const W = 900, H = 340, M = {l:78, r:24, t:16, b:48};
+  const xMax = C.spend[C.spend.length-1], yMax = Math.max(...C.hi, ...C.contribution, xMax / MARGIN * 0.6) * 1.05;
+  const xS = v => M.l + v / xMax * (W - M.l - M.r), yS = v => H - M.b - v / yMax * (H - M.t - M.b);
+  const ticks = n => { if (!(n > 0)) return 1; const raw = n / 5, mag = Math.pow(10, Math.floor(Math.log10(raw))), s = [1,2,2.5,5,10].map(k=>k*mag).find(k=>k>=raw); return s > 0 ? s : 1; };
+  if (!(xMax > 0)) { $("#curve").innerHTML = ""; $("#curveNote").textContent = `${name} had no spend in the last 52 weeks.`; return; }
+  let g = `<g class="grid">`;
+  const sx = ticks(xMax), sy = ticks(yMax);
+  for (let v = 0; v <= xMax; v += sx) g += `<line x1="${xS(v)}" x2="${xS(v)}" y1="${M.t}" y2="${H-M.b}"/>`;
+  for (let v = 0; v <= yMax; v += sy) g += `<line x1="${M.l}" x2="${W-M.r}" y1="${yS(v)}" y2="${yS(v)}"/>`;
+  g += `</g>`;
+  g += `<rect x="${xS(C.current_spend*0.5)}" y="${M.t}" width="${xS(C.current_spend*2)-xS(C.current_spend*0.5)}" height="${H-M.t-M.b}" fill="var(--soft)"/>`;
+  let band = C.spend.map((s,i)=>`${xS(s)},${yS(C.hi[i])}`).join(" ") + " " + C.spend.map((s,i)=>`${xS(s)},${yS(C.lo[i])}`).reverse().join(" ");
+  g += `<polygon points="${band}" fill="var(--blue-soft)"/>`;
+  const beEnd = Math.min(xMax, yMax * MARGIN);
+  g += `<line x1="${xS(0)}" y1="${yS(0)}" x2="${xS(beEnd)}" y2="${yS(beEnd / MARGIN)}" stroke="var(--ink)" stroke-width="2" stroke-dasharray="6 4"/>`;
+  g += `<polyline points="${C.spend.map((s,i)=>`${xS(s)},${yS(C.contribution[i])}`).join(" ")}" fill="none" stroke="var(--blue)" stroke-width="3"/>`;
+  const cy = C.contribution[20];
+  g += `<circle cx="${xS(C.current_spend)}" cy="${yS(cy)}" r="7" fill="var(--hollow)" stroke="var(--ink)" stroke-width="2.5"/>`;
+  g += `<text x="${xS(C.current_spend)+10}" y="${yS(cy)-10}" font-size="12" font-weight="700">Today: ${money(C.current_spend)}</text>`;
+  g += `<g class="axis">`;
+  for (let v = 0; v <= xMax; v += sx) g += `<text x="${xS(v)}" y="${H-M.b+18}" text-anchor="middle" font-size="12">${money(v)}</text>`;
+  for (let v = 0; v <= yMax; v += sy) g += `<text x="${M.l-8}" y="${yS(v)+4}" text-anchor="end" font-size="12">${money(v)}</text>`;
+  g += `<line x1="${M.l}" x2="${W-M.r}" y1="${H-M.b}" y2="${H-M.b}"/><line x1="${M.l}" x2="${M.l}" y1="${M.t}" y2="${H-M.b}"/>`;
+  g += `<text x="${(M.l+W-M.r)/2}" y="${H-8}" text-anchor="middle" font-size="13" font-weight="600">Spend over 52 weeks</text>`;
+  g += `<text transform="translate(16,${(M.t+H-M.b)/2}) rotate(-90)" text-anchor="middle" font-size="13" font-weight="600">Sales driven</text></g>`;
+  $("#curve").innerHTML = g;
+  const carry = (DATA.carryover||[]).find(c=>c.channel===name) || {};
+  $("#curveNote").innerHTML = `<b>${esc(name)}</b>: today's ${money(C.current_spend)} drives ${money(cy)}. The next $1 returns ${x2(ch.mroi)} in sales. ` +
+    `Half of a week's effect has faded after ${carry.half_life_weeks == null ? "n/a" : carry.half_life_weeks} weeks. Outside the shaded band the model is guessing past anything it has seen.`;
+}
+
+// ---------- plan and frontier ----------
+const FR = DATA.frontier || [];
+function drawPlan(){
+  if (!PLAN.rows){ $("#planCap").textContent = PLAN.reason; $("#planTable").innerHTML = ""; return; }
+  $("#planCap").innerHTML = `The best split of today's ${money(PLAN.budget)}, with each channel kept between ${PLAN.limits[0]}x and ${PLAN.limits[1]}x its current spend so the plan stays inside what the model has seen.` +
+    (PLAN.held.length ? ` <b>${esc(list(PLAN.held))}</b> ${PLAN.held.length===1?"is":"are"} held at today's spend until a test settles ${PLAN.held.length===1?"it":"them"}.` : "");
+  tiles("#planTiles", [["Budget", money(PLAN.budget)], ["Extra sales a year", money(PLAN.gain)], ["Extra gross profit", money(PLAN.gain * MARGIN)], ["Channels held", PLAN.held.length]]);
+  $("#planTable").innerHTML = `<tr><th>Channel</th><th>Today</th><th>Best split</th><th>Change</th><th>Sales driven today</th><th>Sales driven, best split</th><th>Next $1 after the move</th></tr>` +
+    PLAN.rows.map(r => `<tr><td><b>${esc(r.channel)}</b>${r.held ? " (held until tested)" : r.certainty === "Close call" ? " (close call)" : ""}</td><td>${money(r.current_spend)}</td><td>${money(r.best_spend)}</td><td><b>${r.change > 0 ? "+" : ""}${money(r.change)}</b></td>` +
+      `<td>${money(r.current_contribution)}</td><td>${money(r.best_contribution)}</td><td>${x2(r.best_mroi)}</td></tr>`).join("");
+}
+function drawFrontier(){
+  const pts = FR.filter(f => f.best_mix != null);
+  if (!pts.length){ $("#frontier").innerHTML = ""; return; }
+  const W = 900, H = 300, M = {l:78, r:24, t:16, b:48};
+  const xMin = FR[0].budget, xMax = FR[FR.length-1].budget;
+  const yMin = Math.min(...FR.map(f=>f.same_mix)) * 0.95, yMax = Math.max(...pts.map(f=>f.best_mix), ...FR.map(f=>f.same_mix)) * 1.03;
+  const xS = v => M.l + (v - xMin) / (xMax - xMin) * (W - M.l - M.r), yS = v => H - M.b - (v - yMin) / (yMax - yMin) * (H - M.t - M.b);
+  let g = `<g class="axis">`;
+  FR.forEach(f => { g += `<text x="${xS(f.budget)}" y="${H-M.b+18}" text-anchor="middle" font-size="12">${money(f.budget)}</text>`; });
+  for (let k = 0; k <= 4; k++){ const v = yMin + (yMax - yMin) * k / 4; g += `<text x="${M.l-8}" y="${yS(v)+4}" text-anchor="end" font-size="12">${money(v)}</text>`; }
+  g += `<line x1="${M.l}" x2="${W-M.r}" y1="${H-M.b}" y2="${H-M.b}"/><line x1="${M.l}" x2="${M.l}" y1="${M.t}" y2="${H-M.b}"/>`;
+  g += `<text x="${(M.l+W-M.r)/2}" y="${H-8}" text-anchor="middle" font-size="13" font-weight="600">Total budget over 52 weeks</text></g>`;
+  g += `<polyline points="${FR.map(f=>`${xS(f.budget)},${yS(f.same_mix)}`).join(" ")}" fill="none" stroke="var(--ink)" stroke-width="2.5"/>`;
+  g += `<polyline points="${pts.map(f=>`${xS(f.budget)},${yS(f.best_mix)}`).join(" ")}" fill="none" stroke="var(--blue)" stroke-width="3"/>`;
+  const f = FR[+$("#lvl").value];
+  g += `<line x1="${xS(f.budget)}" x2="${xS(f.budget)}" y1="${M.t}" y2="${H-M.b}" stroke="var(--ink)" stroke-dasharray="3 3"/>`;
+  if (f.best_mix != null) g += `<circle cx="${xS(f.budget)}" cy="${yS(f.best_mix)}" r="7" fill="var(--blue)" stroke="var(--hollow)" stroke-width="2"/>`;
+  $("#frontier").innerHTML = g;
+  $("#lvlV").textContent = `${money(f.budget)} (${Math.round(f.level*100)}% of today)`;
+  const cur = Object.fromEntries((PLAN.all_rows||[]).map(r=>[r.channel, r.current_spend]));
+  $("#lvlTable").innerHTML = f.best_mix == null ? `<tr><td>No split reaches this budget. Cut and Trim channels do not grow, Test first channels move with the budget, and the rest stop at half and double today.</td></tr>` :
+    `<tr><th>Channel</th><th>Today</th><th>Best split at ${money(f.budget)}</th><th>Change</th></tr>` +
+    Object.entries(f.allocation).map(([k,v]) => `<tr><td>${esc(k)}${PLAN.held.includes(k) ? " (moves with the budget until tested)" : ""}</td><td>${money(cur[k])}</td><td>${money(v)}</td><td>${v - cur[k] > 0 ? "+" : ""}${money(v - cur[k])}</td></tr>`).join("");
+  const nd = f.next_dollar;
+  $("#lvlNote").innerHTML = f.best_mix == null ? "" : `At this level media drives ${money(f.best_mix)} with the best split, against ${money(f.same_mix)} with today's mix scaled.` +
+    (nd != null ? ` The last step up added ${x2(nd)} in sales per extra $1, ${nd * MARGIN >= 1 ? "which still covers its cost" : "which no longer covers its cost"} at a ${pct(MARGIN)} margin.` : "");
+}
+
+// ---------- decomposition ----------
+function drawDecomp(){
+  const D = (DATA.drivers||[]).slice();
+  const tot = D.reduce((t,d)=>t+d.contribution,0);
+  $("#decCap").textContent = `The last 52 weeks of sales, ${money(tot)}, split by what drove them. Base is what you would sell with no media, no season and no events. Seasons lift some weeks and lower others, so they net out near zero over a full year.`;
+  const lo = Math.min(0, ...D.map(d=>d.contribution)), hi = Math.max(...D.map(d=>d.contribution));
+  const span = hi - lo || 1, z = -lo / span * 100;
+  $("#decomp").innerHTML = D.map(d => { const w = Math.abs(d.contribution) / span * 100, left = d.contribution >= 0 ? z : z - w;
+    const cls = d.contribution < 0 ? "neg" : d.is_media ? "media" : "base";
+    return `<div class="bar-row"><div>${esc(d.group)}</div><div class="track"><div class="zero" style="left:${z}%"></div><div class="bar ${cls}" style="left:${left}%;width:${Math.max(w,0.3)}%"></div></div><div class="num">${money(d.contribution)}</div></div>`; }).join("");
+  const O = DATA.outside || [];
+  if (!O.length) $("#outWrap").classList.add("hide");
+  else $("#outTable").innerHTML = `<tr><th>Driver</th><th>Group</th><th>Typical swing</th><th>Weekly sales effect of that swing</th><th>Share of a week</th><th>Real effect?</th></tr>` +
+    O.map(o => `<tr><td>${esc(o.driver)}</td><td>${esc(o.group)}</td><td>${o.one_sd_change}</td><td>${money(o.weekly_effect_1sd)}</td><td>${o.pct_effect_1sd == null ? "n/a" : o.pct_effect_1sd.toFixed(1) + "%"}</td><td>${o.verdict === "Significant" ? "Yes" : "Not proven"}</td></tr>`).join("");
+  const HE = (DATA.holidays||[]).map(h=>({...h, kind:"Holiday"})).concat((DATA.events||[]).map(e=>({...e, kind:"Event"})));
+  if (!HE.length) $("#holWrap").classList.add("hide");
+  else $("#holTable").innerHTML = `<tr><th>Holiday or event</th><th>Kind</th><th>Weekly lift</th><th>Range</th><th>Share of an average week</th><th>Real effect?</th></tr>` +
+    HE.map(h => `<tr><td>${esc(h.name)}</td><td>${h.kind}</td><td>${money(h.weekly_lift)}</td><td>${money(h.weekly_lift_lo)} to ${money(h.weekly_lift_hi)}</td><td>${h.pct_of_avg_week}%</td><td>${h.verdict === "Significant" ? "Yes" : "Not proven"}</td></tr>`).join("");
+}
+
+// ---------- fit and health ----------
+function drawFit(){
+  const S = DATA.series, n = S.weeks.length, W = 900, H = 300, M = {l:78, r:20, t:14, b:40};
+  const all = S.actual.concat(S.fitted), yMin = Math.min(...all) * 0.97, yMax = Math.max(...all) * 1.02;
+  const xS = i => M.l + i / (n - 1) * (W - M.l - M.r), yS = v => H - M.b - (v - yMin) / (yMax - yMin) * (H - M.t - M.b);
+  let g = "";
+  const h0 = S.train.indexOf(false);
+  if (h0 > 0) g += `<rect x="${xS(h0)}" y="${M.t}" width="${xS(n-1)-xS(h0)}" height="${H-M.t-M.b}" fill="var(--amber-soft)"/><text x="${xS(h0)+6}" y="${M.t+14}" font-size="12" font-weight="700">Held back</text>`;
+  g += `<g class="axis">`;
+  for (let k = 0; k <= 4; k++){ const v = yMin + (yMax - yMin) * k / 4; g += `<text x="${M.l-8}" y="${yS(v)+4}" text-anchor="end" font-size="12">${money(v)}</text>`; }
+  S.weeks.forEach((w,i) => { if (i === 0 || w.slice(5,7) === "01" && S.weeks[i-1].slice(5,7) !== "01") g += `<text x="${xS(i)}" y="${H-M.b+18}" text-anchor="middle" font-size="12">${w.slice(0,4)}</text><line x1="${xS(i)}" x2="${xS(i)}" y1="${H-M.b}" y2="${H-M.b+4}"/>`; });
+  g += `<line x1="${M.l}" x2="${W-M.r}" y1="${H-M.b}" y2="${H-M.b}"/></g>`;
+  g += `<polyline points="${S.actual.map((v,i)=>`${xS(i)},${yS(v)}`).join(" ")}" fill="none" stroke="var(--ink)" stroke-width="1.6"/>`;
+  g += `<polyline points="${S.fitted.map((v,i)=>`${xS(i)},${yS(v)}`).join(" ")}" fill="none" stroke="var(--blue)" stroke-width="2"/>`;
+  $("#fit").innerHTML = g;
+  tiles("#healthTiles", [["Verdict", MH.verdict], ["Fit (R²)", MH.r2_train.toFixed(2)], ["Held-back miss", MH.mape_holdout == null ? "n/a" : MH.mape_holdout.toFixed(1) + "%"], ["Weeks", num(META.weeks)]]);
+  const flags = [];
+  (MH.reasons||[]).forEach(r => flags.push(card("warn","Model", esc(r))));
+  (DATA.warnings||[]).forEach(w => flags.push(card("warn","Data", esc(w))));
+  const vf = (MH.vif_flags||[]).filter(v=>v.rating==="Fail");
+  if (vf.length) flags.push(card("", "Overlap", `${esc(list(vf.map(v=>v.column)))} move together with other drivers, so their individual effects are soft. Media channels are what matter here.`));
+  (DATA.notes||[]).forEach(nt => flags.push(card("", "Note", esc(nt))));
+  $("#healthFlags").innerHTML = flags.join("");
+  $("#carryTable").innerHTML = `<tr><th>Channel</th><th>Carry-over per week</th><th>Half-life (weeks)</th><th>Curve shape</th></tr>` +
+    (DATA.carryover||[]).map(c => `<tr><td>${esc(c.channel)}</td><td>${pct(c.decay)}</td><td>${c.half_life_weeks}</td><td>${c.shape > 1.2 ? "S-curve: slow start, then climbs" : "Bends from the first dollar"}</td></tr>`).join("");
+  const dq = DATA.data_quality || [];
+  $("#dqTable").innerHTML = dq.length ? `<tr><th>Check</th><th>Rows</th><th style="text-align:left">What the script did</th></tr>` + dq.map(d => `<tr><td>${esc(d.check)}</td><td>${num(d.rows)}</td><td style="text-align:left">${esc(d.action)}</td></tr>`).join("")
+    : `<tr><td>No duplicate weeks, gaps, blank cells or text numbers found.</td></tr>`;
+}
+
+function drawTruth(){
+  if (!DATA.truth_check) return;
+  $("#truthWrap").classList.remove("hide");
+  $("#truthTable").innerHTML = `<tr><th>Channel</th><th>True sales per $1</th><th>Model</th><th>Model range</th><th>Truth inside range?</th><th>True verdict</th><th>Model verdict</th></tr>` +
+    DATA.truth_check.map(t => `<tr><td>${esc(t.channel)}</td><td>${x2(t.true_roi)}</td><td>${x2(t.est_roi)}</td><td>${x2(t.est_lo)} to ${x2(t.est_hi)}</td><td>${t.in_range ? "Yes" : "<b>No</b>"}</td><td>${pill(t.true_verdict)}</td><td>${pill(t.est_verdict)}</td></tr>`).join("");
+}
+
+// ---------- start ----------
+$("#curveSel").innerHTML = CH.filter(c => c.spend > 0 && DATA.curves[c.channel]).map(c => `<option>${esc(c.channel)}</option>`).join("");
+$("#curveSel").onchange = drawCurve;
+$("#lvl").max = Math.max(FR.length - 1, 0); $("#lvl").value = Math.max(FR.findIndex(f => Math.abs(f.level - 1) < 1e-9), 0);
+$("#lvl").oninput = drawFrontier;
+renderRole(["ceo","cfo","marketing","analyst"].includes(START_ROLE) ? START_ROLE : "ceo");
+if (MH.verdict === "not usable") document.querySelectorAll(".needs-model").forEach(el => el.classList.add("hide"));
+else { drawROI(); drawTests(); if ($("#curveSel").value) drawCurve(); drawPlan(); drawFrontier(); drawDecomp(); }
+drawFit(); drawTruth();
+</script>
+</body>
+</html>

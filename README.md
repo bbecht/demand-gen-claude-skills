@@ -8,6 +8,7 @@ Each skill does one job with your own data and gives a straight answer. Nothing 
 
 | Skill | The question it answers | Released | Download |
 |---|---|---|---|
+| [Marketing Mix Model](docs/marketing-mix-model.md) | What does each channel actually drive, and where should the next dollar go? | October 2026 | [marketing-mix-model.zip](../../releases/tag/marketing-mix-model-v1.0.0) |
 | [Revenue by Channel](docs/revenue-by-channel.md) | Which channels actually turn into closed revenue, and where should the next dollar go? | September 2026 | [revenue-by-channel.zip](../../releases/tag/revenue-by-channel-v1.1.1) |
 | [Archie](docs/archie.md) | Is this new account worth working, and where did it come from? | September 2026 | [archie.zip](../../releases/tag/archie-v1.0.1) |
 | [Customer Segmentation](docs/customer-segmentation.md) | Which accounts are worth the effort, and how exposed is our revenue? | September 2026 | [customer-segmentation.zip](../../releases/tag/customer-segmentation-v1.0.0) |
@@ -41,6 +42,7 @@ python tests/customer-segmentation/test_segment.py  # regression tests, needs nu
 python tests/pipeline-leak-finder/test_analyze.py   # regression tests, standard library only
 python tests/campaign-brief-builder/test_plan.py    # regression tests, standard library only
 python tests/prove-it-or-fail-it/test_plan.py      # regression tests, standard library only
+python tests/marketing-mix-model/test_mmm.py       # regression tests, needs numpy, pandas, scipy (about 2 minutes)
 python tools/build_zips.py                        # builds dist/<skill>.zip and checks each SKILL.md
 ```
 

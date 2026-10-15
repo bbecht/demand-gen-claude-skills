@@ -1,5 +1,25 @@
 # Changelog
 
+## Marketing Mix Model
+
+### 1.0.0 (October 2026)
+
+- Fits a marketing mix model to a weekly file: base, trend, seasons, holidays, events, outside drivers, and each channel with carry-over and saturation
+- Reads the file as exported: finds the week, sales and spend columns by name, reads $, commas, k and M, rolls daily rows into weeks, and stops on monthly data, under 52 weeks, or more than 10% of weeks missing
+- Fixes and reports duplicate weeks, blank sales, blank and negative spend, blank drivers and unreadable dates. Leaves out and names channels with under 8 weeks of spend or flat spend, total and unit-cost columns, and result columns like orders, leads, clicks and impressions
+- Adds US holiday weeks when the file has none
+- Sales per $1 with a 90% range, and the next $1's return, for every channel over the last 52 weeks
+- Grow, Hold, Trim or Cut from your gross margin, and a certainty for each: Clear, Close call or Test first, from 40 full refits on resampled misses, carry-over and saturation included. Channels whose spend moves with another channel's are Test first
+- Which channels to test next, ranked, with the reason for each
+- Lift test results anchor the model: give each test's sales per $1 and standard error
+- The best split of today's budget, inside half to double each channel's spend. Test first channels are held, Cut and Trim channels only shrink, Grow channels only grow. A budget curve from 60% to 160% of today shows where gross profit peaks
+- Model check: fit, a held-back test on the last 13 weeks (8 under two years of data), streaks in the misses, overlap between drivers. Usable, directional or not usable
+- Readouts for four seats: CEO or owner, CFO or finance, marketing lead, analyst
+- Interactive tool with returns and ranges, the test list, response curves, the budget plan and slider, where sales came from, and the model check
+- Demo mode: an invented home-improvement brand with known answers planted, and a truth check in the tool
+- Plain-language method guide, data guide and prerequisites
+- Synthetic MIT sample data, clean and messy, with a sample tool
+
 ## Prove It or Fail It
 
 ### 1.0.0 (September 2026)
